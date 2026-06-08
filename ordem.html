@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Ordem de Serviço</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+
+<body class="bg-light">
+
+<div class="d-flex">
+
+    <!-- SIDEBAR -->
+    <aside class="bg-success text-white p-3 vh-100 d-flex flex-column" style="width:240px;">
+        <h4 class="text-center fw-bold">CELLMASTER</h4>
+        <hr>
+
+        <nav class="nav flex-column gap-2">
+            <a href="#" class="nav-link text-white">Cadastro de Cliente</a>
+            <a href="#" class="nav-link text-white">Cadastro de Funcionário</a>
+            <a href="#" class="nav-link text-white">Estoque</a>
+            <a href="#" class="nav-link text-white">Serviços</a>
+            <a href="#" class="nav-link text-white">Orçamento</a>
+            <a href="#" class="nav-link text-white active fw-bold">Ordem de Serviço</a>
+            <a href="#" class="nav-link text-white">Relatórios</a>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO -->
+    <main class="container-fluid p-4">
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+
+                <h4 class="text-success fw-bold mb-4 text-center">
+                    Registro de Ordem de Serviço
+                </h4>
+
+                <!-- FORM -->
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <input id="id" class="form-control" placeholder="ID OS">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input id="data" type="date" class="form-control">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input id="cliente" class="form-control" placeholder="Cliente">
+                    </div>
+
+                    <div class="col-md-6">
+                        <input id="telefone" class="form-control" placeholder="Telefone">
+                    </div>
+
+                    <div class="col-md-6">
+                        <select id="servico" class="form-select">
+                            <option selected disabled>Serviço</option>
+                            <option>Troca de tela</option>
+                            <option>Troca de bateria</option>
+                            <option>Conserto de botão</option>
+                            <option>Reparo de placa</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <select id="peca" class="form-select">
+                            <option selected disabled>Peça</option>
+                            <option>Tela</option>
+                            <option>Bateria</option>
+                            <option>Conector</option>
+                            <option>Botão</option>
+                            <option>Placa</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <input id="funcionario" class="form-control" placeholder="Funcionário">
+                    </div>
+
+                    <div class="col-md-6">
+                        <select id="status" class="form-select">
+                            <option>Em andamento</option>
+                            <option>Concluída</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <textarea id="obs" class="form-control" rows="2" placeholder="Observações"></textarea>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input id="valor" type="number" class="form-control" placeholder="Valor (R$)">
+                    </div>
+
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="row mt-4 g-2">
+                    <div class="col-md">
+                        <button class="btn btn-success w-100" onclick="registrar()">Registrar OS</button>
+                    </div>
+                    <div class="col-md">
+                        <button class="btn btn-outline-secondary w-100" onclick="limpar()">Limpar Campos</button>
+                    </div>
+                    <div class="col-md">
+                        <button class="btn btn-outline-danger w-100" onclick="excluir()">Excluir OS</button>
+                    </div>
+                    <div class="col-md">
+                        <button class="btn btn-primary w-100" onclick="gerarPDF()">Gerar PDF</button>
+                    </div>
+                </div>
+
+                <!-- PESQUISA -->
+                <div class="mt-4">
+                    <input id="pesquisa" class="form-control" placeholder="Pesquisar..." onkeyup="filtrar()">
+                </div>
+
+                <!-- TABELA -->
+                <div class="table-responsive mt-3">
+                    <table class="table table-hover table-bordered align-middle text-center" id="tabela">
+                        <thead class="table-success">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome do Cliente</th>
+                                <th>Telefone</th>
+                                <th> Serviço</th>
+                                <th> Peça</th>
+                                <th>Nome do Tecnico</th>
+                                <th>Observação</th>
+                                <th>Valor</th>
+                                <th>Status de Atendimento</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+
+let linhaSelecionada = null;
+
+function registrar() {
+    let tabela = document.querySelector("#tabela tbody");
+    let linha = tabela.insertRow();
+
+    let dados = [
+        id.value, cliente.value, telefone.value, servico.value,
+        peca.value, funcionario.value, obs.value, valor.value, status.value
+    ];
+
+    dados.forEach((d, i) => linha.insertCell(i).innerText = d);
+
+    linha.onclick = () => linhaSelecionada = linha;
+}
+
+function limpar() {
+    document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+}
+
+function excluir() {
+    if (linhaSelecionada) {
+        linhaSelecionada.remove();
+        linhaSelecionada = null;
+    } else {
+        alert("Selecione uma linha!");
+    }
+}
+
+function filtrar() {
+    let filtro = pesquisa.value.toLowerCase();
+    document.querySelectorAll("#tabela tbody tr").forEach(linha => {
+        linha.style.display =
+            linha.innerText.toLowerCase().includes(filtro) ? "" : "none";
+    });
+}
+
+function gerarPDF() {
+
+    const { jsPDF } = window.jspdf;
+    let doc = new jsPDF("landscape");
+
+    doc.setFontSize(16);
+    doc.text("RELATÓRIO DE ORDENS DE SERVIÇO", 140, 15, null, null, "center");
+
+    let y = 30;
+    let total = 0;
+
+    document.querySelectorAll("#tabela tbody tr").forEach(linha => {
+
+        let c = linha.querySelectorAll("td");
+
+        doc.text(c[0].innerText, 10, y);
+        doc.text(c[1].innerText, 40, y);
+        doc.text(c[3].innerText, 80, y);
+        doc.text(c[4].innerText, 120, y);
+        doc.text("R$ " + c[7].innerText, 200, y);
+        doc.text(c[8].innerText, 240, y);
+
+        total += Number(c[7].innerText);
+        y += 10;
+    });
+
+    //doc.text(TOTAL: R$ ${total.toFixed(2)}, 220, y + 10);
+
+    doc.save("relatorio_os.pdf");
+}
+
+</script>
+
+</body>
+</html>
