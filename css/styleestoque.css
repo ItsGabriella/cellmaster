@@ -104,3 +104,85 @@ body{
     transform: rotate(180deg);
 }
 
+main{
+    background: #f5f6f8;
+    min-height: 100vh;
+}
+
+.dashboard-card{
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 .125rem .5rem rgba(0,0,0,.08);
+}
+
+.dashboard-card .card-body{
+    padding: 25px;
+}
+
+.card-icon{
+    font-size: 40px;
+    color: #198754;
+    margin-bottom: 15px;
+}
+
+.card{
+    border-radius: 20px !important;
+}
+
+.form-control,
+.form-select{
+    height: 48px;
+    border-radius: 10px;
+}
+
+.input-group-text{
+    background: white;
+}
+
+.btn-success{
+    background: #198754;
+    border: none;
+}
+
+.btn-success:hover{
+    background: #157347;
+}
+
+.table th{
+    color: #198754;
+    font-weight: 600;
+}
+
+.badge{
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+.table td,
+.table th{
+    vertical-align: middle;
+}
+
+.icon-circle{
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #e7f7e7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.icon-circle i{
+    font-size: 32px;
+    color: #198754;
+}
+
+.icon-circle.warning{
+    background: #fff4d8;
+}
+
+.icon-circle.warning i{
+    color: #e9a400;
+}

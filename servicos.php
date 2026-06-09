@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estoque</title>
+    <title>Servicos</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
-    <!-- Seu CSS -->
     <link rel="stylesheet" href="css/styleestoque.css">
 </head>
 
@@ -19,12 +16,11 @@
 
     <div class="d-flex">
 
-        <!-- Sidebar -->
         <nav id="sidebar" class="d-flex flex-column justify-content-between">
 
             <div class="p-3">
 
-                <!-- Usuário -->
+
                 <div class="d-flex align-items-center gap-2 mb-4">
                     <img src="img/perfil.png" id="user_avatar" alt="Avatar">
 
@@ -38,7 +34,6 @@
                     </div>
                 </div>
 
-                <!-- Menu -->
                 <ul class="nav flex-column gap-2">
 
                     <li class="nav-item side-item active">
@@ -123,7 +118,7 @@
 
             </div>
 
-            <!-- Logout -->
+
             <div class="border-top p-3">
                 <button id="logout_btn" class="w-100">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -136,93 +131,184 @@
 
         </nav>
 
-        <!-- Conteúdo -->
+
     <main class="flex-grow-1 p-4 bg-light">
 
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
 
-            <div class="card-body p-4">
+<div class="card-body p-4">
 
-                <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center">
 
-                    <div>
-                        <h3 class="fw-bold mb-1">
-                            Estoque
-                        </h3>
+        <div>
+            <h3 class="fw-bold mb-1">
+                Serviços
+            </h3>
 
-                        <nav style="--bs-breadcrumb-divider: '>';">
-                            <ol class="breadcrumb mb-0">
-                                <li class="breadcrumb-item">
-                                    <a href="#" class="text-success text-decoration-none">
-                                        Home
-                                    </a>
-                                </li>
+            <nav style="--bs-breadcrumb-divider: '>';">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="#" class="text-success text-decoration-none">
+                            Home
+                        </a>
+                    </li>
 
-                                <li class="breadcrumb-item active">
-                                    Estoque
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-
-                    <button class="btn btn-success px-4 py-2">
-                        <i class="fa-solid fa-plus me-2"></i>
-                        Novo Produto
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-        <!-- Cards -->
-        <div class="row g-4 mb-4">
-
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h6 class="text-secondary">Total de Produtos</h6>
-                        <h2 class="fw-bold">128</h2>
-                        <small>Produtos cadastrados</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h6 class="text-secondary">Estoque Total</h6>
-                        <h2 class="fw-bold">2.456</h2>
-                        <small>Unidades em estoque</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h6 class="text-secondary">Produtos Baixos</h6>
-                        <h2 class="fw-bold text-warning">15</h2>
-                        <small>Abaixo do mínimo</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h6 class="text-secondary">Valor Total</h6>
-                        <h2 class="fw-bold text-success">
-                            R$ 78.650,00
-                        </h2>
-                        <small>Valor do estoque</small>
-                    </div>
-                </div>
-            </div>
-
+                    <li class="breadcrumb-item active">
+                        Serviços
+                    </li>
+                </ol>
+            </nav>
         </div>
 
-        <!-- Tabela -->
+        <button class="btn btn-success px-4 py-2">
+            <i class="fa-solid fa-plus me-2"></i>
+            Novo Serviço
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+    <div class="row g-4 mb-4">
+
+<!-- Total de Serviços -->
+        <div class="col-md-3">
+            <div class="card dashboard-card shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h6 class="text-secondary mb-2">
+                                Total de Serviços
+                            </h6>
+
+                            <h2 class="fw-bold mb-1">
+                                65
+                            </h2>
+
+                            <small class="text-secondary">
+                                Cadastrados
+                            </small>
+                        </div>
+
+                        <div class="icon-circle">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Serviços Ativos -->
+        <div class="col-md-3">
+            <div class="card dashboard-card shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h6 class="text-secondary mb-2">
+                                Serviços Ativos
+                            </h6>
+
+                            <h2 class="fw-bold mb-1">
+                                48
+                            </h2>
+
+                            <small class="text-secondary">
+                                Disponíveis
+                            </small>
+                        </div>
+
+                        <div class="icon-circle">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Serviços Inativos -->
+        <div class="col-md-3">
+            <div class="card dashboard-card shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h6 class="text-secondary mb-2">
+                                Serviços Inativos
+                            </h6>
+
+                            <h2 class="fw-bold mb-1">
+                                17
+                            </h2>
+
+                            <small class="text-secondary">
+                                Desativados
+                            </small>
+                        </div>
+
+                        <div class="icon-circle warning">
+                            <i class="fa-solid fa-circle-pause"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Valor Médio -->
+        <div class="col-md-3">
+            <div class="card dashboard-card shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+                            <h6 class="text-secondary mb-2">
+                                Valor Médio
+                            </h6>
+
+                            <h2 class="fw-bold mb-1">
+                                R$ 350
+                            </h2>
+
+                            <small class="text-secondary">
+                                Por serviço
+                            </small>
+                        </div>
+
+                        <div class="icon-circle">
+                            <i class="fa-solid fa-dollar-sign"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+
+
+
         <div class="card border-0 shadow-sm">
 
             <div class="card-header bg-white p-4">
@@ -232,7 +318,7 @@
                     <!-- Buscar -->
                     <div class="col-lg-4">
                         <label class="form-label fw-semibold">
-                            Buscar Produto
+                            Buscar Serviço
                         </label>
 
                         <div class="input-group">
@@ -243,26 +329,13 @@
                             <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Buscar produto..."
+                                placeholder="Buscar serviço..."
                             >
                         </div>
                     </div>
 
-                    <!-- Categoria -->
-                    <div class="col-lg-3">
-                        <label class="form-label fw-semibold">
-                            Categoria
-                        </label>
 
-                        <select class="form-select">
-                            <option selected>Todas</option>
-                            <option>Tela</option>
-                            <option>Bateria</option>
-                            <option>Botões</option>
-                        </select>
-                    </div>
 
-                    <!-- Status -->
                     <div class="col-lg-3">
                         <label class="form-label fw-semibold">
                             Status
@@ -270,13 +343,12 @@
 
                         <select class="form-select">
                             <option selected>Todos</option>
-                            <option>Em estoque</option>
-                            <option>Estoque baixo</option>
-                            <option>Esgotado</option>
+                            <option>Ativo</option>
+                            <option>Inativo</option>
                         </select>
                     </div>
 
-                    <!-- Botões -->
+
                     <div class="col-lg-3">
                         <div class="d-flex gap-1">
 
@@ -305,12 +377,10 @@
 
                         <tr>
                             <th>ID</th>
-                            <th>Produto</th>
-                            <th>Categoria</th>
-                            <th>Estoque</th>
-                            <th>Estoque Mínimo</th>
-                            <th>Valor Unitário</th>
-                            <th>Valor Total</th>
+                            <th>Serviço</th>
+                            <th>Descrição</th>
+                            <th>Valor</th>
+                            <th>Tempo estimado</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -321,15 +391,12 @@
 
                         <tr>
                             <td>1</td>
-                            <td>Tela AMOLED 32p</td>
-                            <td>Tela</td>
-                            <td>45</td>
-                            <td>10</td>
-                            <td>R$ 550,00</td>
-                            <td>R$ 24.750,00</td>
-                            <td>
-                                <span class="badge text-bg-success">Em estoque</span>
-                            </td>
+                            <td>Troca de Tela</td>
+                            <td>Realização de troca de tela</td>
+                            <td>450,00</td>
+                            <td>1h</td>
+                            <td>Ativo</td>
+
 
                             <td>
                                 <button class="btn btn-success btn-sm">
@@ -344,15 +411,11 @@
 
                         <tr>
                             <td>2</td>
-                            <td>Bateria 5000ma</td>
-                            <td>Bateria</td>
-                            <td>120</td>
-                            <td>20</td>
-                            <td>R$ 45,00</td>
-                            <td>R$ 5.400,00</td>
-                            <td>
-                                <span class="badge text-bg-success">Em estoque</span>
-                            </td>
+                            <td>Troca de bateria</td>
+                            <td>Realização da troca de bateria</td>
+                            <td>120,20</td>
+                            <td>30min</td>
+                            <td>Ativo</td>
 
                             <td>
                                 <button class="btn btn-success btn-sm">
@@ -367,16 +430,11 @@
 
                         <tr>
                             <td>3</td>
-                            <td>Botão lateral lig/des</td>
-                            <td>Botões</td>
-                            <td class="text-warning fw-bold">30</td>
-                            <td>50</td>
-                            <td>R$ 80,00</td>
-                            <td>R$ 2.400,00</td>
-                            <td>
-                                <span class="badge text-bg-warning">Estoque baixo</span>
-                                    
-                            </td>
+                            <td>Troca de Botão lateral lig/des</td>
+                            <td>Troca de botão lateral de ligar e desligar</td>
+                            <td>500,99</td>
+                            <td>50min</td>
+                            <td>Inativo</td>
                             
                             
                             <td>
