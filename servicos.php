@@ -36,7 +36,7 @@
 
                 <ul class="nav flex-column gap-2">
 
-                    <li class="nav-item side-item active">
+                    <li class="nav-item side-item">
                         <a href="#" class="nav-link text-white">
                             <i class="fa-solid fa-chart-line"></i>
                             <span class="item-description ms-2">
@@ -63,7 +63,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item side-item active">
+                    <li class="nav-item side-item">
                         <a href="#" class="nav-link text-white">
                             <i class="fa-solid fa-box-archive"></i>
                             <span class="item-description ms-2">
@@ -73,7 +73,7 @@
                     </li>
 
 
-                    <li class="nav-item side-item">
+                    <li class="nav-item side-item active">
                         <a href="#" class="nav-link text-white">
                             <i class="fa-solid fa-screwdriver-wrench"></i>
                             <span class="item-description ms-2">
