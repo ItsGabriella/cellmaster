@@ -277,7 +277,7 @@
                     </div>
 
                     <!-- Botões -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="d-flex gap-1">
 
                             <button class="btn btn-outline-success flex-fill">

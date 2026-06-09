@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicos</title>
+    <title>Relatório</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -142,7 +142,7 @@
 
         <div>
             <h3 class="fw-bold mb-1">
-                Serviços
+                Relatório
             </h3>
 
             <nav style="--bs-breadcrumb-divider: '>';">
@@ -154,7 +154,7 @@
                     </li>
 
                     <li class="breadcrumb-item active">
-                        Serviços
+                        Relatório
                     </li>
                 </ol>
             </nav>
@@ -162,7 +162,7 @@
 
         <button class="btn btn-success px-4 py-2">
             <i class="fa-solid fa-plus me-2"></i>
-            Novo Serviço
+            Novo Relatório
         </button>
 
     </div>
@@ -183,7 +183,7 @@
 
                         <div>
                             <h6 class="text-secondary mb-2">
-                                Total de Serviços
+                                Total de Relatórios
                             </h6>
 
                             <h2 class="fw-bold mb-1">
@@ -196,7 +196,7 @@
                         </div>
 
                         <div class="icon-circle">
-                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <i class="fa-solid fa-file-contract"></i>
                         </div>
 
                     </div>
@@ -216,7 +216,7 @@
 
                         <div>
                             <h6 class="text-secondary mb-2">
-                                Serviços Ativos
+                                Este mês
                             </h6>
 
                             <h2 class="fw-bold mb-1">
@@ -224,12 +224,12 @@
                             </h2>
 
                             <small class="text-secondary">
-                                Disponíveis
+                                Gerados
                             </small>
                         </div>
 
                         <div class="icon-circle">
-                            <i class="fa-solid fa-clipboard-check"></i>
+                            <i class="fa-solid fa-file-circle-check"></i>
                         </div>
 
                     </div>
@@ -249,7 +249,7 @@
 
                         <div>
                             <h6 class="text-secondary mb-2">
-                                Serviços Inativos
+                                Pendentes
                             </h6>
 
                             <h2 class="fw-bold mb-1">
@@ -257,12 +257,12 @@
                             </h2>
 
                             <small class="text-secondary">
-                                Desativados
+                                Aguardando
                             </small>
                         </div>
 
                         <div class="icon-circle warning">
-                            <i class="fa-solid fa-circle-pause"></i>
+                            <i class="fa-solid fa-file-circle-exclamation"></i>
                         </div>
 
                     </div>
@@ -282,20 +282,20 @@
 
                         <div>
                             <h6 class="text-secondary mb-2">
-                                Valor Médio
+                                Exportados
                             </h6>
 
                             <h2 class="fw-bold mb-1">
-                                R$ 350
+                                190
                             </h2>
 
                             <small class="text-secondary">
-                                Por serviço
+                                Downloads
                             </small>
                         </div>
 
                         <div class="icon-circle">
-                            <i class="fa-solid fa-dollar-sign"></i>
+                            <i class="fa-solid fa-file-zipper"></i>
                         </div>
 
                     </div>
@@ -307,186 +307,6 @@
 
         </div>
 
-
-
-        <div class="card border-0 shadow-sm">
-
-            <div class="card-header bg-white p-4">
-
-                <div class="row g-3 align-items-end">
-
-                    <!-- Buscar -->
-                    <div class="col-lg-4">
-                        <label class="form-label fw-semibold">
-                            Buscar Serviço
-                        </label>
-
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </span>
-
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Buscar serviço..."
-                            >
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-lg-3">
-                        <label class="form-label fw-semibold">
-                            Status
-                        </label>
-
-                        <select class="form-select">
-                            <option selected>Todos</option>
-                            <option>Ativo</option>
-                            <option>Inativo</option>
-                        </select>
-                    </div>
-
-
-                    <div class="col-lg-2">
-                        <div class="d-flex gap-1">
-
-                            <button class="btn btn-outline-success flex-fill">
-                                <i class="fa-solid fa-rotate-left me-1"></i>
-                                Limpar
-                            </button>
-
-                            <button class="btn btn-success flex-fill">
-                                <i class="fa-solid fa-filter me-1"></i>
-                                Filtrar
-                            </button>
-
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="table-responsive">
-
-                <table class="table table-hover align-middle mb-0">
-
-                    <thead class="table-light">
-
-                        <tr>
-                            <th>ID</th>
-                            <th>Serviço</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Tempo estimado</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        <tr>
-                            <td>1</td>
-                            <td>Troca de Tela</td>
-                            <td>Realização de troca de tela</td>
-                            <td>450,00</td>
-                            <td>1h</td>
-                            <td>Ativo</td>
-
-
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>Troca de bateria</td>
-                            <td>Realização da troca de bateria</td>
-                            <td>120,20</td>
-                            <td>30min</td>
-                            <td>Ativo</td>
-
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>Troca de Botão lateral lig/des</td>
-                            <td>Troca de botão lateral de ligar e desligar</td>
-                            <td>500,99</td>
-                            <td>50min</td>
-                            <td>Inativo</td>
-                            
-                            
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-            <div class="card-footer bg-white">
-
-                <nav>
-
-                    <ul class="pagination justify-content-end mb-0">
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">Anterior</a>
-                        </li>
-
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">Próximo</a>
-                        </li>
-
-                    </ul>
-
-                </nav>
-
-            </div>
-
-        </div>
-
-    </main>
-
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/home.js"></script>
