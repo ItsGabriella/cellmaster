@@ -7,7 +7,7 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
@@ -336,8 +336,10 @@
                                     <i class="fa-solid fa-pen"></i>
                                 </button>
 
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
+                                <button class="btn btn-danger btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalExcluir">
+                                <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
@@ -359,8 +361,10 @@
                                     <i class="fa-solid fa-pen"></i>
                                 </button>
 
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
+                                <button class="btn btn-danger btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalExcluir">
+                                <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
@@ -384,8 +388,10 @@
                                     <i class="fa-solid fa-pen"></i>
                                 </button>
 
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
+                                <button class="btn btn-danger btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalExcluir">
+                                <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
@@ -426,12 +432,56 @@
 
         </div>
 
+        
+
     </main>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/home.js"></script>
+
+
+    <div class="modal fade" id="modalExcluir" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-body text-center p-4">
+
+                <div class="mb-3">
+                    <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
+                         style="width:80px;height:80px;">
+                        <i class="bi bi-trash text-danger fs-1"></i>
+                    </div>
+                </div>
+
+                <h3 class="fw-bold">Excluir Produto</h3>
+
+                <p class="text-secondary">
+                    Tem certeza que deseja excluir o produto
+                    <strong style="color: red;">Tela AMOLED 32p</strong>?
+                </p>
+
+                <p class="text-muted">
+                    Esta ação não poderá ser desfeita.
+                </p>
+
+                <div class="d-flex gap-2 justify-content-center mt-4">
+                    <button class="btn btn-outline-success px-4"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button class="btn btn-danger px-4">
+                        Excluir
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
