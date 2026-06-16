@@ -63,8 +63,9 @@
                         </a>
                     </li>
 
+
                     <li class="nav-item side-item">
-                        <a href="#" class="nav-link text-white">
+                        <a href="estoque.php" class="nav-link text-white">
                             <i class="fa-solid fa-box-archive"></i>
                             <span class="item-description ms-2">
                                 Estoque
@@ -74,7 +75,7 @@
 
 
                     <li class="nav-item side-item active">
-                        <a href="#" class="nav-link text-white">
+                        <a href="servicos.php" class="nav-link text-white">
                             <i class="fa-solid fa-screwdriver-wrench"></i>
                             <span class="item-description ms-2">
                                 Serviços
@@ -101,8 +102,9 @@
                         </a>
                     </li>
 
+
                     <li class="nav-item side-item">
-                        <a href="#" class="nav-link text-white">
+                        <a href="relatorio.php" class="nav-link text-white">
                             <i class="fa-solid fa-file"></i>
                             <span class="item-description ms-2">
                                 Relatório
@@ -120,7 +122,7 @@
 
 
             <div class="border-top p-3">
-                <button id="logout_btn" class="w-100">
+                <button id="logout_btn"  class="w-100" onclick="window.location.href='login.php';">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
 
                     <span class="item-description">

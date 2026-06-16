@@ -19,13 +19,19 @@ body{
     width: 82px;
     min-width: 82px;
     border-radius: 0 18px 18px 0;
-    position: relative;
+    position: fixed;
     transition: .5s;
 }
 
 #sidebar.open-sidebar{
     width: 320px;
 }
+
+#sidebar.open-sidebar ~ main{
+    margin-left: 320px;
+    width: calc(100% - 320px);
+}
+
 
 #user_avatar{
     width: 50px;
@@ -105,8 +111,12 @@ body{
 }
 
 main{
+    margin-left: 82px;
+    width: calc(100% - 82px);
+    padding: 30px;
     background: #f5f6f8;
     min-height: 100vh;
+    transition: .5s;
 }
 
 .dashboard-card{
@@ -185,4 +195,54 @@ main{
 
 .icon-circle.warning i{
     color: #e9a400;
+}
+
+.chart-container{
+    position: relative;
+    height: 300px;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#graficoMes,
+#graficoTipo{
+    max-width: 100%;
+    max-height: 260px;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.export-card{
+    border-radius: 10px;
+}
+
+.export-btn{
+    width: 95px;
+}
+
+.exportacao-card{
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.page-link{
+    color:  #148041;
+    border-color: #148041;
+}
+
+.page-link:hover,
+.page-item.active .page-link{
+    background-color:  #148041;
+    border-color:  #148041;
+    color: white;
 }
