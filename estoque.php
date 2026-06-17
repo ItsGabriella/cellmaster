@@ -127,7 +127,7 @@
 
             <!-- Logout -->
             <div class="border-top p-3">
-                <button id="logout_btn"  class="w-100" onclick="window.location.href='login.php';">
+                <button id="logout_btn"  class="w-100" onclick="window.location.href='index.php';">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
 
                     <span class="item-description">

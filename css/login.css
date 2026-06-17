@@ -1,0 +1,148 @@
+body{
+    background:rgba(252, 252, 252, 0.75);
+}
+
+.imagem-login{
+    height: 100%;
+    background: url('../img/cellmaster_logo.jpeg') center center;
+    background-size: cover;
+    position: relative;
+}
+
+.overlay{
+    height: 100%;
+    background: rgba(36,90,34,.75);
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 80px;
+}
+
+.overlay h1{
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.overlay p{
+    margin-top: 20px;
+    font-size: 1.2rem;
+    max-width: 500px;
+}
+
+.login-card{
+    width: 450px;
+    border-radius: 25px;
+}
+
+.form-control{
+    height: 50px;
+    border-radius: 10px;
+}
+
+.input-group-text{
+    background: rgb(255, 255, 255);
+}
+
+.btn-success{
+    height: 50px;
+    border-radius: 12px;
+    background: #198754;
+}
+
+.linha{
+    width: 180px;
+    height: 3px;
+    background: #198754;
+    margin: 10px auto 0;
+}
+
+
+
+.btn-success{
+    background-color: #245a22 !important;
+    border-color: #245a22 !important;
+    height: 50px;
+    border-radius: 12px;
+
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover{
+    background-color: #2f752c !important;
+    border-color: #2f752c !important;
+
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(36, 90, 34, 0.35);
+}
+
+.btn-success:active{
+    transform: scale(0.97);
+}
+
+.login-card{
+    width: 450px;
+    border-radius: 30px !important;
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.15);
+}
+
+.form-control{
+    height: 55px;
+    border-radius: 15px;
+    border: 2px solid #e9ecef;
+
+    transition: .3s;
+}
+
+.form-control:focus{
+    border-color: #245a22;
+    box-shadow: 0 0 0 .2rem rgba(36,90,34,.15);
+}
+
+.btn-success{
+    background: linear-gradient(
+        135deg,
+        #245a22,
+        #3f8a3c
+    ) !important;
+
+    border: none !important;
+
+    height: 55px;
+    border-radius: 15px;
+
+    font-weight: 600;
+    letter-spacing: .5px;
+
+    transition: .3s;
+}
+
+.btn-success:hover{
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(36,90,34,.35);
+}
+.logo-circle{
+    width: 80px;
+    height: 80px;
+
+    background: #e8f5e9;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-circle i{
+    font-size: 36px;
+    color: #245a22;
+}
