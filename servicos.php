@@ -162,7 +162,9 @@
             </nav>
         </div>
 
-        <button class="btn btn-success px-4 py-2">
+        <button class="btn btn-success px-4 py-2"
+        data-bs-toggle="modal"
+        data-bs-target="#modalServico">
             <i class="fa-solid fa-plus me-2"></i>
             Novo Serviço
         </button>
@@ -489,6 +491,123 @@
     </main>
 
     </div>
+
+    <!-- Modal Novo Produto -->
+<div class="modal fade" id="modalServico" tabindex="-1">
+
+<div class="modal-dialog modal-lg modal-dialog-centered">
+
+    <div class="modal-content border-0 shadow-lg">
+
+        <!-- Cabeçalho -->
+        <div class="modal-header bg-success text-white">
+
+            <h5 class="modal-title">
+                <i class="fa-solid fa-box-archive me-2"></i>
+                Novo Serviço
+            </h5>
+
+            <button type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal">
+            </button>
+
+        </div>
+
+        <!-- Corpo -->
+        <div class="modal-body">
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">
+                        Nome do Serviço
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Digite o nome">
+                </div>
+
+
+
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold">
+                        Código
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           placeholder="0001">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Valor
+                    </label>
+
+                    <input type="number"
+                           step="0.01"
+                           class="form-control">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Tempo Estimado
+                    </label>
+
+                    <input type="time"
+                           class="form-control">
+                </div>
+
+                
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">
+                        Status
+                    </label>
+
+                    <select class="form-select">
+                        <option>Ativo</option>
+                        <option>Inativo</option>
+                    </select>
+                </div>
+
+                
+
+
+                <div class="col-12">
+                    <label class="form-label fw-semibold">
+                        Descrição
+                    </label>
+
+                    <textarea class="form-control"
+                              rows="4"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Rodapé -->
+        <div class="modal-footer">
+
+            <button class="btn btn-outline-danger"
+                    data-bs-dismiss="modal">
+                Cancelar
+            </button>
+
+            <button class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk me-2"></i>
+                Salvar Serviço
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/home.js"></script>
