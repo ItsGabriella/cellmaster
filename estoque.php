@@ -88,9 +88,8 @@
                     </li>
 
 
-
                     <li class="nav-item side-item">
-                        <a href="#" class="nav-link text-white">
+                        <a href="orcamentos.php" class="nav-link text-white">
                             <i class="fa-solid fa-file-invoice-dollar"></i>
                             <span class="item-description ms-2">
                                 Orçamento
@@ -167,7 +166,9 @@
                         </nav>
                     </div>
 
-                    <button class="btn btn-success px-4 py-2">
+                    <button class="btn btn-success px-4 py-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalProduto">
                         <i class="fa-solid fa-plus me-2"></i>
                         Novo Produto
                     </button>
@@ -256,7 +257,7 @@
                             Categoria
                         </label>
 
-                        <select class="form-select">
+                        <select class="form-select select-verde">
                             <option selected>Todas</option>
                             <option>Tela</option>
                             <option>Bateria</option>
@@ -270,7 +271,7 @@
                             Status
                         </label>
 
-                        <select class="form-select">
+                        <select class="form-select select-verde">
                             <option selected>Todos</option>
                             <option>Em estoque</option>
                             <option>Estoque baixo</option>
@@ -386,8 +387,10 @@
                             
                             
                             <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
+                                <button class="btn btn-success btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalEditar">
+                                <i class="fa-solid fa-pen"></i>
                                 </button>
 
                                 <button class="btn btn-danger btn-sm"
@@ -461,7 +464,7 @@
 
                 <p class="text-secondary">
                     Tem certeza que deseja excluir o produto
-                    <strong style="color: red;">Tela AMOLED 32p</strong>?
+                    <strong style="color: red;">Botão lateral lig/des</strong>?
                 </p>
 
                 <p class="text-muted">
@@ -483,6 +486,170 @@
 
         </div>
     </div>
+</div>
+
+
+<div class="modal fade" id="modalEditar" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-body text-center p-4">
+
+                <div class="mb-3">
+                    <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
+                         style="width:80px;height:80px;">
+                        <i class="fa-solid fa-pen text-success fs-1"></i>
+                    </div>
+                </div>
+
+                <h3 class="fw-bold">Editar Produto</h3>
+
+                <p class="text-secondary">
+                    Tem certeza que deseja editar o produto
+                    <strong style="color: green;">Botão lateral lig/des</strong>?
+                </p>
+
+                <p class="text-muted">
+                    Esta ação não poderá ser desfeita.
+                </p>
+
+                <div class="d-flex gap-2 justify-content-center mt-4">
+                    <button class="btn btn-outline-danger px-4"
+                            data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+
+                    <button class="btn btn-success px-4">
+                        Editar
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal Novo Produto -->
+<div class="modal fade" id="modalProduto" tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow-lg">
+
+            <!-- Cabeçalho -->
+            <div class="modal-header bg-success text-white">
+
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-box-archive me-2"></i>
+                    Novo Produto
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <!-- Corpo -->
+            <div class="modal-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            Nome do Produto
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Digite o nome">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">
+                            Categoria
+                        </label>
+
+                        <select class="form-select">
+                            <option>Tela</option>
+                            <option>Bateria</option>
+                            <option>Botões</option>
+                            <option>Conectores</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">
+                            Código
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               placeholder="0001">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Quantidade
+                        </label>
+
+                        <input type="number"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Estoque Mínimo
+                        </label>
+
+                        <input type="number"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Valor Unitário
+                        </label>
+
+                        <input type="number"
+                               step="0.01"
+                               class="form-control">
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">
+                            Descrição
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="4"></textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Rodapé -->
+            <div class="modal-footer">
+
+                <button class="btn btn-outline-danger"
+                        data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+
+                <button class="btn btn-success">
+                    <i class="fa-solid fa-floppy-disk me-2"></i>
+                    Salvar Produto
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 </body>

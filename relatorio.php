@@ -6,10 +6,9 @@
     <title>Relatório</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-
     <link rel="stylesheet" href="css/styleestoque.css">
+    
 </head>
 
 <body class="bg-custom">
@@ -84,7 +83,7 @@
 
 
                     <li class="nav-item side-item">
-                        <a href="#" class="nav-link text-white">
+                        <a href="orcamentos.php" class="nav-link text-white">
                             <i class="fa-solid fa-file-invoice-dollar"></i>
                             <span class="item-description ms-2">
                                 Orçamento
