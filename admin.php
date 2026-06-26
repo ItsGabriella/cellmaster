@@ -244,7 +244,7 @@ h2,h3,h4{
 
     <div class="topbar">
         <h1 class="fw-bold">
-            Dashboard Loja de Conserto de Celulares
+            Gestão de Assistências
         </h1>
         <p class="mb-0 opacity-75">
             Controle completo da assistência técnica
