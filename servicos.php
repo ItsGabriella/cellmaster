@@ -326,9 +326,11 @@
                         </label>
 
                         <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </span>
+                       
+                                <button>
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                   
 
                             <input
                                 type="text"
@@ -345,9 +347,8 @@
                             Status
                         </label>
 
-                        <select class="form-select">
-                            <option selected>Todos</option>
-                            <option>Ativo</option>
+                        <select class="form-select select-verde">
+                            <option selected>Ativo</option>
                             <option>Inativo</option>
                         </select>
                     </div>
@@ -573,8 +574,6 @@
                 </div>
 
                 
-
-
                 <div class="col-12">
                     <label class="form-label fw-semibold">
                         Descrição

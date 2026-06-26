@@ -170,7 +170,7 @@
                         data-bs-toggle="modal"
                         data-bs-target="#modalProduto">
                         <i class="fa-solid fa-plus me-2"></i>
-                        Novo Produto
+                        Nova Peça
                     </button>
 
                 </div>
@@ -184,9 +184,9 @@
             <div class="col-md-3">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <h6 class="text-secondary">Total de Produtos</h6>
+                        <h6 class="text-secondary">Total de Peças</h6>
                         <h2 class="fw-bold">128</h2>
-                        <small>Produtos cadastrados</small>
+                        <small>Peças cadastradas</small>
                     </div>
                 </div>
             </div>
@@ -204,7 +204,7 @@
             <div class="col-md-3">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <h6 class="text-secondary">Produtos Baixos</h6>
+                        <h6 class="text-secondary">Peças Baixas</h6>
                         <h2 class="fw-bold text-warning">15</h2>
                         <small>Abaixo do mínimo</small>
                     </div>
@@ -235,7 +235,7 @@
                     <!-- Buscar -->
                     <div class="col-lg-4">
                         <label class="form-label fw-semibold">
-                            Buscar Produto
+                            Buscar Peça
                         </label>
 
                         <div class="input-group">
@@ -246,7 +246,7 @@
                             <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Buscar produto..."
+                                placeholder="Buscar peça..."
                             >
                         </div>
                     </div>
@@ -308,12 +308,11 @@
 
                         <tr>
                             <th>ID</th>
-                            <th>Produto</th>
+                            <th>Peça</th>
                             <th>Categoria</th>
                             <th>Estoque</th>
                             <th>Estoque Mínimo</th>
                             <th>Valor Unitário</th>
-                            <th>Valor Total</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -329,7 +328,6 @@
                             <td>45</td>
                             <td>10</td>
                             <td>R$ 550,00</td>
-                            <td>R$ 24.750,00</td>
                             <td>
                                 <span class="badge text-bg-success">Em estoque</span>
                             </td>
@@ -354,7 +352,6 @@
                             <td>120</td>
                             <td>20</td>
                             <td>R$ 45,00</td>
-                            <td>R$ 5.400,00</td>
                             <td>
                                 <span class="badge text-bg-success">Em estoque</span>
                             </td>
@@ -379,7 +376,6 @@
                             <td class="text-warning fw-bold">30</td>
                             <td>50</td>
                             <td>R$ 80,00</td>
-                            <td>R$ 2.400,00</td>
                             <td>
                                 <span class="badge text-bg-warning">Estoque baixo</span>
                                     
@@ -541,7 +537,7 @@
 
                 <h5 class="modal-title">
                     <i class="fa-solid fa-box-archive me-2"></i>
-                    Novo Produto
+                    Nova Peça
                 </h5>
 
                 <button type="button"
@@ -556,9 +552,19 @@
 
                 <div class="row g-3">
 
+                <div class="col-md-3">
+                        <label class="form-label fw-semibold">
+                            ID
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               placeholder="0001" readonly>
+                    </div>
+
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">
-                            Nome do Produto
+                            Nome da Peça
                         </label>
 
                         <input type="text"
@@ -579,15 +585,6 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3">
-                        <label class="form-label fw-semibold">
-                            Código
-                        </label>
-
-                        <input type="text"
-                               class="form-control"
-                               placeholder="0001">
-                    </div>
 
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">
@@ -622,7 +619,7 @@
                             Descrição
                         </label>
 
-                        <textarea class="form-control"
+                        <textarea style="resize: none;" class="form-control"
                                   rows="4"></textarea>
                     </div>
 
@@ -640,7 +637,7 @@
 
                 <button class="btn btn-success">
                     <i class="fa-solid fa-floppy-disk me-2"></i>
-                    Salvar Produto
+                    Salvar Peça
                 </button>
 
             </div>
