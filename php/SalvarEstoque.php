@@ -42,13 +42,13 @@
 
     }elseif($funcao == "D"){
         //DELETE
-        $sql = "DELETE FROM produto "
-                ." WHERE idProduto = ".$idProduto.";";
+        $sql = "DELETE FROM peca "
+                ." WHERE idpeca = ".$idPeca.";";
     }
 
     $result = mysqli_query($conn,$sql);
     mysqli_close($conn);
 
-    header("location: ../produtos.php");
+    header("location: ../estoque.php");
 
 ?>
