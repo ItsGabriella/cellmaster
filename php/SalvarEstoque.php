@@ -28,16 +28,17 @@
                 .$valorPeca.","
                 .$status.");";
 
-    }elseif($funcao == "A"){
+    }elseif($funcao == "U"){
         //UPDATE
         $sql = "UPDATE peca "
                     ." SET nome_peca = ".$peca.", "
-                    ." idCategoria = ".$idCategoria.", "
-                    ." Quantidade = ".$quantidade."', "
-                    ." Quantidade = ".$quantidade."', "
+                    ." categoria = ".$idCategoria.", "
+                    ." qtdade_peca = ".$quantidade."', "
+                    ." valor_unit = ".$valorPeca."', "
+                    ." status = ".$status.");";
 
                     
-                ." WHERE idProduto = ".$idProduto.";";
+                ." WHERE idpeca = ".$idPeca.";";
 
     }elseif($funcao == "D"){
         //DELETE
