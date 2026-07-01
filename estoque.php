@@ -1,3 +1,7 @@
+<?php
+    include ('php/funcoes.php');
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -312,7 +316,7 @@
                             <th>Categoria</th>
                             <th>Estoque</th>
                             <th>Estoque Mínimo</th>
-                            <th>Valor Unitário</th>
+                            <th>Valor Unitário (R$)</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -320,7 +324,7 @@
                     </thead>
 
                     <tbody>
-
+<!--
                         <tr>
                             <td>1</td>
                             <td>Tela AMOLED 32p</td>
@@ -523,7 +527,9 @@
 
         </div>
     </div>
-</div>
+</div>-->
+
+<?php echo listaProduto();?>
 
 <!-- Modal Novo Produto -->
 <div class="modal fade" id="modalProduto" tabindex="-1">

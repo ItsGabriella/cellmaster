@@ -3,15 +3,15 @@
     include('funcoes.php');
 
     $idPeca   = $_GET["id"];
-    $peca = $_POST["nPeca"]
-    $idCategoria = $_POST["nCategoria"];
+    $peca = $_POST["nPeca"];
+    $categoria = $_POST["nCategoria"];
     $quantidade  = $_POST["nQuantidade"];
     $valorPeca   = $_POST["nValor"];
-    $status   = $_POST["nStatus"];
+    $estoqueMin = $_POST["nEstoqueMin"];
     $funcao   = $_GET["funcao"];
     
 
-    include("conexao.php");
+    include("conexaoBD.php");
 
     //Validar se é Inclusão ou Alteração
     if($funcao == "I"){
@@ -32,12 +32,11 @@
         //UPDATE
         $sql = "UPDATE peca "
                     ." SET nome_peca = ".$peca.", "
-                    ." categoria = ".$idCategoria.", "
+                    ." categoria = ".$categoria.", "
                     ." qtdade_peca = ".$quantidade."', "
                     ." valor_unit = ".$valorPeca."', "
-                    ." status = ".$status.");";
+                    ." estoque_min = ".$status.");";
 
-                    
                 ." WHERE idpeca = ".$idPeca.";";
 
     }elseif($funcao == "D"){
