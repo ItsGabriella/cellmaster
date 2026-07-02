@@ -2,13 +2,13 @@
 
     include('funcoes.php');
 
-    $idPeca   = $_GET["id"];
     $peca = $_POST["nPeca"];
     $categoria = $_POST["nCategoria"];
     $quantidade  = $_POST["nQuantidade"];
     $valorPeca   = $_POST["nValor"];
     $estoqueMin = $_POST["nEstoqueMin"];
     $funcao   = $_GET["funcao"];
+    $idPeca   = $_GET["codigo"];
     
 
     include("conexaoBD.php");
@@ -20,22 +20,23 @@
         $idPeca = proxIdPeca();
 
         //INSERT
-        $sql = "INSERT INTO peca (idpeca,nome_peca, categoria, qtdade_peca, valor_unit, status) "
-                ." VALUES (".$idPeca.","
-                .$peca.","
-                .$idCategoria.","
-                .$quantidade.","
-                .$valorPeca.","
-                .$status.");";
+        $sql = "INSERT INTO peca (idpeca, nome_peca, categoria, qtdade_peca, valor_unit, estoque_min) "
+                ." VALUES (
+                ".$idPeca.",
+                '".$peca."',
+                '".$categoria."',
+                ".$quantidade.",
+                ".$valorPeca.",
+                ".$estoqueMin.");";
 
     }elseif($funcao == "U"){
         //UPDATE
         $sql = "UPDATE peca "
-                    ." SET nome_peca = ".$peca.", "
-                    ." categoria = ".$categoria.", "
-                    ." qtdade_peca = ".$quantidade."', "
-                    ." valor_unit = ".$valorPeca."', "
-                    ." estoque_min = ".$status.");";
+                    ." SET nome_peca = '".$peca."', "
+                    ." categoria = '".$categoria."', "
+                    ." qtdade_peca = ".$quantidade.", "
+                    ." valor_unit = ".$valorPeca.", "
+                    ." estoque_min = ".$estoqueMin
 
                 ." WHERE idpeca = ".$idPeca.";";
 

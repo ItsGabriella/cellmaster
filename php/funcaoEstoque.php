@@ -58,25 +58,28 @@ function listaProduto(){
 
                             <h3 class="fw-bold">Excluir Produto</h3>
 
-                            <p class="text-secondary">
-                                Tem certeza que deseja excluir o produto
-                                <strong style="color: red;">'.$coluna["nome_peca"].'</strong>?
-                            </p>
+                            <form method="POST" action="php/salvarEstoque.php?funcao=D&codigo='.$coluna["idpeca"].'"enctype="multipart/form-data">
 
-                            <p class="text-muted">
-                                Esta ação não poderá ser desfeita.
-                            </p>
+                                <p class="text-secondary">
+                                    Tem certeza que deseja excluir o produto
+                                    <strong style="color: red;">'.$coluna["nome_peca"].'</strong>?
+                                </p>
 
-                            <div class="d-flex gap-2 justify-content-center mt-4">
-                                <button class="btn btn-outline-success px-4"
-                                        data-bs-dismiss="modal">
-                                    Cancelar
-                                </button>
+                                <p class="text-muted">
+                                    Esta ação não poderá ser desfeita.
+                                </p>
 
-                                <button class="btn btn-danger px-4">
-                                    Excluir
-                                </button>
-                            </div>
+                                <div class="d-flex gap-2 justify-content-center mt-4">
+                                    <button type="button" class="btn btn-outline-success px-4"
+                                            data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+
+                                    <button type="submit" class="btn btn-danger px-4">
+                                        Excluir
+                                    </button>
+                                </div>
+                            </form>
 
                         </div>
 
@@ -113,7 +116,6 @@ function listaProduto(){
                                         </label>
 
                                         <input type="text"
-                                            name="nome_peca"
                                             class="form-control"
                                             id="iPeca" name="nPeca"
                                             value="'.$coluna["nome_peca"].'">
@@ -126,7 +128,7 @@ function listaProduto(){
                                             Categoria
                                         </label>
 
-                                        <select name="categoria" class="form-select">
+                                        <select name="nCategoria" class="form-select">
                                             <option>Tela</option>
                                             <option selected>Botões</option>
                                             <option>Bateria</option>
@@ -142,7 +144,6 @@ function listaProduto(){
                                         </label>
 
                                         <input type="number"
-                                            name="qtdade_peca"
                                             class="form-control"
                                             id="iQuantidade" name="nQuantidade"
                                             value="'.$coluna["qtdade_peca"].'">
@@ -156,7 +157,6 @@ function listaProduto(){
                                         </label>
 
                                         <input type="number"
-                                            name="estoque_min"
                                             class="form-control"
                                             id="iEstoqueMin"
                                             name="nEstoqueMin"
@@ -171,7 +171,6 @@ function listaProduto(){
                                         </label>
 
                                         <input type="number"
-                                            name="valor_unit"
                                             class="form-control"
                                             step="0.01"
                                             id="iValor" name="nValor"
@@ -201,7 +200,7 @@ function listaProduto(){
                                     </button>
 
                                     <button type="submit"
-                                            class="btn btn-success">
+                                        class="btn btn-success">
                                         <i class="fa-solid fa-floppy-disk me-2"></i>
                                         Salvar Alterações
                                     </button>
@@ -234,12 +233,12 @@ function funcaoStatus($qtd,$qtdmin){
 }
 
 //Próximo ID do produto
-function proxIdProduto(){
+function proxIdPeca(){
 
     $id = "";
 
-    include("conexao.php");
-    $sql = "SELECT MAX(idProduto) AS Maior FROM produto;";        
+    include("conexaoBD.php");
+    $sql = "SELECT MAX(idpeca) AS Maior FROM peca;";        
     $result = mysqli_query($conn,$sql);
     mysqli_close($conn);
 

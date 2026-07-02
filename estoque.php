@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
     <!-- Seu CSS -->
-    <link rel="stylesheet" href="css/styleestoque.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="bg-custom">
@@ -556,78 +556,74 @@
             <!-- Corpo -->
             <div class="modal-body">
 
-                <div class="row g-3">
+                <form method="POST" action="php/salvarEstoque.php?funcao=I" enctype="multipart/form-data">   
 
-                <div class="col-md-3">
-                        <label class="form-label fw-semibold">
-                            ID
-                        </label>
-
-                        <input type="text"
-                               class="form-control"
-                               placeholder="0001" readonly>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            Nome da Peça
-                        </label>
-
-                        <input type="text"
-                               class="form-control"
-                               placeholder="Digite o nome">
-                    </div>
+                    <div class="row g-3">
 
                     <div class="col-md-3">
-                        <label class="form-label fw-semibold">
-                            Categoria
-                        </label>
+                            <label class="form-label fw-semibold">
+                                ID
+                            </label>
 
-                        <select class="form-select">
-                            <option>Tela</option>
-                            <option>Bateria</option>
-                            <option>Botões</option>
-                            <option>Conectores</option>
-                        </select>
-                    </div>
+                            <input type="text"
+                                class="form-control"
+                                placeholder="0001" readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Nome da Peça
+                            </label>
+
+                            <input type="text"
+                                id="iPeca" name="nPeca"
+                                class="form-control"
+                                placeholder="Digite o nome">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">
+                                Categoria
+                            </label>
+
+                            <select id="iCategoria" name="nCategoria" class="form-select">
+                                <option>Tela</option>
+                                <option>Bateria</option>
+                                <option>Botões</option>
+                                <option>Conectores</option>
+                            </select>
+                        </div>
 
 
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">
-                            Quantidade
-                        </label>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">
+                                Quantidade
+                            </label>
 
-                        <input type="number"
-                               class="form-control">
-                    </div>
+                            <input id="iQuantidade" name="nQuantidade" type="number"
+                                class="form-control">
+                        </div>
 
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">
-                            Estoque Mínimo
-                        </label>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">
+                                Estoque Mínimo
+                            </label>
 
-                        <input type="number"
-                               class="form-control">
-                    </div>
+                            <input type="number" id="iEstoqueMin" name="nEstoqueMin"
+                                class="form-control">
+                        </div>
 
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">
-                            Valor Unitário
-                        </label>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">
+                                Valor Unitário
+                            </label>
 
-                        <input type="number"
-                               step="0.01"
-                               class="form-control">
-                    </div>
+                            <input type="number"
+                                step="0.01"
+                                id="iValor" name="nValor"
+                                class="form-control">
+                        </div>
 
-                    <div class="col-12">
-                        <label class="form-label fw-semibold">
-                            Descrição
-                        </label>
-
-                        <textarea style="resize: none;" class="form-control"
-                                  rows="4"></textarea>
-                    </div>
 
                 </div>
 
@@ -641,12 +637,14 @@
                     Cancelar
                 </button>
 
-                <button class="btn btn-success">
+                <button type="submit" class="btn btn-success">
                     <i class="fa-solid fa-floppy-disk me-2"></i>
                     Salvar Peça
                 </button>
 
             </div>
+
+        </form>
 
         </div>
 
