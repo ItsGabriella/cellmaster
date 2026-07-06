@@ -493,6 +493,8 @@
 
     </div>
 
+    <?php echo listaServico();?>
+
     <!-- Modal Novo Produto -->
 <div class="modal fade" id="modalServico" tabindex="-1">
 
