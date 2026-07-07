@@ -1,3 +1,15 @@
+<?php
+include("php/funcoes.php");
+
+$busca = "";
+
+if(isset($_GET["nBusca"])){
+    $busca = $_GET["nBusca"];
+}
+
+$resultado = BuscarServico($busca);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -312,33 +324,40 @@
         </div>
 
 
-
         <div class="card border-0 shadow-sm">
 
             <div class="card-header bg-white p-4">
 
                 <div class="row g-3 align-items-end">
 
-                    <!-- Buscar -->
                     <div class="col-lg-4">
                         <label class="form-label fw-semibold">
-                            Buscar Serviço
+                            Buscar Peça
                         </label>
 
-                        <div class="input-group">
-                       
-                                <button>
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </button>
-                   
+                    <form method="GET" action="css/salvarServico.php">
+
+                        <div class="input-group shadow-sm">
 
                             <input
                                 type="text"
-                                class="form-control"
+                                class="form-control border-success"
                                 placeholder="Buscar serviço..."
+                                name= "nBusca"
                             >
+
+                            <button
+                                class="btn btn-success px-4"
+                                type="submit">
+                                <i class="fa-solid fa-magnifying-glass me-0"></i>
+                                
+                            </button>
+
                         </div>
+
+                    </form>
                     </div>
+
 
 
 
@@ -392,72 +411,7 @@
 
                     </thead>
 
-                    <tbody>
 
-                        <tr>
-                            <td>1</td>
-                            <td>Troca de Tela</td>
-                            <td>Realização de troca de tela</td>
-                            <td>450,00</td>
-                            <td>1h</td>
-                            <td>Ativo</td>
-
-
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>Troca de bateria</td>
-                            <td>Realização da troca de bateria</td>
-                            <td>120,20</td>
-                            <td>30min</td>
-                            <td>Ativo</td>
-
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>Troca de Botão lateral lig/des</td>
-                            <td>Troca de botão lateral de ligar e desligar</td>
-                            <td>500,99</td>
-                            <td>50min</td>
-                            <td>Inativo</td>
-                            
-                            
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
 
             <div class="card-footer bg-white">
 
@@ -498,111 +452,118 @@
     <!-- Modal Novo Produto -->
 <div class="modal fade" id="modalServico" tabindex="-1">
 
-<div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
 
-    <div class="modal-content border-0 shadow-lg">
+        <div class="modal-content border-0 shadow-lg">
 
-        <!-- Cabeçalho -->
-        <div class="modal-header bg-success text-white">
+            <!-- Cabeçalho -->
+            <div class="modal-header bg-success text-white">
 
-            <h5 class="modal-title">
-                <i class="fa-solid fa-box-archive me-2"></i>
-                Novo Serviço
-            </h5>
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-box-archive me-2"></i>
+                    Novo Serviço
+                </h5>
 
-            <button type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="modal">
-            </button>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
 
-        </div>
+            </div>
 
         <!-- Corpo -->
         <div class="modal-body">
+            <form method="POST" action="php/salvarServico.php?funcao=I" enctype="multipart/form-data">  
 
-            <div class="row g-3">
+                <div class="row g-3">
 
-                <div class="col-md-6">
-                    <label class="form-label fw-semibold">
-                        Nome do Serviço
-                    </label>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            Nome do Serviço
+                        </label>
 
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Digite o nome">
-                </div>
+                        <input type="text"
+                            class="form-control"
+                            id="iServico" name="nServico"
+                            placeholder="Digite o nome do serviço">
+                    </div>
 
 
 
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold">
-                        Código
-                    </label>
+                    <div class="col-md-3">
+                        <label class="form-label fw-semibold">
+                            Código
+                        </label>
 
-                    <input type="text"
-                           class="form-control"
-                           placeholder="0001">
-                </div>
+                        <input type="text"
+                            class="form-control"
+                            placeholder="0001"
+                            readonly>
+                    </div>
 
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">
-                        Valor
-                    </label>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Valor
+                        </label>
 
-                    <input type="number"
-                           step="0.01"
-                           class="form-control">
-                </div>
+                        <input type="number"
+                                id="iValor" name="nValor"
+                            step="0.01"
+                            class="form-control">
+                    </div>
 
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">
-                        Tempo Estimado
-                    </label>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Tempo Estimado
+                        </label>
 
-                    <input type="time"
-                           class="form-control">
-                </div>
+                        <input type="time"
+                            id="iTempo" name="nTempo"
+                            class="form-control">
+                    </div>
 
-                
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">
-                        Status
-                    </label>
+                    
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Status
+                        </label>
 
-                    <select class="form-select">
-                        <option>Ativo</option>
-                        <option>Inativo</option>
-                    </select>
-                </div>
+                        <select class="form-select" id="iStatus" name="nStatus">
+                            <option>Ativo</option>
+                            <option>Inativo</option>
+                        </select>
+                    </div>
 
-                
-                <div class="col-12">
-                    <label class="form-label fw-semibold">
-                        Descrição
-                    </label>
+                    
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">
+                            Descrição
+                        </label>
 
-                    <textarea class="form-control"
-                              rows="4"></textarea>
+                        <textarea class="form-control"
+                                id="iDescricao" name="nDescricao"
+                                rows="4"></textarea>
+                    </div>
+
                 </div>
 
             </div>
 
-        </div>
+            <!-- Rodapé -->
+            <div class="modal-footer">
 
-        <!-- Rodapé -->
-        <div class="modal-footer">
+                <button class="btn btn-outline-danger"
+                        data-bs-dismiss="modal">
+                    Cancelar
+                </button>
 
-            <button class="btn btn-outline-danger"
-                    data-bs-dismiss="modal">
-                Cancelar
-            </button>
-
-            <button class="btn btn-success">
-                <i class="fa-solid fa-floppy-disk me-2"></i>
-                Salvar Serviço
-            </button>
-
-        </div>
+                <button class="btn btn-success" type="submit">
+                    <i class="fa-solid fa-floppy-disk me-2"></i>
+                    Salvar Serviço
+                </button>
+                
+            </div>
+            </form>
 
     </div>
 

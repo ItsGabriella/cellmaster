@@ -1,6 +1,7 @@
 <?php
 
 include ('funcaoEstoque.php');
+include ('funcaoServico.php');
 
 // function toggleSenha() {
 //     const senha = document.getElementById("iSenha");

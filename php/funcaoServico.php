@@ -23,6 +23,10 @@ function listaServico(){
                 <td>'.$coluna["nome_servico"].'</td>
                 <td>'.$coluna["descricao_servico"].'</td>
                 <td>'.$coluna["valor"].'</td>
+                <td>'.$coluna["tempo"].'</td>
+
+        
+                <td>'.funcaoStatusServico($coluna["status"]).'</td>
 
                 <td>
                     <button class="btn btn-success btn-sm"
@@ -85,16 +89,22 @@ function listaServico(){
             
             <div class="modal fade" id="modalEditar'.$coluna["idservico"].'" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content border-0 shadow">
 
-                        <div class="modal-header border-0">
-                            <h4 class="modal-title fw-bold text-success">
-                                <i class="fa-solid fa-pen me-2"></i>Editar Serviço
-                            </h4>
+                    <div class="modal-content border-0 shadow-lg">
+
+                        <!-- Cabeçalho -->
+                        <div class="modal-header bg-success text-white">
+
+                            <h5 class="modal-title">
+                                <i class="fa-solid fa-box-archive me-2"></i>
+                                Editar Serviço
+                            </h5>
 
                             <button type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"></button>
+                                    class="btn-close btn-close-white"
+                                    data-bs-dismiss="modal">
+                            </button>
+
                         </div>
 
                         <div class="modal-body">
@@ -133,7 +143,6 @@ function listaServico(){
                                             
                                     </div>
 
-                                    <!-- Estoque mínimo -->
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">
                                             Valor
@@ -147,6 +156,36 @@ function listaServico(){
                                             value="'.$coluna["valor"].'">
                                             
                                     </div>
+
+
+                                    
+                                    <!-- Tempo estimado -->
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">
+                                            Tempo estimado
+                                        </label>
+
+                                        <input type="time"
+                                            class="form-control"
+                                            id="iTempo" name="nTempo"
+                                            value="'.$coluna["tempo"].'">
+                                            
+                                    </div>
+
+
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">
+                                            Status
+                                        </label>
+
+                                        <input type="text"
+                                            class="form-control"
+                                            id="iStatus" name="nStatus"
+                                            value='.funcaoStatusServico($coluna["status"]).'>
+                                            
+                                    </div>
+
+                                    
 
                                 </div>
 
@@ -221,187 +260,40 @@ function proxIdServico(){
     return $id;
 }
 
-//Função para buscar a categoria de um produto
-function categoriaProduto($id){
 
-    $resp = "";
-
-    include("conexao.php");
-    $sql = "SELECT idTipoUsuario FROM usuarios WHERE idUsuario = $id;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
-
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-                
-        $array = array();
-        
-        while ($linha = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            array_push($array,$linha);
-        }
-        
-        foreach ($array as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            if($coluna["idTipoUsuario"] == 1){
-                //Admin
-                $resp = '<option value="1">Admin</option>'
-                        .'<option value="2">Empresa</option>'
-                        .'<option value="3">Comum</option>';
-            }else if($coluna["idTipoUsuario"] == 2){
-                //Empresa
-                $resp = '<option value="2">Empresa</option>'
-                        .'<option value="1">Admin</option>'
-                        .'<option value="3">Comum</option>';
-            }else{
-                //Comum
-                $resp = '<option value="3">Comum</option>'
-                        .'<option value="1">Admin</option>'
-                        .'<option value="2">Empresa</option>';
-            }
-        }        
-    } 
-
-    return $resp;
+function funcaoStatusServico($status){
+    if ($status == "a" or $status == "A"){
+        $status = 'ativo';
+    }else{
+        $status = 'inativo';
+    }
+    return $status;
 }
 
-//Função para buscar a descrição do produto
-function descrProduto($id){
+function BuscarServico($busca)
+{
+    include("conexaoBD.php"); // ou sua conexão
 
-    $resp = "";
+    $sql = "SELECT * FROM servico";
 
-    include("conexao.php");
-    $sql = "SELECT Nome FROM usuarios WHERE idUsuario = $id;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
+    // Se digitou algo, adiciona o filtro
+    if (!empty($busca)) {
+        $sql .= " WHERE nome_servico LIKE ?";
+    }
 
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-                
-        $array = array();
-        
-        while ($linha = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            array_push($array,$linha);
-        }
-        
-        foreach ($array as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            $resp = $coluna["Nome"];
-        }        
-    } 
+    $sql .= " ORDER BY nome_servico";
 
-    return $resp;
-}
+    $stmt = mysqli_prepare($conn, $sql);
 
-//Função para quantidade de produtos
-function qtdProduto(){
+    if (!empty($busca)) {
+        $busca = "%" . $busca . "%";
+        mysqli_stmt_bind_param($stmt, "s", $busca);
+    }
 
-    $qtd = 0;
+    mysqli_stmt_execute($stmt);
+    $resultado = mysqli_stmt_get_result($stmt);
 
-    include("conexao.php");
-    $sql = "SELECT COUNT(*) AS Qtd FROM produto;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
-
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-        
-        foreach ($result as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            $qtd = $coluna['Qtd'];
-        }        
-    } 
-
-    return $qtd;
-
-}
-
-//Função para quantidade de produtos sem estoque
-function qtdProdutoSemEstoque(){
-
-    $qtd = 0;
-
-    include("conexao.php");
-    $sql = "SELECT COUNT(*) AS Qtd FROM produto WHERE Quantidade = 0;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
-
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-        
-        foreach ($result as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            $qtd = $coluna['Qtd'];
-        }        
-    } 
-
-    return $qtd;
-
-}
-
-//Labels do gráfico de barras
-function labelTresProdutos(){
-
-    $lista = '';
-    $cont  = 0;
-
-    include("conexao.php");
-    $sql = "SELECT * "
-            ." FROM produto "
-            ." ORDER BY Quantidade DESC, Descricao "
-            ." LIMIT 3;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
-
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-        
-        foreach ($result as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            if($cont == 0){
-                $lista .= "'".$coluna['Descricao']."'";
-            }else{
-                $lista .= ",'".$coluna['Descricao']."'";
-            }
-
-            $cont++;
-        }        
-    } 
-
-    return $lista;
-
-}
-
-//Quantidades do gráfico de barras
-function qtdTresProdutos(){
-
-    $lista = '';
-    $cont  = 0;
-
-    include("conexao.php");
-    $sql = "SELECT * "
-            ." FROM produto "
-            ." ORDER BY Quantidade DESC, Descricao "
-            ." LIMIT 3;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
-
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-        
-        foreach ($result as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            if($cont == 0){
-                $lista .= $coluna['Quantidade'];
-            }else{
-                $lista .= ",".$coluna['Quantidade'];
-            }
-
-            $cont++;
-        }        
-    } 
-
-    return $lista;
-
+    return $resultado;
 }
 
 ?>
