@@ -1,4 +1,5 @@
 <?php
+
 //Função para listar todos os produtos
 function listaServico(){
 
@@ -270,30 +271,30 @@ function funcaoStatusServico($status){
     return $status;
 }
 
-function BuscarServico($busca)
-{
-    include("conexaoBD.php"); // ou sua conexão
+// function BuscarServico($busca)
+// {
+//     include("conexaoBD.php"); // ou sua conexão
 
-    $sql = "SELECT * FROM servico";
+//     $sql = "SELECT * FROM servico";
 
-    // Se digitou algo, adiciona o filtro
-    if (!empty($busca)) {
-        $sql .= " WHERE nome_servico LIKE ?";
-    }
+//     // Se digitou algo, adiciona o filtro
+//     if (!empty($busca)) {
+//         $sql .= " WHERE nome_servico LIKE ?";
+//     }
 
-    $sql .= " ORDER BY nome_servico";
+//     $sql .= " ORDER BY nome_servico";
 
-    $stmt = mysqli_prepare($conn, $sql);
+//     $stmt = mysqli_prepare($conn, $sql);
 
-    if (!empty($busca)) {
-        $busca = "%" . $busca . "%";
-        mysqli_stmt_bind_param($stmt, "s", $busca);
-    }
+//     if (!empty($busca)) {
+//         $busca = "%" . $busca . "%";
+//         mysqli_stmt_bind_param($stmt, "s", $busca);
+//     }
 
-    mysqli_stmt_execute($stmt);
-    $resultado = mysqli_stmt_get_result($stmt);
+//     mysqli_stmt_execute($stmt);
+//     $resultado = mysqli_stmt_get_result($stmt);
 
-    return $resultado;
-}
+//     return $resultado;
+// }
 
 ?>

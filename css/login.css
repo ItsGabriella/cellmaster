@@ -146,3 +146,15 @@ body{
     font-size: 36px;
     color: #245a22;
 }
+
+/* Remove o botão nativo de mostrar senha do Edge */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+/* Compatibilidade */
+::-ms-reveal,
+::-ms-clear {
+    display: none;
+}

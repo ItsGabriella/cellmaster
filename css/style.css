@@ -276,3 +276,38 @@ main{
     border-color: #198754;
     box-shadow: 0 0 0 .2rem rgba(25,135,84,.15);
 }
+
+/* Botão apenas com ícone */
+.btn-filtro{
+    height: 46px;
+    min-width: 95px;
+    padding: 0 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    border-radius: 10px;
+}
+
+.btn-filtro i{
+    font-size: 16px;
+}
+
+/* Botão Filtrar */
+.btn-filtrar{
+    height: 46px;
+    min-width: 100px;
+    padding: 0 22px;
+
+    border-radius: 10px;
+
+    font-weight: 600;
+    font-size: .95rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}

@@ -1,15 +1,17 @@
 <?php
-include("php/funcoes.php");
+
+include("php/funcaoServico.php");
+
 
 $busca = "";
 
 if(isset($_GET["nBusca"])){
+
     $busca = $_GET["nBusca"];
+
 }
 
-$resultado = BuscarServico($busca);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -332,10 +334,10 @@ $resultado = BuscarServico($busca);
 
                     <div class="col-lg-4">
                         <label class="form-label fw-semibold">
-                            Buscar Peça
+                            Buscar Serviço
                         </label>
 
-                    <form method="GET" action="css/salvarServico.php">
+                    <form method="GET" action="servicos.php">
 
                         <div class="input-group shadow-sm">
 
@@ -447,7 +449,7 @@ $resultado = BuscarServico($busca);
 
     </div>
 
-    <?php echo listaServico();?>
+    <?php echo listaServico($busca);?>
 
     <!-- Modal Novo Produto -->
 <div class="modal fade" id="modalServico" tabindex="-1">

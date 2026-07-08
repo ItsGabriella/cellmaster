@@ -1,3 +1,12 @@
+<?php
+
+$email = "";
+
+if(isset($_COOKIE["lembrar_email"])){
+    $email = $_COOKIE["lembrar_email"];
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,6 +21,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" href="css/login.css">
+
+    <script src="js/login2.js"></script>
 </head>
 
 <body>
@@ -36,98 +47,166 @@
             <!-- Lado direito -->
             <div class="col-lg-6 d-flex align-items-center justify-content-center">
 
-                <div class="card border-0 shadow-lg login-card">
+<div class="card login-card border-0">
 
-                    <div class="card-body p-5">
-                        <div class="text-center mb-4">
+    <div class="card-body p-5">
 
-                        <div class="logo-circle mx-auto mb-3">
-                            <i class="bi bi-phone-fill"></i>
-                        </div>
+        <div class="text-center mb-5">
 
-                        <h2 class="fw-bold">
-                            Faça seu Login
-                        </h2>
+            <div class="logo-circle mx-auto mb-3">
 
-                        <div class="linha"></div>
+                <i class="bi bi-phone-fill"></i>
 
-                        </div>
+            </div>
 
-                        <form action="php/validaAcesso.php" method="POST">
+            <h2 class="fw-bold">
 
-                            <div class="mb-4">
+                Bem-vindo!
 
-                                <label class="form-label">
-                                    E-mail
-                                </label>
+            </h2>
 
-                                <input
-                                    type="email"
-                                    name="nLogin"
-                                    id="iLogin"
-                                    class="form-control"
-                                    placeholder="Digite seu e-mail">
+            <p class="text-muted">
 
-                            </div>
+                Faça login para acessar o sistema.
 
-                            <div class="mb-4">
+            </p>
 
-                                <label class="form-label">
-                                    Senha
-                                </label>
+            <div class="linha"></div>
 
-                                <div class="input-group">
+        </div>
 
-                                    <input
-                                        type="password"
-                                        name="nSenha"
-                                        id= "iSenha"
-                                        class="form-control"
-                                        placeholder="Digite sua senha">
+        <form action="php/validaAcesso.php" method="POST">
 
-                                </div>
+            <!-- EMAIL -->
 
-                            </div>
+            <div class="mb-4">
 
-                            <div class="form-check mb-4">
+                <label class="form-label">
 
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox">
+                    E-mail
 
-                                <label class="form-check-label">
-                                    Lembrar-me
-                                </label>
+                </label>
 
-                            </div>
+                <div class="input-group">
 
-                            <button
-                                type="submit"
-                                class="btn btn-success w-100">
+                    <span class="input-group-text">
 
-                                Entrar
+                        <i class="bi bi-envelope-fill"></i>
 
-                            </button>
+                    </span>
 
-                            <div class="text-center mt-4">
-
-                                <a href="#" class="link-success text-decoration-none">
-                                    Esqueceu sua senha?
-                                </a>
-
-                            </div>
-
-                        </form>
-
-                    </div>
+                    <input
+                        type="email"
+                        class="form-control"
+                        name="nLogin"
+                        id="iLogin"
+                        placeholder="Digite seu e-mail"
+                        value="<?= $email ?>"
+                        required>
 
                 </div>
 
             </div>
 
-        </div>
+            <!-- SENHA -->
+
+            <div class="mb-4">
+
+                <label class="form-label">
+
+                    Senha
+
+                </label>
+
+                <div class="input-group">
+
+                    <span class="input-group-text">
+
+                        <i class="bi bi-lock-fill"></i>
+
+                    </span>
+
+                    <input
+                        type="password"
+                        class="form-control"
+                        name="nSenha"
+                        id="iSenha"
+                        placeholder="Digite sua senha"
+                        required>
+
+                    <button
+                        type="button"
+                        class="btn btn-olho"
+                        onclick="toggleSenha()">
+
+                        <i id="iconeSenha"
+                            class="bi bi-eye-fill"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- OPÇÕES -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div class="form-check">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="lembrar"
+                        name="lembrar"
+                        value="1"
+                        <?= isset($_COOKIE["lembrar_email"]) ? "checked" : "" ?>>
+
+                    <label
+                        class="form-check-label"
+                        for="lembrar">
+
+                        Lembrar-me
+
+                    </label>
+
+                </div>
+
+                <a
+                    href="php/solicitarSenha.php"
+                    class="link-success text-decoration-none">
+
+                    Esqueceu sua senha?
+
+                </a>
+
+            </div>
+
+            <!-- BOTÃO -->
+
+            <button
+                type="submit"
+                class="btn btn-success w-100">
+
+                <i class="bi bi-box-arrow-in-right"></i>
+
+                Entrar
+
+            </button>
+
+        </form>
+
+
 
     </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
   
 
 

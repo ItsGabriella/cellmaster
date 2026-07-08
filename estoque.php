@@ -236,24 +236,33 @@
 
                 <div class="row g-3 align-items-end">
 
-                    <!-- Buscar -->
                     <div class="col-lg-4">
                         <label class="form-label fw-semibold">
                             Buscar Peça
                         </label>
 
-                        <div class="input-group">
-                            <span class="input-group-text">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </span>
+                    <form method="GET" action="css/salvarEstoque.php">
+
+                        <div class="input-group shadow-sm">
 
                             <input
                                 type="text"
-                                class="form-control"
+                                class="form-control border-success"
                                 placeholder="Buscar peça..."
+                                name= "nBusca"
                             >
+
+                            <button
+                                class="btn btn-success px-4"
+                                type="submit">
+                                <i class="fa-solid fa-magnifying-glass me-0"></i>
+                                
+                            </button>
+
                         </div>
-                    </div>
+
+                    </form>
+                </div>
 
                     <!-- Categoria -->
                     <div class="col-lg-3">
@@ -284,20 +293,29 @@
                     </div>
 
                     <!-- Botões -->
-                    <div class="col-lg-2">
-                        <div class="d-flex gap-1">
+                    <div class="col-lg-auto d-flex align-items-end">
 
-                            <button class="btn btn-outline-success flex-fill">
-                                <i class="fa-solid fa-rotate-left me-1"></i>
-                                Limpar
-                            </button>
+                    <div class="d-flex gap-2">
 
-                            <button class="btn btn-success flex-fill">
-                                <i class="fa-solid fa-filter me-1"></i>
-                                Filtrar
-                            </button>
+                        <button
+                            class="btn btn-outline-success btn-filtro"
+                            title="Limpar">
 
-                        </div>
+                            <i class="fa-solid fa-rotate-left"></i>
+
+                        </button>
+
+                        <button
+                            class="btn btn-success btn-filtrar">
+
+                            <i class="fa-solid fa-filter"></i>
+
+                            Filtrar
+
+                        </button>
+
+                    </div>
+
                     </div>
 
                 </div>

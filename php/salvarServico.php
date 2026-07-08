@@ -9,7 +9,6 @@
     $status  = $_POST["nStatus"];
     $funcao   = $_GET["funcao"];
     $idServico   = $_GET["codigo"];
-    $busca = $_GET["nBusca"];
     
 
     include("conexaoBD.php");

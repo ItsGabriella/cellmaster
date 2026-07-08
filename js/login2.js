@@ -12,3 +12,4 @@ function toggleSenha() {
         icone.classList.add("bi-eye");
     }
 }
+
