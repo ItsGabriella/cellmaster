@@ -1,10 +1,9 @@
 <?php
 
-//Função para listar todos os produtos
-function listaServico(){
+function listaRelatorio(){
 
     include("conexaoBD.php");
-    $sql = "SELECT * FROM servico;";
+    $sql = "SELECT * FROM relatorio;";
             
     $result = mysqli_query($conn,$sql);
     mysqli_close($conn);
@@ -20,31 +19,31 @@ function listaServico(){
 
             $lista .= 
             '<tr>
-                <td>'.$coluna["idservico"].'</td>
-                <td>'.$coluna["nome_servico"].'</td>
-                <td>'.$coluna["descricao_servico"].'</td>
-                <td>'.$coluna["valor"].'</td>
-                <td>'.$coluna["tempo"].'</td>
+                <td>'.$coluna["idrelatorio"].'</td>
+                <td>'.$coluna["nome_peca"].'</td>
+                <td>'.$coluna["categoria"].'</td>
+                <td>'.$coluna["qtdade_peca"].'</td>
+                <td>'.$coluna["estoque_min"].'</td>
+                <td>'.$coluna["valor_unit"].'</td>
 
-        
-                <td>'.funcaoStatusServico($coluna["status"]).'</td>
+                <td>'.funcaoStatus($coluna["qtdade_peca"],$coluna["estoque_min"]).'</td>
 
                 <td>
                     <button class="btn btn-success btn-sm"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalEditar'.$coluna["idservico"].'">
+                    data-bs-target="#modalEditar'.$coluna["idpeca"].'">
                     <i class="fa-solid fa-pen"></i>
                     </button>
 
                     <button class="btn btn-danger btn-sm"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalExcluir'.$coluna["idservico"].'">
+                    data-bs-target="#modalExcluir'.$coluna["idpeca"].'">
                     <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             </tr>
 
-            <div class="modal fade" id="modalExcluir'.$coluna["idservico"].'" tabindex="-1">
+            <div class="modal fade" id="modalExcluir'.$coluna["idpeca"].'" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
 
@@ -57,13 +56,13 @@ function listaServico(){
                                 </div>
                             </div>
 
-                            <h3 class="fw-bold">Excluir Serviço</h3>
+                            <h3 class="fw-bold">Excluir Produto</h3>
 
-                            <form method="POST" action="php/salvarServico.php?funcao=D&codigo='.$coluna["idservico"].'"enctype="multipart/form-data">
+                            <form method="POST" action="php/salvarEstoque.php?funcao=D&codigo='.$coluna["idpeca"].'"enctype="multipart/form-data">
 
                                 <p class="text-secondary">
-                                    Tem certeza que deseja excluir o serviço
-                                    <strong style="color: red;">'.$coluna["nome_servico"].'</strong>?
+                                    Tem certeza que deseja excluir o produto
+                                    <strong style="color: red;">'.$coluna["nome_peca"].'</strong>?
                                 </p>
 
                                 <p class="text-muted">
@@ -88,30 +87,24 @@ function listaServico(){
                 </div>
             </div>
             
-            <div class="modal fade" id="modalEditar'.$coluna["idservico"].'" tabindex="-1">
+            <div class="modal fade" id="modalEditar'.$coluna["idpeca"].'" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content border-0 shadow">
 
-                    <div class="modal-content border-0 shadow-lg">
-
-                        <!-- Cabeçalho -->
-                        <div class="modal-header bg-success text-white">
-
-                            <h5 class="modal-title">
-                                <i class="fa-solid fa-box-archive me-2"></i>
-                                Editar Serviço
-                            </h5>
+                        <div class="modal-header border-0">
+                            <h4 class="modal-title fw-bold text-success">
+                                <i class="fa-solid fa-pen me-2"></i>Editar Produto
+                            </h4>
 
                             <button type="button"
-                                    class="btn-close btn-close-white"
-                                    data-bs-dismiss="modal">
-                            </button>
-
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"></button>
                         </div>
 
                         <div class="modal-body">
 
                             <form method="POST"
-                                action="php/salvarServico.php?funcao=U&codigo='.$coluna["idservico"].'"
+                                action="php/salvarEstoque.php?funcao=U&codigo='.$coluna["idpeca"].'"
                                 enctype="multipart/form-data">
 
                                 <div class="row g-3">
@@ -119,86 +112,83 @@ function listaServico(){
                                     <!-- Nome -->
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold">
-                                            Nome do Serviço
+                                            Nome do Produto
                                         </label>
 
                                         <input type="text"
                                             class="form-control"
-                                            id="iServico" name="nServico"
-                                            value="'.$coluna["nome_servico"].'">
+                                            id="iPeca" name="nPeca"
+                                            value="'.$coluna["nome_peca"].'">
                                             
                                     </div>
 
-
-
-                                    <!-- Descrição -->
-                                    <div class="col-md-4">
+                                    <!-- Categoria -->
+                                    <div class="col-md-6">
                                         <label class="form-label fw-semibold">
-                                            Descrição
+                                            Categoria
                                         </label>
 
-                                        <input type="text"
+                                        <select name="nCategoria" class="form-select">
+                                            <option>Tela</option>
+                                            <option selected>Botões</option>
+                                            <option>Bateria</option>
+                                            <option>Conector</option>
+                                            <option>Outros</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Quantidade -->
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">
+                                            Quantidade
+                                        </label>
+
+                                        <input type="number"
                                             class="form-control"
-                                            id="iDescricao" name="nDescricao"
-                                            value="'.$coluna["descricao_servico"].'">
+                                            id="iQuantidade" name="nQuantidade"
+                                            value="'.$coluna["qtdade_peca"].'">
                                             
                                     </div>
 
+                                    <!-- Estoque mínimo -->
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">
-                                            Valor
+                                            Estoque Mínimo
+                                        </label>
+
+                                        <input type="number"
+                                            class="form-control"
+                                            id="iEstoqueMin"
+                                            name="nEstoqueMin"
+                                            value="'.$coluna["estoque_min"].'">
+                                            
+                                    </div>
+
+                                    <!-- Valor -->
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">
+                                            Valor Unitário
                                         </label>
 
                                         <input type="number"
                                             class="form-control"
                                             step="0.01"
-                                            id="iValor"
-                                            name="nValor"
-                                            value="'.$coluna["valor"].'">
+                                            id="iValor" name="nValor"
+                                            value="'.$coluna["valor_unit"].'">
                                             
                                     </div>
-
-
-                                    
-                                    <!-- Tempo estimado -->
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">
-                                            Tempo estimado
-                                        </label>
-
-                                        <input type="time"
-                                            class="form-control"
-                                            id="iTempo" name="nTempo"
-                                            value="'.$coluna["tempo"].'">
-                                            
-                                    </div>
-
-
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">
-                                            Status
-                                        </label>
-
-                                        <input type="text"
-                                            class="form-control"
-                                            id="iStatus" name="nStatus"
-                                            value='.funcaoStatusServico($coluna["status"]).'>
-                                            
-                                    </div>
-
-                                    
 
                                 </div>
 
                                 <hr>
 
                                 <p class="text-secondary mb-1">
-                                    Tem certeza que deseja editar o serviço
-                                    <strong class="text-success">'.$coluna["nome_servico"].'</strong>?
+                                    Tem certeza que deseja editar o produto
+                                    <strong class="text-success">'.$coluna["nome_peca"].'</strong>?
                                 </p>
 
                                 <p class="text-muted">
-                                    As alterações serão salvas no sistema.
+                                    As alterações serão salvas no estoque.
                                 </p>
 
                                 <div class="d-flex justify-content-end gap-2 mt-4">
@@ -233,49 +223,16 @@ function listaServico(){
 }
 
 
-//Próximo ID do produto
-function proxIdServico(){
-
-    $id = "";
-
-    include("conexaoBD.php");
-    $sql = "SELECT MAX(idservico) AS Maior FROM servico;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
-
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-                
-        $array = array();
-        
-        while ($linha = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            array_push($array,$linha);
-        }
-        
-        foreach ($array as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            $id = $coluna["Maior"] + 1;
-        }        
-    } 
-
-    return $id;
-}
 
 
-function funcaoStatusServico($status){
-    if ($status == "a" or $status == "A"){
-        $status = 'ativo';
-    }else{
-        $status = 'inativo';
-    }
-    return $status;
-}
 
-function TotalServicos()
+
+
+function TotalRelatorios()
 {
     include("conexaoBD.php");
 
-    $sql = "SELECT COUNT(*) AS total FROM servico";
+    $sql = "SELECT COUNT(*) AS total FROM relatorio";
     $resultado = mysqli_query($conn, $sql);
 
     $dados = mysqli_fetch_assoc($resultado);
@@ -283,13 +240,14 @@ function TotalServicos()
     return $dados["total"];
 }
 
-function ServicosAtivos()
+function RelatoriosMes()
 {
     include("conexaoBD.php");
 
     $sql = "SELECT COUNT(*) AS total
-            FROM servico
-            WHERE status = 'a' or status = 'a' ";
+            FROM relatorio
+            WHERE MONTH(data_relatorio) = MONTH(CURRENT_DATE())
+            AND YEAR(data_relatorio) = YEAR(CURRENT_DATE())";
 
     $resultado = mysqli_query($conn, $sql);
 
@@ -298,13 +256,13 @@ function ServicosAtivos()
     return $dados["total"];
 }
 
-function ServicosInativos()
+function RelatoriosPendentes()
 {
     include("conexaoBD.php");
 
     $sql = "SELECT COUNT(*) AS total
-            FROM servico
-            WHERE status = 'I' or status = 'i' ";
+            FROM relatorio
+            WHERE status = 'Pendente'";
 
     $resultado = mysqli_query($conn, $sql);
 
@@ -312,64 +270,18 @@ function ServicosInativos()
 
     return $dados["total"];
 }
-function ValorMedioServico()
+
+function RelatoriosExportados()
 {
     include("conexaoBD.php");
 
-    $sql = "SELECT AVG(valor) AS media
-            FROM servico";
+    $sql = "SELECT COUNT(*) AS total
+            FROM relatorio
+            WHERE exportado = 'Sim'";
 
     $resultado = mysqli_query($conn, $sql);
 
     $dados = mysqli_fetch_assoc($resultado);
 
-    return $dados["media"] ?? 0;
+    return $dados["total"];
 }
-
-function BuscarServico($busca)
-{
-    include("conexaoBD.php");
-
-    $busca = mysqli_real_escape_string($conn, $busca);
-
-    $sql = "SELECT *
-            FROM servico
-            WHERE nome_servico LIKE '%$busca%'
-            ORDER BY nome_servico";
-
-    $result = mysqli_query($conn, $sql);
-
-    $lista = "";
-
-    if(mysqli_num_rows($result) > 0)
-    {
-        foreach($result as $coluna)
-        {
-            $lista .= '
-            <tr>
-                <td>'.$coluna["idservico"].'</td>
-                <td>'.$coluna["nome_servico"].'</td>
-                <td>'.$coluna["descricao_servico"].'</td>
-                <td>R$ '.number_format($coluna["valor"],2,",",".").'</td>
-                <td>'.$coluna["tempo"].'</td>
-                <td>'.funcaoStatusServico($coluna["status"]).'</td>
-                <td>
-                    <button class="btn btn-success btn-sm">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-
-                    <button class="btn btn-danger btn-sm">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </td>
-            </tr>';
-        }
-    }
-
-    mysqli_close($conn);
-
-    return $lista;
-}
-
-
-?>

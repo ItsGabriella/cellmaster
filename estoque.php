@@ -1,5 +1,20 @@
 <?php
     include ('php/funcoes.php');
+
+    $totalPecas = TotalPecas();
+    $estoqueTotal = EstoqueTotal();
+    $pecasBaixas = PecasBaixas();
+    $valorTotal = ValorTotalEstoque();
+
+
+    $busca = "";
+
+    if(isset($_GET["nBusca"]))
+    {
+        $busca = $_GET["nBusca"];
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -189,7 +204,7 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h6 class="text-secondary">Total de Peças</h6>
-                        <h2 class="fw-bold">128</h2>
+                        <h2 class="fw-bold"><?= $totalPecas ?></h2>
                         <small>Peças cadastradas</small>
                     </div>
                 </div>
@@ -199,7 +214,7 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h6 class="text-secondary">Estoque Total</h6>
-                        <h2 class="fw-bold">2.456</h2>
+                        <h2 class="fw-bold"><?= number_format($estoqueTotal, 0, ',', '.') ?></h2>
                         <small>Unidades em estoque</small>
                     </div>
                 </div>
@@ -209,7 +224,7 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h6 class="text-secondary">Peças Baixas</h6>
-                        <h2 class="fw-bold text-warning">15</h2>
+                        <h2 class="fw-bold text-warning"><?= $pecasBaixas ?></h2>
                         <small>Abaixo do mínimo</small>
                     </div>
                 </div>
@@ -220,7 +235,7 @@
                     <div class="card-body">
                         <h6 class="text-secondary">Valor Total</h6>
                         <h2 class="fw-bold text-success">
-                            R$ 78.650,00
+                            R$ <?= number_format($valorTotal, 2, ',', '.') ?>
                         </h2>
                         <small>Valor do estoque</small>
                     </div>
@@ -293,7 +308,7 @@
                     </div>
 
                     <!-- Botões -->
-                    <div class="col-lg-auto d-flex align-items-end">
+                <div class="col-lg-auto d-flex align-items-end">
 
                     <div class="d-flex gap-2">
 

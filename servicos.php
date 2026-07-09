@@ -3,13 +3,20 @@
 include("php/funcaoServico.php");
 
 
-$busca = "";
 
-if(isset($_GET["nBusca"])){
+    $busca = "";
 
-    $busca = $_GET["nBusca"];
+    if(isset($_GET["nBusca"]))
+    {
+        $busca = $_GET["nBusca"];
+    }
 
-}
+
+
+    $totalServicos = TotalServicos();
+    $servicosAtivos = ServicosAtivos();
+    $servicosInativos = ServicosInativos();
+    $valorMedio = ValorMedioServico();
 
 ?>
 <!DOCTYPE html>
@@ -205,7 +212,7 @@ if(isset($_GET["nBusca"])){
                             </h6>
 
                             <h2 class="fw-bold mb-1">
-                                65
+                                <?= $totalServicos ?>
                             </h2>
 
                             <small class="text-secondary">
@@ -238,7 +245,7 @@ if(isset($_GET["nBusca"])){
                             </h6>
 
                             <h2 class="fw-bold mb-1">
-                                48
+                                <?= $servicosAtivos ?>
                             </h2>
 
                             <small class="text-secondary">
@@ -271,7 +278,7 @@ if(isset($_GET["nBusca"])){
                             </h6>
 
                             <h2 class="fw-bold mb-1">
-                                17
+                                <?= $servicosInativos ?>
                             </h2>
 
                             <small class="text-secondary">
@@ -304,7 +311,7 @@ if(isset($_GET["nBusca"])){
                             </h6>
 
                             <h2 class="fw-bold mb-1">
-                                R$ 350
+                                R$ <?= number_format($valorMedio, 2, ',', '.') ?>
                             </h2>
 
                             <small class="text-secondary">
@@ -339,23 +346,22 @@ if(isset($_GET["nBusca"])){
 
                     <form method="GET" action="servicos.php">
 
-                        <div class="input-group shadow-sm">
+                        <div class="input-group">
 
                             <input
                                 type="text"
-                                class="form-control border-success"
+                                class="form-control"
+                                name="nBusca"
                                 placeholder="Buscar serviço..."
-                                name= "nBusca"
-                            >
+                                value="<?= $busca ?>">
 
-                            <button
-                                class="btn btn-success px-4"
-                                type="submit">
-                                <i class="fa-solid fa-magnifying-glass me-0"></i>
-                                
+                            <button class="btn btn-success" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
 
                         </div>
+
+                    </form>
 
                     </form>
                     </div>
@@ -375,20 +381,29 @@ if(isset($_GET["nBusca"])){
                     </div>
 
 
-                    <div class="col-lg-2">
-                        <div class="d-flex gap-1">
+                <div class="col-lg-auto d-flex align-items-end">
 
-                            <button class="btn btn-outline-success flex-fill">
-                                <i class="fa-solid fa-rotate-left me-1"></i>
-                                Limpar
-                            </button>
+                    <div class="d-flex gap-2">
 
-                            <button class="btn btn-success flex-fill">
-                                <i class="fa-solid fa-filter me-1"></i>
-                                Filtrar
-                            </button>
+                        <button
+                            class="btn btn-outline-success btn-filtro"
+                            title="Limpar">
 
-                        </div>
+                            <i class="fa-solid fa-rotate-left"></i>
+
+                        </button>
+
+                        <button
+                            class="btn btn-success btn-filtrar">
+
+                            <i class="fa-solid fa-filter"></i>
+
+                            Filtrar
+
+                        </button>
+
+                    </div>
+
                     </div>
 
                 </div>
@@ -449,7 +464,18 @@ if(isset($_GET["nBusca"])){
 
     </div>
 
-    <?php echo listaServico($busca);?>
+    <?php
+
+    if($busca == "")
+    {
+        echo listaServico();
+    }
+    else
+    {
+        echo BuscarServico($busca);
+    }
+
+    ?>
 
     <!-- Modal Novo Produto -->
 <div class="modal fade" id="modalServico" tabindex="-1">
@@ -509,7 +535,7 @@ if(isset($_GET["nBusca"])){
                         </label>
 
                         <input type="number"
-                                id="iValor" name="nValor"
+                            id="iValor" name="nValor"
                             step="0.01"
                             class="form-control">
                     </div>

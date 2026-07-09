@@ -377,70 +377,66 @@ function qtdProdutoSemEstoque(){
 
 }
 
-//Labels do gráfico de barras
-function labelTresProdutos(){
 
-    $lista = '';
-    $cont  = 0;
 
-    include("conexao.php");
-    $sql = "SELECT * "
-            ." FROM produto "
-            ." ORDER BY Quantidade DESC, Descricao "
-            ." LIMIT 3;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
 
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-        
-        foreach ($result as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            if($cont == 0){
-                $lista .= "'".$coluna['Descricao']."'";
-            }else{
-                $lista .= ",'".$coluna['Descricao']."'";
-            }
 
-            $cont++;
-        }        
-    } 
 
-    return $lista;
+function TotalPecas()
+{
+    include("conexaoBD.php");
 
+    $sql = "SELECT COUNT(*) AS total FROM peca";
+    $resultado = mysqli_query($conn, $sql);
+
+    $dados = mysqli_fetch_assoc($resultado);
+
+    return $dados["total"];
 }
 
-//Quantidades do gráfico de barras
-function qtdTresProdutos(){
+function EstoqueTotal()
+{
+    include("conexaoBD.php");
 
-    $lista = '';
-    $cont  = 0;
+    $sql = "SELECT SUM(qtdade_peca) AS total FROM peca";
+    $resultado = mysqli_query($conn, $sql);
 
-    include("conexao.php");
-    $sql = "SELECT * "
-            ." FROM produto "
-            ." ORDER BY Quantidade DESC, Descricao "
-            ." LIMIT 3;";        
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
+    $dados = mysqli_fetch_assoc($resultado);
 
-    //Validar se tem retorno do BD
-    if (mysqli_num_rows($result) > 0) {
-        
-        foreach ($result as $coluna) {            
-            //***Verificar os dados da consulta SQL
-            if($cont == 0){
-                $lista .= $coluna['Quantidade'];
-            }else{
-                $lista .= ",".$coluna['Quantidade'];
-            }
-
-            $cont++;
-        }        
-    } 
-
-    return $lista;
-
+    return $dados["total"] ?? 0;
 }
+
+function PecasBaixas()
+{
+    include("conexaoBD.php");
+
+    $sql = "SELECT COUNT(*) AS total
+            FROM peca
+            WHERE qtdade_peca <= estoque_min";
+
+    $resultado = mysqli_query($conn, $sql);
+
+    $dados = mysqli_fetch_assoc($resultado);
+
+    return $dados["total"];
+}
+
+function ValorTotalEstoque()
+{
+    include("conexaoBD.php");
+
+    $sql = "SELECT SUM(qtdade_peca * valor_unit) AS total
+            FROM peca";
+
+    $resultado = mysqli_query($conn, $sql);
+
+    $dados = mysqli_fetch_assoc($resultado);
+
+    return $dados["total"] ?? 0;
+}
+
 
 ?>
+
+
+

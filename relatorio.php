@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -184,9 +186,9 @@
                                 Total de Relatórios
                             </h6>
 
-                            <h2 class="fw-bold mb-1">
-                                65
-                            </h2>
+                        <h2 class="fw-bold mb-1">
+                            <?= $totalRelatorios ?>
+                        </h2>
 
                             <small class="text-secondary">
                                 Cadastrados
@@ -218,7 +220,7 @@
                             </h6>
 
                             <h2 class="fw-bold mb-1">
-                                48
+                                <?= $relatoriosMes ?>
                             </h2>
 
                             <small class="text-secondary">
@@ -251,7 +253,7 @@
                             </h6>
 
                             <h2 class="fw-bold mb-1">
-                                17
+                                <?= $pendentes ?>
                             </h2>
 
                             <small class="text-secondary">
@@ -279,9 +281,10 @@
                     <div class="d-flex justify-content-between align-items-center">
 
                         <div>
-                            <h6 class="text-secondary mb-2">
-                                Exportados
-                            </h6>
+
+                            <h2 class="fw-bold mb-1">
+                                <?= $exportados ?>
+                            </h2>
 
                             <h2 class="fw-bold mb-1">
                                 190
