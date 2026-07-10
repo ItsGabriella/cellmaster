@@ -15,122 +15,9 @@
 
 <body class="bg-custom">
 
-    <div class="d-flex">
-
-        <nav id="sidebar" class="d-flex flex-column justify-content-between">
-
-            <div class="p-3">
-
-
-                <div class="d-flex align-items-center gap-2 mb-4">
-                    <img src="img/perfil.png" id="user_avatar" alt="Avatar">
-
-                    <div class="user_infos">
-                        <span class="item-description d-block">
-                            Fulano de tal
-                        </span>
-                        <span class="item-description d-block text-secondary">
-                            Gerente
-                        </span>
-                    </div>
-                </div>
-
-                <ul class="nav flex-column gap-2">
-
-                    <li class="nav-item side-item">
-                        <a href="#" class="nav-link text-white">
-                            <i class="fa-solid fa-chart-line"></i>
-                            <span class="item-description ms-2">
-                                Dashboard
-                            </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item side-item">
-                        <a href="#" class="nav-link text-white">
-                            <i class="fa-solid fa-clipboard-user"></i>
-                            <span class="item-description ms-2">
-                                Funcionários
-                            </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item side-item">
-                        <a href="#" class="nav-link text-white">
-                            <i class="fa-solid fa-users"></i>
-                            <span class="item-description ms-2">
-                                Clientes
-                            </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item side-item">
-                        <a href="estoque.php" class="nav-link text-white">
-                            <i class="fa-solid fa-box-archive"></i>
-                            <span class="item-description ms-2">
-                                Estoque
-                            </span>
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item side-item">
-                        <a href="servicos.php" class="nav-link text-white">
-                            <i class="fa-solid fa-screwdriver-wrench"></i>
-                            <span class="item-description ms-2">
-                                Serviços
-                            </span>
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item side-item">
-                        <a href="orcamentos.php" class="nav-link text-white">
-                            <i class="fa-solid fa-file-invoice-dollar"></i>
-                            <span class="item-description ms-2">
-                                Orçamento
-                            </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item side-item">
-                        <a href="#" class="nav-link text-white">
-                            <i class="fa-solid fa-file-contract"></i>
-                            <span class="item-description ms-2">
-                                Ordem de Serviço
-                            </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item side-item active">
-                        <a href="#" class="nav-link text-white">
-                            <i class="fa-solid fa-file"></i>
-                            <span class="item-description ms-2">
-                                Relatório
-                            </span>
-                        </a>
-                    </li>
-
-                </ul>
-
-                <button id="open_btn">
-                    <i id="open_btn_icon" class="fa-solid fa-chevron-right"></i>
-                </button>
-
-            </div>
-
-
-            <div class="border-top p-3">
-                <button id="logout_btn"  class="w-100" onclick="window.location.href='index.php';"> 
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-
-                    <span class="item-description">
-                        Logout
-                    </span>
-                </button>
-            </div>
-
-        </nav>
+    <?php 
+        $pagina = 'relatorio';
+        include 'php/sidebar.php'; ?>
 
 
     <main class="flex-grow-1 p-4 bg-light">
@@ -531,6 +418,129 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+
+    <div class="modal fade" id="modalProduto" tabindex="-1">
+
+<div class="modal-dialog modal-lg modal-dialog-centered">
+
+    <div class="modal-content border-0 shadow-lg">
+
+        <!-- Cabeçalho -->
+        <div class="modal-header bg-success text-white">
+
+            <h5 class="modal-title">
+                <i class="fa-solid fa-box-archive me-2"></i>
+                Nova Peça
+            </h5>
+
+            <button type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal">
+            </button>
+
+        </div>
+
+        <!-- Corpo -->
+        <div class="modal-body">
+
+            <form method="POST" action="php/salvarRelatório.php?funcao=I" enctype="multipart/form-data">   
+
+                <div class="row g-3">
+
+                <div class="col-md-3">
+                        <label class="form-label fw-semibold">
+                            ID
+                        </label>
+
+                        <input type="text"
+                            class="form-control"
+                            placeholder="0001" readonly>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            Relatório
+                        </label>
+
+                        <input type="text"
+                            id="iRelatorio" name="nRelatorio"
+                            class="form-control"
+                            placeholder="Digite o nome do relatório">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">
+                            Relatório
+                        </label>
+
+                        <input type="text"
+                            id="iRelatorio" name="nRelatorio"
+                            class="form-control"
+                            placeholder="Digite o nome do relatório">
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Quantidade
+                        </label>
+
+                        <input id="iQuantidade" name="nQuantidade" type="number"
+                            class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Estoque Mínimo
+                        </label>
+
+                        <input type="number" id="iEstoqueMin" name="nEstoqueMin"
+                            class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Valor Unitário
+                        </label>
+
+                        <input type="number"
+                            step="0.01"
+                            id="iValor" name="nValor"
+                            class="form-control">
+                    </div>
+
+
+            </div>
+
+        </div>
+
+        <!-- Rodapé -->
+        <div class="modal-footer">
+
+            <button class="btn btn-outline-danger"
+                    data-bs-dismiss="modal">
+                Cancelar
+            </button>
+
+            <button type="submit" class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk me-2"></i>
+                Salvar Relatório
+            </button>
+
+        </div>
+
+    </form>
+
+    </div>
+
+</div>
+
+</div>
+
 
 <script>
 

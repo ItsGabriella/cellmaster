@@ -20,30 +20,29 @@ function listaRelatorio(){
             $lista .= 
             '<tr>
                 <td>'.$coluna["idrelatorio"].'</td>
-                <td>'.$coluna["nome_peca"].'</td>
-                <td>'.$coluna["categoria"].'</td>
-                <td>'.$coluna["qtdade_peca"].'</td>
-                <td>'.$coluna["estoque_min"].'</td>
-                <td>'.$coluna["valor_unit"].'</td>
+                <td>'.$coluna["relatorio"].'</td>
+                <td>'.$coluna["tipo"].'</td>
+                <td>'.$coluna["data"].'</td>
+                <td>'.$coluna["responsavel"].'</td>
+                <td>'.$coluna["status"].'</td>
 
-                <td>'.funcaoStatus($coluna["qtdade_peca"],$coluna["estoque_min"]).'</td>
 
                 <td>
                     <button class="btn btn-success btn-sm"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalEditar'.$coluna["idpeca"].'">
+                    data-bs-target="#modalEditar'.$coluna["idrelatorio"].'">
                     <i class="fa-solid fa-pen"></i>
                     </button>
 
                     <button class="btn btn-danger btn-sm"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalExcluir'.$coluna["idpeca"].'">
+                    data-bs-target="#modalExcluir'.$coluna["idrelatorio"].'">
                     <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             </tr>
 
-            <div class="modal fade" id="modalExcluir'.$coluna["idpeca"].'" tabindex="-1">
+            <div class="modal fade" id="modalExcluir'.$coluna["idrelatorio"].'" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
 
@@ -58,11 +57,11 @@ function listaRelatorio(){
 
                             <h3 class="fw-bold">Excluir Produto</h3>
 
-                            <form method="POST" action="php/salvarEstoque.php?funcao=D&codigo='.$coluna["idpeca"].'"enctype="multipart/form-data">
+                            <form method="POST" action="php/salvarRelatorio.php?funcao=D&codigo='.$coluna["idrelatorio"].'"enctype="multipart/form-data">
 
                                 <p class="text-secondary">
-                                    Tem certeza que deseja excluir o produto
-                                    <strong style="color: red;">'.$coluna["nome_peca"].'</strong>?
+                                    Tem certeza que deseja excluir o relatório
+                                    <strong style="color: red;">'.$coluna["relatorio"].'</strong>?
                                 </p>
 
                                 <p class="text-muted">
@@ -87,13 +86,13 @@ function listaRelatorio(){
                 </div>
             </div>
             
-            <div class="modal fade" id="modalEditar'.$coluna["idpeca"].'" tabindex="-1">
+            <div class="modal fade" id="modalEditar'.$coluna["idrelatorio"].'" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
 
                         <div class="modal-header border-0">
                             <h4 class="modal-title fw-bold text-success">
-                                <i class="fa-solid fa-pen me-2"></i>Editar Produto
+                                <i class="fa-solid fa-pen me-2"></i>Editar Relatório
                             </h4>
 
                             <button type="button"
@@ -104,7 +103,7 @@ function listaRelatorio(){
                         <div class="modal-body">
 
                             <form method="POST"
-                                action="php/salvarEstoque.php?funcao=U&codigo='.$coluna["idpeca"].'"
+                                action="php/salvarRelatorio.php?funcao=U&codigo='.$coluna["idrelatorio"].'"
                                 enctype="multipart/form-data">
 
                                 <div class="row g-3">
@@ -112,69 +111,67 @@ function listaRelatorio(){
                                     <!-- Nome -->
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold">
-                                            Nome do Produto
+                                            Relatório
                                         </label>
 
                                         <input type="text"
                                             class="form-control"
-                                            id="iPeca" name="nPeca"
-                                            value="'.$coluna["nome_peca"].'">
+                                            id="iRelatorio" name="nRelatorio"
+                                            value="'.$coluna["relatorio"].'">
                                             
                                     </div>
 
                                     <!-- Categoria -->
-                                    <div class="col-md-6">
+                                    <div class="col-md-5">
                                         <label class="form-label fw-semibold">
-                                            Categoria
+                                            Tipo
                                         </label>
 
-                                        <select name="nCategoria" class="form-select">
-                                            <option>Tela</option>
-                                            <option selected>Botões</option>
-                                            <option>Bateria</option>
-                                            <option>Conector</option>
-                                            <option>Outros</option>
-                                        </select>
+                                        <input type="text"
+                                            class="form-control"
+                                            id="iTipo" name="nTipo"
+                                            value="'.$coluna["relatorio"].'">
+                                            
                                     </div>
 
                                     <!-- Quantidade -->
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">
-                                            Quantidade
+                                            Data
                                         </label>
 
-                                        <input type="number"
+                                        <input type="date"
                                             class="form-control"
-                                            id="iQuantidade" name="nQuantidade"
-                                            value="'.$coluna["qtdade_peca"].'">
+                                            id="iDate" name="nDate"
+                                            value="'.$coluna["data"].'">
                                             
                                     </div>
 
                                     <!-- Estoque mínimo -->
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">
-                                            Estoque Mínimo
+                                            Responsável
                                         </label>
 
                                         <input type="number"
                                             class="form-control"
-                                            id="iEstoqueMin"
-                                            name="nEstoqueMin"
-                                            value="'.$coluna["estoque_min"].'">
+                                            id="iResponsavel"
+                                            name="nResponsavel"
+                                            value="'.$coluna["responsavel"].'">
                                             
                                     </div>
 
                                     <!-- Valor -->
                                     <div class="col-md-4">
                                         <label class="form-label fw-semibold">
-                                            Valor Unitário
+                                            Status
                                         </label>
 
-                                        <input type="number"
+                                        <input type="text"
                                             class="form-control"
                                             step="0.01"
-                                            id="iValor" name="nValor"
-                                            value="'.$coluna["valor_unit"].'">
+                                            id="iStatus" name="nStatus"
+                                            value="'.$coluna["status"].'">
                                             
                                     </div>
 
@@ -183,12 +180,12 @@ function listaRelatorio(){
                                 <hr>
 
                                 <p class="text-secondary mb-1">
-                                    Tem certeza que deseja editar o produto
-                                    <strong class="text-success">'.$coluna["nome_peca"].'</strong>?
+                                    Tem certeza que deseja editar o relatório
+                                    <strong class="text-success">'.$coluna["relatorio"].'</strong>?
                                 </p>
 
                                 <p class="text-muted">
-                                    As alterações serão salvas no estoque.
+                                    As alterações serão salvas no sistema.
                                 </p>
 
                                 <div class="d-flex justify-content-end gap-2 mt-4">
