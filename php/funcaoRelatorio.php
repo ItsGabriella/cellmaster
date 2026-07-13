@@ -24,25 +24,26 @@ function listaRelatorio(){
                 <td>'.$coluna["tipo"].'</td>
                 <td>'.$coluna["data"].'</td>
                 <td>'.$coluna["responsavel"].'</td>
+                <td>'.$coluna["exportado"].'</td>
                 <td>'.$coluna["status"].'</td>
 
 
                 <td>
                     <button class="btn btn-success btn-sm"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalEditar'.$coluna["idrelatorio"].'">
+                    data-bs-target="#modalEditarRelatorio'.$coluna["idrelatorio"].'">
                     <i class="fa-solid fa-pen"></i>
                     </button>
 
                     <button class="btn btn-danger btn-sm"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalExcluir'.$coluna["idrelatorio"].'">
+                    data-bs-target="#modalExcluirRelatorio'.$coluna["idrelatorio"].'">
                     <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             </tr>
 
-            <div class="modal fade" id="modalExcluir'.$coluna["idrelatorio"].'" tabindex="-1">
+            <div class="modal fade" id="modalExcluirRelatorio'.$coluna["idrelatorio"].'" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
 
@@ -55,7 +56,7 @@ function listaRelatorio(){
                                 </div>
                             </div>
 
-                            <h3 class="fw-bold">Excluir Produto</h3>
+                            <h3 class="fw-bold">Excluir Relatório</h3>
 
                             <form method="POST" action="php/salvarRelatorio.php?funcao=D&codigo='.$coluna["idrelatorio"].'"enctype="multipart/form-data">
 
@@ -86,7 +87,7 @@ function listaRelatorio(){
                 </div>
             </div>
             
-            <div class="modal fade" id="modalEditar'.$coluna["idrelatorio"].'" tabindex="-1">
+            <div class="modal fade" id="modalEditarRelatorio'.$coluna["idrelatorio"].'" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
 
@@ -281,4 +282,17 @@ function RelatoriosExportados()
     $dados = mysqli_fetch_assoc($resultado);
 
     return $dados["total"];
+}
+
+function ListarFuncionarios()
+{
+    include("conexao.php");
+
+    $sql = "SELECT idfuncionario, nome_func
+            FROM funcionario
+            ORDER BY nome_func";
+
+    $resultado = mysqli_query($conn, $sql);
+
+    return $resultado;
 }

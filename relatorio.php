@@ -1,4 +1,10 @@
+<?php 
 
+    include("php/funcaoRelatorio.php");
+    $funcionarios = ListarFuncionarios();
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -48,10 +54,13 @@
             </nav>
         </div>
 
-        <button class="btn btn-success px-4 py-2">
+        <button class="btn btn-success px-4 py-2"
+        data-bs-toggle="modal"
+        data-bs-target="#modalRelatorio">
             <i class="fa-solid fa-plus me-2"></i>
             Novo Relatório
         </button>
+
 
     </div>
 
@@ -286,7 +295,7 @@
 
                                 <button class="btn btn-danger btn-sm"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalExcluir">
+                                data-bs-target="#modalExcluirRelatorio">
                                 <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
@@ -309,7 +318,7 @@
 
                                 <button class="btn btn-danger btn-sm"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalExcluir">
+                                data-bs-target="#modalExcluirRelatorio">
                                 <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
@@ -333,7 +342,7 @@
 
                                 <button class="btn btn-danger btn-sm"
                                 data-bs-toggle="modal"
-                                data-bs-target="#modalExcluir">
+                                data-bs-target="#modalExcluirRelatorio">
                                 <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
@@ -423,7 +432,7 @@
 
 
 
-    <div class="modal fade" id="modalProduto" tabindex="-1">
+    <div class="modal fade" id="modalRelatorio" tabindex="-1">
 
 <div class="modal-dialog modal-lg modal-dialog-centered">
 
@@ -434,7 +443,7 @@
 
             <h5 class="modal-title">
                 <i class="fa-solid fa-box-archive me-2"></i>
-                Nova Peça
+                Novo Relatório
             </h5>
 
             <button type="button"
@@ -474,45 +483,57 @@
 
                     <div class="col-md-6">
                         <label class="form-label fw-semibold">
-                            Relatório
+                            Tipo
                         </label>
 
                         <input type="text"
-                            id="iRelatorio" name="nRelatorio"
+                            id="iTipo" name="nTipo"
                             class="form-control"
-                            placeholder="Digite o nome do relatório">
+                            placeholder="Digite o tipo">
                     </div>
 
 
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">
-                            Quantidade
+                            Data
                         </label>
 
-                        <input id="iQuantidade" name="nQuantidade" type="number"
+                        <input id="iData" name="nData" type="date"
                             class="form-control">
                     </div>
 
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">
-                            Estoque Mínimo
-                        </label>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Responsável</label>
 
-                        <input type="number" id="iEstoqueMin" name="nEstoqueMin"
-                            class="form-control">
-                    </div>
+                            <select name="nFuncionario" class="form-select w-200" required>
 
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">
-                            Valor Unitário
-                        </label>
+                                <option value="">Selecione um funcionário</option>
 
-                        <input type="number"
-                            step="0.01"
-                            id="iValor" name="nValor"
-                            class="form-control">
-                    </div>
+                                <?php while($funcionario = mysqli_fetch_assoc($funcionarios)){ ?>
 
+                                    <option value="<?= $funcionario["idfuncionario"] ?>">
+                                        <?= $funcionario["nome_func"] ?>
+                                    </option>
+
+                                <?php } ?>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">
+                                Status
+                            </label>
+
+                            <select id="iStatus" name="nStatus" class="form-select">
+                                <option>Pendente</option> <!--Relatório ainda não foi iniciado. -->
+                                <option>Em andamento</option> <!--Está sendo elaborado. -->
+                                <option>Concluído</option> <!--Foi finalizado. -->
+                                <option>Enviado</option> <!--Foi enviado ao cliente ou gerente. -->
+                                <option>Arquivado</option> <!--Não será mais alterado. -->
+                                <option>Cancelado</option> <!--Relatório foi cancelado. -->
+                            </select>
+                        </div>
 
             </div>
 
