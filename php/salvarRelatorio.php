@@ -7,7 +7,7 @@
     $responsavel = $_POST["nResponsavel"];
     $status = $_POST["nStatus"];
     $funcao   = $_GET["funcao"];
-    $idPeca   = $_GET["codigo"];
+    $idRelatorio   = $_GET["codigo"];
     
 
     include("conexaoBD.php");
@@ -19,13 +19,17 @@
         $idPeca = proxIdRelatorio();
 
         //INSERT
-        $sql = "INSERT INTO relatorio (idrelatorio, relatorio, categoria, qtdade_peca, valor_unit, estoque_min) "
+        $sql = "INSERT INTO relatorio (idrelatorio, relatorio, tipo, data, responsavel, exportado, status) "
                 ." VALUES (
-                ".$idPeca.",
-                '".$peca."',
-                '".$categoria."',
-                ".$quantidade.",
-                ".$valorPeca.",
+                ".$idRelatorio.",
+                '".$relatorio."',
+                '".$tipo."',
+                ".$data.",
+                ".$responsavel.",
+
+
+                
+                ".$status.",
                 ".$estoqueMin.");";
 
     }elseif($funcao == "U"){
