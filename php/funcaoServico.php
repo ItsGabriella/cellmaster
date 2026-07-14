@@ -25,26 +25,26 @@ function listaServico(){
                 <td>'.$coluna["descricao_servico"].'</td>
                 <td>'.$coluna["valor"].'</td>
                 <td>'.$coluna["tempo"].'</td>
+                <td>'.$coluna["status"].'</td>
 
         
-                <td>'.funcaoStatusServico($coluna["status"]).'</td>
 
                 <td>
                     <button class="btn btn-success btn-sm"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalEditar'.$coluna["idservico"].'">
+                    data-bs-target="#modalEditarServico'.$coluna["idservico"].'">
                     <i class="fa-solid fa-pen"></i>
                     </button>
 
                     <button class="btn btn-danger btn-sm"
                     data-bs-toggle="modal"
-                    data-bs-target="#modalExcluir'.$coluna["idservico"].'">
+                    data-bs-target="#modalExcluirServico'.$coluna["idservico"].'">
                     <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             </tr>
 
-            <div class="modal fade" id="modalExcluir'.$coluna["idservico"].'" tabindex="-1">
+            <div class="modal fade" id="modalExcluirServico'.$coluna["idservico"].'" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
 
@@ -88,7 +88,7 @@ function listaServico(){
                 </div>
             </div>
             
-            <div class="modal fade" id="modalEditar'.$coluna["idservico"].'" tabindex="-1">
+            <div class="modal fade" id="modalEditarServico'.$coluna["idservico"].'" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
 
                     <div class="modal-content border-0 shadow-lg">
@@ -179,11 +179,10 @@ function listaServico(){
                                             Status
                                         </label>
 
-                                        <input type="text"
-                                            class="form-control"
-                                            id="iStatus" name="nStatus"
-                                            value='.funcaoStatusServico($coluna["status"]).'>
-                                            
+                                        <select class="form-select" id="iStatus" name="nStatus" value="'.$coluna["status"].'">
+                                            <option>Ativo</option>
+                                            <option>Inativo</option>
+                                        </select>
                                     </div>
 
                                     
@@ -262,14 +261,14 @@ function proxIdServico(){
 }
 
 
-function funcaoStatusServico($status){
-    if ($status == "a" or $status == "A"){
-        $status = 'ativo';
-    }else{
-        $status = 'inativo';
-    }
-    return $status;
-}
+// function funcaoStatusServico($status){
+//     if ($status == "a" or $status == "A"){
+//         $status = 'ativo';
+//     }else{
+//         $status = 'inativo';
+//     }
+//     return $status;
+// }
 
 function TotalServicos()
 {
@@ -289,7 +288,7 @@ function ServicosAtivos()
 
     $sql = "SELECT COUNT(*) AS total
             FROM servico
-            WHERE status = 'a' or status = 'a' ";
+            WHERE status = 'Ativo' or status = 'ativo' ";
 
     $resultado = mysqli_query($conn, $sql);
 
@@ -304,7 +303,7 @@ function ServicosInativos()
 
     $sql = "SELECT COUNT(*) AS total
             FROM servico
-            WHERE status = 'I' or status = 'i' ";
+            WHERE status = 'Inativo' or status = 'inativo' ";
 
     $resultado = mysqli_query($conn, $sql);
 
@@ -326,15 +325,15 @@ function ValorMedioServico()
     return $dados["media"] ?? 0;
 }
 
-function BuscarServico($busca)
+function BuscarServico($buscaS)
 {
     include("conexaoBD.php");
 
-    $busca = mysqli_real_escape_string($conn, $busca);
+    $buscaS = mysqli_real_escape_string($conn, $buscaS);
 
     $sql = "SELECT *
             FROM servico
-            WHERE nome_servico LIKE '%$busca%'
+            WHERE nome_servico LIKE '%$buscaS%'
             ORDER BY nome_servico";
 
     $result = mysqli_query($conn, $sql);
@@ -352,7 +351,7 @@ function BuscarServico($busca)
                 <td>'.$coluna["descricao_servico"].'</td>
                 <td>R$ '.number_format($coluna["valor"],2,",",".").'</td>
                 <td>'.$coluna["tempo"].'</td>
-                <td>'.funcaoStatusServico($coluna["status"]).'</td>
+                <td>'.$coluna["status"].'</td>
                 <td>
                     <button class="btn btn-success btn-sm">
                         <i class="fa-solid fa-pen"></i>

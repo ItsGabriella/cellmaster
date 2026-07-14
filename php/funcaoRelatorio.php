@@ -224,8 +224,6 @@ function listaRelatorio(){
 
 
 
-
-
 function TotalRelatorios()
 {
     include("conexaoBD.php");
@@ -295,4 +293,9 @@ function ListarFuncionarios()
     $resultado = mysqli_query($conn, $sql);
 
     return $resultado;
+}
+
+function RelatorioExportado(){
+
+    
 }

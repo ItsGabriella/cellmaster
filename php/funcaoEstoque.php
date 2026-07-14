@@ -436,7 +436,56 @@ function ValorTotalEstoque()
 }
 
 
+function BuscarEstoque($buscaE)
+{
+    include("conexaoBD.php");
+
+    $buscaE = mysqli_real_escape_string($conn, $buscaE);
+
+    $sql = "SELECT *
+            FROM peca
+            WHERE nome_peca LIKE '%$buscaE%'
+            ORDER BY nome_peca";
+
+    $result = mysqli_query($conn, $sql);
+
+    $lista = "";
+
+    if(mysqli_num_rows($result) > 0)
+    {
+        foreach($result as $coluna)
+        {
+            $lista .= '
+            <tr>
+                <td>'.$coluna["idpeca"].'</td>
+                <td>'.$coluna["nome_peca"].'</td>
+                <td>'.$coluna["categoria"].'</td>
+                <td>'.$coluna["qtdade_peca"].'</td>
+                <td>'.$coluna["estoque_min"].'</td>
+                <td>'.$coluna["valor_unit"].'</td>
+                <td>'.funcaoStatus($coluna["qtdade_peca"],$coluna["estoque_min"]).'</td>
+                <td>
+                    <button class="btn btn-success btn-sm">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-sm">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>';
+        }
+    }
+
+    mysqli_close($conn);
+
+    return $lista;
+}
+
+
+
 ?>
+
 
 
 

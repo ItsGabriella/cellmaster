@@ -1,13 +1,11 @@
-<?php 
-
-    include('funcaoEstoque.php');
+<?php
 
 
-    $peca = $_POST["nPeca"];
-    $categoria = $_POST["nCategoria"];
-    $quantidade  = $_POST["nQuantidade"];
-    $valorPeca   = $_POST["nValor"];
-    $estoqueMin = $_POST["nEstoqueMin"];
+    $relatorio = $_POST["nRelatorio"];
+    $tipo = $_POST["nTipo"];
+    $data  = $_POST["nData"];
+    $responsavel = $_POST["nResponsavel"];
+    $status = $_POST["nStatus"];
     $funcao   = $_GET["funcao"];
     $idPeca   = $_GET["codigo"];
     
@@ -18,10 +16,10 @@
     if($funcao == "I"){
 
         //Busca o próximo ID na tabela
-        $idPeca = proxIdPeca();
+        $idPeca = proxIdRelatorio();
 
         //INSERT
-        $sql = "INSERT INTO peca (idpeca, nome_peca, categoria, qtdade_peca, valor_unit, estoque_min) "
+        $sql = "INSERT INTO relatorio (idrelatorio, relatorio, categoria, qtdade_peca, valor_unit, estoque_min) "
                 ." VALUES (
                 ".$idPeca.",
                 '".$peca."',

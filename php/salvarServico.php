@@ -1,6 +1,6 @@
 <?php
 
-    include('funcoes.php');
+    include('funcaoServico.php');
 
     $servico = $_POST["nServico"];
     $descricao = $_POST["nDescricao"];
@@ -27,7 +27,7 @@
                 '".$descricao."',
                 '".$valorServico."',
                 '".$tempo."',
-                ".$status.");";
+                '".$status."');";
 
     }elseif($funcao == "U"){
         //UPDATE

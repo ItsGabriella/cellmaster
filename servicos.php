@@ -4,11 +4,11 @@ include("php/funcoes.php");
 
 
 
-    $busca = "";
+    $buscaS = "";
 
-    if(isset($_GET["nBusca"]))
+    if(isset($_GET["nBuscaServico"]))
     {
-        $busca = $_GET["nBusca"];
+        $buscaS = $_GET["nBuscaServico"];
     }
 
 
@@ -236,9 +236,9 @@ include("php/funcoes.php");
                             <input
                                 type="text"
                                 class="form-control"
-                                name="nBusca"
+                                name="nBuscaServico"
                                 placeholder="Buscar serviço..."
-                                value="<?= $busca ?>">
+                                value="<?= $buscaS ?>">
 
                             <button class="btn btn-success" type="submit">
                                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -351,13 +351,13 @@ include("php/funcoes.php");
 
     <?php
 
-    if($busca == "")
+    if($buscaS == "")
     {
         echo listaServico();
     }
     else
     {
-        echo BuscarServico($busca);
+        echo BuscarServico($buscaS);
     }
 
     ?>

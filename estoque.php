@@ -1,18 +1,19 @@
 <?php
     include ('php/funcoes.php');
 
+
+
+    $buscaE = "";
+
+    if(isset($_GET["nBuscaEstoque"]))
+    {
+        $buscaE = $_GET["nBuscaEstoque"];
+    }
+
     $totalPecas = TotalPecas();
     $estoqueTotal = EstoqueTotal();
     $pecasBaixas = PecasBaixas();
     $valorTotal = ValorTotalEstoque();
-
-
-    $busca = "";
-
-    if(isset($_GET["nBusca"]))
-    {
-        $busca = $_GET["nBusca"];
-    }
 
 
 ?>
@@ -140,7 +141,7 @@
                             Buscar Peça
                         </label>
 
-                    <form method="GET" action="css/salvarEstoque.php">
+                    <form method="GET" action="estoque.php">
 
                         <div class="input-group shadow-sm">
 
@@ -148,8 +149,9 @@
                                 type="text"
                                 class="form-control border-success"
                                 placeholder="Buscar peça..."
-                                name= "nBusca"
-                            >
+                                name= "nBuscaEstoque"
+                                value="<?= $buscaE ?>">
+                            
 
                             <button
                                 class="btn btn-success px-4"
@@ -194,7 +196,7 @@
                     <!-- Botões -->
                 <div class="col-lg-auto d-flex align-items-end">
 
-                    <div class="d-flex gap-2">
+                    <div class="col-lg-3"">
 
                         <button
                             class="btn btn-outline-success btn-filtro"
@@ -241,213 +243,19 @@
                     </thead>
 
                     <tbody>
-<!--
-                        <tr>
-                            <td>1</td>
-                            <td>Tela AMOLED 32p</td>
-                            <td>Tela</td>
-                            <td>45</td>
-                            <td>10</td>
-                            <td>R$ 550,00</td>
-                            <td>
-                                <span class="badge text-bg-success">Em estoque</span>
-                            </td>
 
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
+    <?php
 
-                                <button class="btn btn-danger btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalExcluir">
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
+        if($buscaE == "")
+        {
+            echo listaProduto();
+        }
+        else
+        {
+            echo BuscarEstoque($buscaE);
+        }
 
-                        <tr>
-                            <td>2</td>
-                            <td>Bateria 5000ma</td>
-                            <td>Bateria</td>
-                            <td>120</td>
-                            <td>20</td>
-                            <td>R$ 45,00</td>
-                            <td>
-                                <span class="badge text-bg-success">Em estoque</span>
-                            </td>
-
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalExcluir">
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>3</td>
-                            <td>Botão lateral lig/des</td>
-                            <td>Botões</td>
-                            <td class="text-warning fw-bold">30</td>
-                            <td>50</td>
-                            <td>R$ 80,00</td>
-                            <td>
-                                <span class="badge text-bg-warning">Estoque baixo</span>
-                                    
-                            </td>
-                            
-                            
-                            <td>
-                                <button class="btn btn-success btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalEditar">
-                                <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalExcluir">
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-            <div class="card-footer bg-white">
-
-                <nav>
-
-                    <ul class="pagination justify-content-end mb-0">
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">Anterior</a>
-                        </li>
-
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a class="page-link" href="#">Próximo</a>
-                        </li>
-
-                    </ul>
-
-                </nav>
-
-            </div>
-
-        </div>
-
-        
-
-    </main>
-
-    </div>
-
-
-
-
-    <div class="modal fade" id="modalExcluir" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
-
-            <div class="modal-body text-center p-4">
-
-                <div class="mb-3">
-                    <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
-                         style="width:80px;height:80px;">
-                        <i class="bi bi-trash text-danger fs-1"></i>
-                    </div>
-                </div>
-
-                <h3 class="fw-bold">Excluir Produto</h3>
-
-                <p class="text-secondary">
-                    Tem certeza que deseja excluir o produto
-                    <strong style="color: red;">Botão lateral lig/des</strong>?
-                </p>
-
-                <p class="text-muted">
-                    Esta ação não poderá ser desfeita.
-                </p>
-
-                <div class="d-flex gap-2 justify-content-center mt-4">
-                    <button class="btn btn-outline-success px-4"
-                            data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <button class="btn btn-danger px-4">
-                        Excluir
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="modalEditar" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
-
-            <div class="modal-body text-center p-4">
-
-                <div class="mb-3">
-                    <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
-                         style="width:80px;height:80px;">
-                        <i class="fa-solid fa-pen text-success fs-1"></i>
-                    </div>
-                </div>
-
-                <h3 class="fw-bold">Editar Produto</h3>
-
-                <p class="text-secondary">
-                    Tem certeza que deseja editar o produto
-                    <strong style="color: green;">Botão lateral lig/des</strong>?
-                </p>
-
-                <p class="text-muted">
-                    Esta ação não poderá ser desfeita.
-                </p>
-
-                <div class="d-flex gap-2 justify-content-center mt-4">
-                    <button class="btn btn-outline-danger px-4"
-                            data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-
-                    <button class="btn btn-success px-4">
-                        Editar
-                    </button>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>-->
-
-<?php echo listaProduto();?>
-
+        ?>
 <!-- Modal Novo Produto -->
 <div class="modal fade" id="modalProduto" tabindex="-1">
 
