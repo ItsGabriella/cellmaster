@@ -2,6 +2,15 @@
 
     include("php/funcaoRelatorio.php");
     $funcionarios = ListarFuncionarios();
+    $graficoMes = graficoRelatoriosMes();
+    $graficoTipo = graficoRelatoriosTipo();
+    
+
+    $totalRelatorios = TotalRelatorios();
+    $relatoriosMes   = RelatoriosMes();
+    $pendentes       = RelatoriosPendentes();
+    $exportados      = RelatoriosExportados();
+
 
 
 ?>
@@ -182,10 +191,6 @@
                                 <?= $exportados ?>
                             </h2>
 
-                            <h2 class="fw-bold mb-1">
-                                190
-                            </h2>
-
                             <small class="text-secondary">
                                 Downloads
                             </small>
@@ -246,25 +251,28 @@
 </div>
 
 
-    <div class="row g-4 mb-4">
-        <!-- Tabela -->
-        <div class="card border-0 shadow-sm" style="width:66%; ">
+<div class="row g-4 mb-4">
+    <div class="card border-0 shadow-sm" style="width: 66%;">
 
-            <div class="card-header bg-white p-4">
-                <h6>
-                    Relatórios Recentes
-                </h6>
+        <div class="card-header bg-white p-4 d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">
+                Relatórios Recentes
+            </h6>
+            
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="selectAll">
+                <label class="form-check-label" for="selectAll">
+                    Selecionar todos
+                </label>
+            </div>
+        </div>
 
-                <div class="row g-1 align-items-end">
-
-
+        <div class="card-body">
             <div class="table-responsive">
-
-               <table class="table table-sm table-hover align-middle mb-0">
-
+                <table class="table table-sm table-hover align-middle mb-0">
                     <thead class="table-light">
-
                         <tr>
+                            <th></th>
                             <th>ID</th>
                             <th>Relatório</th>
                             <th>Tipo</th>
@@ -273,95 +281,16 @@
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
-
                     </thead>
-
                     <tbody>
-
-                        <tr>
-                            <td>1</td>
-                            <td>Estoque Mensal</td>
-                            <td>Estoque</td>
-                            <td>10/06/2026</td>
-                            <td>João Silva</td>
-                            <td>
-                                <span class="badge text-bg-success">Concluído</span>
-                            </td>
-
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalExcluirRelatorio">
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                        <td>2</td>
-                            <td>Estoque Mensal</td>
-                            <td>Estoque</td>
-                            <td>10/06/2026</td>
-                            <td>João Silva</td>
-                            <td>
-                                <span class="badge text-bg-success">Concluído</span>
-                            </td>
-
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalExcluirRelatorio">
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                        <tr>
-                        <td>3</td>
-                            <td>Estoque Mensal</td>
-                            <td>Estoque</td>
-                            <td>10/06/2026</td>
-                            <td>João Silva</td>
-                            <td>
-                                <span class="badge text-bg-success">Concluído</span>
-                            </td>
-                            
-                            
-                            <td>
-                                <button class="btn btn-success btn-sm">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-
-                                <button class="btn btn-danger btn-sm"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalExcluirRelatorio">
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
+                        <?php echo listaRelatorio(); ?>
                     </tbody>
-
                 </table>
-
             </div>
-
-        
-
-            </div>
-            
-
         </div>
-        
+
     </div>
+</div>
 
     <div class="col-lg-4">
     <div class="card border-0 shadow-sm h-100">
@@ -373,7 +302,7 @@
 
             <div class="card border-light shadow-sm mb-3">
                 <div class="card-body d-flex align-items-center gap-3 py-2 px-3">
-                    <button class="btn btn-outline-danger d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
+                    <button type="submit" class="btn btn-outline-danger d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
                         <i class="fa-solid fa-file-pdf me-2"></i> PDF
                     </button>
                     <span class="text-secondary" style="font-size: 0.9rem;">Exportar relatório em PDF</span>
@@ -382,7 +311,7 @@
 
             <div class="card border-light shadow-sm mb-3">
                 <div class="card-body d-flex align-items-center gap-3 py-2 px-3">
-                    <button class="btn btn-outline-success d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
+                    <button type="submit" class="btn btn-outline-success d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
                         <i class="fa-solid fa-file-excel me-2"></i> Excel
                     </button>
                     <span class="text-secondary" style="font-size: 0.9rem;">Exportar relatório em Excel</span>
@@ -391,7 +320,7 @@
 
             <div class="card border-light shadow-sm mb-4">
                 <div class="card-body d-flex align-items-center gap-3 py-2 px-3">
-                    <button class="btn btn-outline-primary d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
+                    <button type="submit" class="btn btn-outline-primary d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
                         <i class="fa-solid fa-file-csv me-2"></i> CSV
                     </button>
                     <span class="text-secondary" style="font-size: 0.9rem;">Exportar relatório em CSV</span>
@@ -434,110 +363,114 @@
 
     <div class="modal fade" id="modalRelatorio" tabindex="-1">
 
-<div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
 
-    <div class="modal-content border-0 shadow-lg">
+        <div class="modal-content border-0 shadow-lg">
 
-        <!-- Cabeçalho -->
-        <div class="modal-header bg-success text-white">
+            <!-- Cabeçalho -->
+            <div class="modal-header bg-success text-white">
 
-            <h5 class="modal-title">
-                <i class="fa-solid fa-box-archive me-2"></i>
-                Novo Relatório
-            </h5>
+                <h5 class="modal-title">
+                    <i class="fa-solid fa-box-archive me-2"></i>
+                    Novo Relatório
+                </h5>
 
-            <button type="button"
-                    class="btn-close btn-close-white"
-                    data-bs-dismiss="modal">
-            </button>
-
-        </div>
-
-        <!-- Corpo -->
-        <div class="modal-body">
-
-            <form method="POST" action="php/salvarRelatório.php?funcao=I" enctype="multipart/form-data">   
-
-                <div class="row g-3">
-
-                <div class="col-md-3">
-                        <label class="form-label fw-semibold">
-                            ID
-                        </label>
-
-                        <input type="text"
-                            class="form-control"
-                            placeholder="0001" readonly>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            Relatório
-                        </label>
-
-                        <input type="text"
-                            id="iRelatorio" name="nRelatorio"
-                            class="form-control"
-                            placeholder="Digite o nome do relatório">
-                    </div>
-
-                    <div class="col-md-6">
-                        <label class="form-label fw-semibold">
-                            Tipo
-                        </label>
-
-                        <input type="text"
-                            id="iTipo" name="nTipo"
-                            class="form-control"
-                            placeholder="Digite o tipo">
-                    </div>
-
-
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold">
-                            Data
-                        </label>
-
-                        <input id="iData" name="nData" type="date"
-                            class="form-control">
-                    </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">Responsável</label>
-
-                            <select name="nFuncionario" class="form-select w-200" required>
-
-                                <option value="">Selecione um funcionário</option>
-
-                                <?php while($funcionario = mysqli_fetch_assoc($funcionarios)){ ?>
-
-                                    <option value="<?= $funcionario["idfuncionario"] ?>">
-                                        <?= $funcionario["nome_func"] ?>
-                                    </option>
-
-                                <?php } ?>
-
-                            </select>
-                        </div>
-
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">
-                                Status
-                            </label>
-
-                            <select id="iStatus" name="nStatus" class="form-select">
-                                <option>Pendente</option> <!--Relatório ainda não foi iniciado. -->
-                                <option>Em andamento</option> <!--Está sendo elaborado. -->
-                                <option>Concluído</option> <!--Foi finalizado. -->
-                                <option>Enviado</option> <!--Foi enviado ao cliente ou gerente. -->
-                                <option>Arquivado</option> <!--Não será mais alterado. -->
-                                <option>Cancelado</option> <!--Relatório foi cancelado. -->
-                            </select>
-                        </div>
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
 
             </div>
 
-        </div>
+            <!-- Corpo -->
+            <div class="modal-body">
+
+                <form method="POST" action="php/salvarRelatorio.php?funcao=I" enctype="multipart/form-data">   
+
+                    <div class="row g-3">
+
+                    <div class="col-md-3">
+                            <label class="form-label fw-semibold">
+                                ID
+                            </label>
+
+                            <input type="text"
+                                class="form-control"
+                                placeholder="0001" readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">
+                                Relatório
+                            </label>
+
+                            <input type="text"
+                                id="iRelatorio" name="nRelatorio"
+                                class="form-control"
+                                placeholder="Digite o nome do relatório">
+                        </div>
+
+                        <div class="col-md-6">
+                                <label class="form-label fw-semibold">
+                                    Tipo
+                                </label>
+
+                                <select id="iTipo" name="nTipo" class="form-select">
+                                    <option>Clientes</option> 
+                                    <option>Funcionários</option> 
+                                    <option>Serviços</option> 
+                                    <option>Estoque</option> 
+                                    <option>Orçamento</option> 
+                                    <option>Ordem de Serviço</option> 
+                                </select>
+                            </div>
+
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">
+                                Data
+                            </label>
+
+                            <input id="iData" name="nData" type="date"
+                                class="form-control">
+                        </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Responsável</label>
+
+                                <select name="nResponsavel" id="iResponsavel" class="form-select w-200" required >
+
+                                    <option value="">Selecione um funcionário</option>
+
+                                    <?php while($funcionario = mysqli_fetch_assoc($funcionarios)){ ?>
+
+                                        <option>
+                                            <?= $funcionario["nome_func"] ?>
+                                        </option>
+
+                                    <?php } ?>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">
+                                    Status
+                                </label>
+
+                                <select id="iStatus" name="nStatus" class="form-select">
+                                    <option>Pendente</option> <!--Relatório ainda não foi iniciado. -->
+                                    <option>Em andamento</option> <!--Está sendo elaborado. -->
+                                    <option>Concluído</option> <!--Foi finalizado. -->
+                                    <option>Enviado</option> <!--Foi enviado ao cliente ou gerente. -->
+                                    <option>Arquivado</option> <!--Não será mais alterado. -->
+                                    <option>Cancelado</option> <!--Relatório foi cancelado. -->
+                                </select>
+                            </div>
+
+                </div>
+
+            </div>
 
         <!-- Rodapé -->
         <div class="modal-footer">
@@ -563,15 +496,18 @@
 </div>
 
 
+
+
 <script>
 
 // Gráfico de Barras
 new Chart(document.getElementById('graficoMes'), {
     type: 'bar',
     data: {
-        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+        labels: <?= json_encode($graficoMes["meses"]) ?>,
+
         datasets: [{
-            data: [12, 18, 25, 22, 28, 36],
+            data: <?= json_encode($graficoMes["totais"]) ?>,
             backgroundColor: '#198754',
             borderRadius: 8,
             maxBarThickness: 35
@@ -603,15 +539,10 @@ new Chart(document.getElementById('graficoMes'), {
 new Chart(document.getElementById('graficoTipo'), {
     type: 'doughnut',
     data: {
-        labels: [
-            'Estoque',
-            'Serviços',
-            'Financeiro',
-            'Clientes',
-            'Orçamentos'
-        ],
+        labels: <?= json_encode($graficoTipo["tipos"]) ?>,
+
         datasets: [{
-            data: [35, 30, 20, 10, 5],
+            data: <?= json_encode($graficoTipo["quantidades"]) ?>,
             backgroundColor: [
                 '#198754',
                 '#0d6efd',

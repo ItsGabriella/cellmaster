@@ -2,6 +2,9 @@
 
 function listaRelatorio(){
 
+
+    $funcionarios = ListarFuncionarios();
+
     include("conexaoBD.php");
     $sql = "SELECT * FROM relatorio;";
             
@@ -19,12 +22,17 @@ function listaRelatorio(){
 
             $lista .= 
             '<tr>
+                <td>
+                    <input type="checkbox" 
+                    class="form-check-input"
+                    name="relatorios[]"
+                    value="'.$coluna["idrelatorio"].'">
+                </td>
                 <td>'.$coluna["idrelatorio"].'</td>
-                <td>'.$coluna["relatorio"].'</td>
+                <td>'.$coluna["nome_relatorio"].'</td>
                 <td>'.$coluna["tipo"].'</td>
                 <td>'.$coluna["data"].'</td>
                 <td>'.$coluna["responsavel"].'</td>
-                <td>'.$coluna["exportado"].'</td>
                 <td>'.$coluna["status"].'</td>
 
 
@@ -62,7 +70,7 @@ function listaRelatorio(){
 
                                 <p class="text-secondary">
                                     Tem certeza que deseja excluir o relatório
-                                    <strong style="color: red;">'.$coluna["relatorio"].'</strong>?
+                                    <strong style="color: red;">'.$coluna["nome_relatorio"].'</strong>?
                                 </p>
 
                                 <p class="text-muted">
@@ -91,14 +99,18 @@ function listaRelatorio(){
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
 
-                        <div class="modal-header border-0">
-                            <h4 class="modal-title fw-bold text-success">
-                                <i class="fa-solid fa-pen me-2"></i>Editar Relatório
-                            </h4>
+                        <div class="modal-header bg-success text-white">
+
+                            <h5 class="modal-title">
+                                <i class="fa-solid fa-box-archive me-2"></i>
+                                Editar Relatório
+                            </h5>
 
                             <button type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"></button>
+                                    class="btn-close btn-close-white"
+                                    data-bs-dismiss="modal">
+                            </button>
+
                         </div>
 
                         <div class="modal-body">
@@ -118,21 +130,24 @@ function listaRelatorio(){
                                         <input type="text"
                                             class="form-control"
                                             id="iRelatorio" name="nRelatorio"
-                                            value="'.$coluna["relatorio"].'">
+                                            value="'.$coluna["nome_relatorio"].'">
                                             
                                     </div>
 
-                                    <!-- Categoria -->
+
                                     <div class="col-md-5">
                                         <label class="form-label fw-semibold">
                                             Tipo
                                         </label>
 
-                                        <input type="text"
-                                            class="form-control"
-                                            id="iTipo" name="nTipo"
-                                            value="'.$coluna["relatorio"].'">
-                                            
+                                        <select id="iTipo" name="nTipo" class="form-select" value="'.$coluna["tipo"].'">
+                                            <option>Clientes</option> 
+                                            <option>Funcionários</option> 
+                                            <option>Serviços</option> 
+                                            <option>Estoque</option> 
+                                            <option>Orçamento</option> 
+                                            <option>Ordem de Serviço</option> 
+                                        </select>
                                     </div>
 
                                     <!-- Quantidade -->
@@ -143,38 +158,46 @@ function listaRelatorio(){
 
                                         <input type="date"
                                             class="form-control"
-                                            id="iDate" name="nDate"
+                                            id="iData" name="nData"
                                             value="'.$coluna["data"].'">
                                             
                                     </div>
 
-                                    <!-- Estoque mínimo -->
+                                    
                                     <div class="col-md-4">
-                                        <label class="form-label fw-semibold">
-                                            Responsável
-                                        </label>
+                                        <label class="form-label fw-semibold">Responsável</label>
 
-                                        <input type="number"
-                                            class="form-control"
-                                            id="iResponsavel"
-                                            name="nResponsavel"
-                                            value="'.$coluna["responsavel"].'">
-                                            
+                                        <select name="nResponsavel" id="iResponsavel" class="form-select w-200" required>
+
+                                            <option value="">Selecione um funcionário</option>';
+
+                                            while($funcionario = mysqli_fetch_assoc($funcionarios)){
+                                                $lista .= '
+                                                    <option>
+                                                        '.$funcionario["nome_func"].'
+                                                    </option>';
+                                            }
+
+                                            $lista .= '
+
+                                        </select>
                                     </div>
 
                                     <!-- Valor -->
-                                    <div class="col-md-4">
-                                        <label class="form-label fw-semibold">
-                                            Status
-                                        </label>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">
+                                        Status
+                                    </label>
 
-                                        <input type="text"
-                                            class="form-control"
-                                            step="0.01"
-                                            id="iStatus" name="nStatus"
-                                            value="'.$coluna["status"].'">
-                                            
-                                    </div>
+                                    <select id="iStatus" name="nStatus" class="form-select">
+                                        <option>Pendente</option> <!--Relatório ainda não foi iniciado. -->
+                                        <option>Em andamento</option> <!--Está sendo elaborado. -->
+                                        <option>Concluído</option> <!--Foi finalizado. -->
+                                        <option>Enviado</option> <!--Foi enviado ao cliente ou gerente. -->
+                                        <option>Arquivado</option> <!--Não será mais alterado. -->
+                                        <option>Cancelado</option> <!--Relatório foi cancelado. -->
+                                    </select>
+                                </div>
 
                                 </div>
 
@@ -182,7 +205,7 @@ function listaRelatorio(){
 
                                 <p class="text-secondary mb-1">
                                     Tem certeza que deseja editar o relatório
-                                    <strong class="text-success">'.$coluna["relatorio"].'</strong>?
+                                    <strong class="text-success">'.$coluna["nome_relatorio"].'</strong>?
                                 </p>
 
                                 <p class="text-muted">
@@ -242,8 +265,8 @@ function RelatoriosMes()
 
     $sql = "SELECT COUNT(*) AS total
             FROM relatorio
-            WHERE MONTH(data_relatorio) = MONTH(CURRENT_DATE())
-            AND YEAR(data_relatorio) = YEAR(CURRENT_DATE())";
+            WHERE MONTH(data) = MONTH(CURRENT_DATE())
+            AND YEAR(data) = YEAR(CURRENT_DATE())";
 
     $resultado = mysqli_query($conn, $sql);
 
@@ -295,7 +318,154 @@ function ListarFuncionarios()
     return $resultado;
 }
 
-function RelatorioExportado(){
 
-    
+
+
+function BuscarRelatorio($buscaR)
+{
+    include("conexaoBD.php");
+
+    $buscaS = mysqli_real_escape_string($conn, $buscaR);
+
+    $sql = "SELECT *
+            FROM relatorio
+            WHERE nome_relatorio LIKE '%$buscaR%'
+            ORDER BY nome_relatorio";
+
+    $result = mysqli_query($conn, $sql);
+
+    $lista = "";
+
+    if(mysqli_num_rows($result) > 0)
+    {
+        foreach($result as $coluna)
+        {
+            $lista .= '
+            <tr>
+                <td>'.$coluna["idrelatorio"].'</td>
+                <td>'.$coluna["nome_relatorio"].'</td>
+                <td>'.$coluna["tipo"].'</td>
+                <td>'.$coluna["data"].'</td>
+                <td>'.$coluna["responsavel"].'</td>
+                <td>'.$coluna["exportado"].'</td>
+                <td>'.$coluna["status"].'</td>
+
+
+                <td>
+                    <button class="btn btn-success btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalEditarRelatorio'.$coluna["idrelatorio"].'">
+                    <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalExcluirRelatorio'.$coluna["idrelatorio"].'">
+                    <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>';
+        }
+    }
+
+    mysqli_close($conn);
+
+    return $lista;
 }
+
+function proxIdRelatorio(){
+
+    $id = "";
+
+    include("conexaoBD.php");
+    $sql = "SELECT MAX(idrelatorio) AS Maior FROM relatorio;";        
+    $result = mysqli_query($conn,$sql);
+    mysqli_close($conn);
+
+    //Validar se tem retorno do BD
+    if (mysqli_num_rows($result) > 0) {
+                
+        $array = array();
+        
+        while ($linha = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            array_push($array,$linha);
+        }
+        
+        foreach ($array as $coluna) {            
+            //***Verificar os dados da consulta SQL
+            $id = $coluna["Maior"] + 1;
+        }        
+    } 
+
+    return $id;
+}
+
+
+function graficoRelatoriosMes(){
+
+    include("conexaoBD.php");
+
+    $sql = "
+        SELECT MONTH(data) AS mes,
+               COUNT(*) AS total
+        FROM relatorio
+        GROUP BY MONTH(data)
+        ORDER BY MONTH(data)
+    ";
+
+    $resultado = mysqli_query($conn, $sql);
+
+    $meses = [];
+    $totais = [];
+
+    $nomeMes = [
+        1=>"Jan",2=>"Fev",3=>"Mar",4=>"Abr",
+        5=>"Mai",6=>"Jun",7=>"Jul",8=>"Ago",
+        9=>"Set",10=>"Out",11=>"Nov",12=>"Dez"
+    ];
+
+    while($linha = mysqli_fetch_assoc($resultado)){
+
+        $meses[] = $nomeMes[$linha["mes"]];
+        $totais[] = $linha["total"];
+
+    }
+
+    return [
+        "meses" => $meses,
+        "totais" => $totais
+    ];
+}
+
+
+function graficoRelatoriosTipo(){
+
+    include("conexaoBD.php");
+
+    $sql = "
+        SELECT tipo, COUNT(*) AS total
+        FROM relatorio
+        GROUP BY tipo
+    ";
+
+    $resultado = mysqli_query($conn, $sql);
+
+    $tipos = [];
+    $quantidades = [];
+
+    while($linha = mysqli_fetch_assoc($resultado)){
+
+        $tipos[] = $linha["tipo"];
+        $quantidades[] = $linha["total"];
+
+    }
+
+    return [
+        "tipos" => $tipos,
+        "quantidades" => $quantidades
+    ];
+}
+
+
+
+?>

@@ -13,3 +13,14 @@ function toggleSenha() {
     }
 }
 
+function selecionarTodos(){
+
+    let checks = document.querySelectorAll(
+        'input[name="relatorios[]"]'
+    );
+
+    checks.forEach(check => {
+        check.checked = true;
+    });
+
+}

@@ -248,7 +248,7 @@
 
         if($buscaE == "")
         {
-            echo listaProduto();
+            echo listaRelatorio();
         }
         else
         {
@@ -256,6 +256,7 @@
         }
 
         ?>
+        
 <!-- Modal Novo Produto -->
 <div class="modal fade" id="modalProduto" tabindex="-1">
 
