@@ -248,7 +248,7 @@
 
         if($buscaE == "")
         {
-            echo listaRelatorio();
+            echo listaProduto();
         }
         else
         {

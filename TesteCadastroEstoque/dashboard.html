@@ -1,0 +1,68 @@
+
+        <!DOCTYPE html>
+        <html lang="pt-br">
+        <head>
+            <meta charset="UTF-8">
+            <title>Dashboard de Testes - Estoque</title>
+            <style>
+                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 20px; }
+                .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                h1 { color: #198754; text-align: center; }
+                .summary { display: flex; justify-content: space-around; margin-bottom: 30px; padding: 15px; background: #e9ecef; border-radius: 5px; }
+                .card { text-align: center; }
+                .card h2 { margin: 0; font-size: 2em; }
+                .status-sucesso { color: #198754; }
+                .status-falha { color: #dc3545; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+                th { background-color: #198754; color: white; }
+                .img-link { color: #0d6efd; text-decoration: none; font-weight: bold; }
+                tr:hover { background-color: #f1f1f1; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Relatório de Automação de Estoque</h1>
+                <div class="summary">
+                    <div class="card"><h3>Total</h3><h2>3</h2></div>
+                    <div class="card"><h3 class="status-sucesso">Sucessos</h3><h2>3</h2></div>
+                    <div class="card"><h3 class="status-falha">Falhas</h3><h2>0</h2></div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Peça</th>
+                            <th>Status</th>
+                            <th>Evidência</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        
+                <tr>
+                    <td>1</td>
+                    <td>Bateria iPhone XR #787</td>
+                    <td class="status-sucesso">Sucesso</td>
+                    <td><a class="img-link" href="cadastro_peca_1.png" target="_blank">Visualizar Screenshot</a></td>
+                </tr>
+            
+                <tr>
+                    <td>2</td>
+                    <td>Bateria Galaxy S20 #872</td>
+                    <td class="status-sucesso">Sucesso</td>
+                    <td><a class="img-link" href="cadastro_peca_2.png" target="_blank">Visualizar Screenshot</a></td>
+                </tr>
+            
+                <tr>
+                    <td>3</td>
+                    <td>Tela Touch iPhone 11 #373</td>
+                    <td class="status-sucesso">Sucesso</td>
+                    <td><a class="img-link" href="cadastro_peca_3.png" target="_blank">Visualizar Screenshot</a></td>
+                </tr>
+            
+                    </tbody>
+                </table>
+            </div>
+        </body>
+        </html>
+        
