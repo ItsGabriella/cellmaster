@@ -134,94 +134,76 @@
 
             <div class="card-header bg-white p-4">
 
-                <div class="row g-3 align-items-end">
+            <div class="row g-3 align-items-end">
 
-                    <div class="col-lg-4">
-                        <label class="form-label fw-semibold">
-                            Buscar Peça
-                        </label>
+        <div class="col-lg-3">
+            <label class="form-label fw-semibold">
+                Buscar Peça
+            </label>
 
-                    <form method="GET" action="estoque.php">
+            <form method="GET" action="estoque.php">
+                <div class="input-group shadow-sm">
+                    <input
+                        type="text"
+                        class="form-control border-success"
+                        placeholder="Buscar peça..."
+                        name="nBuscaEstoque"
+                        value="<?= $buscaE ?>">
 
-                        <div class="input-group shadow-sm">
-
-                            <input
-                                type="text"
-                                class="form-control border-success"
-                                placeholder="Buscar peça..."
-                                name= "nBuscaEstoque"
-                                value="<?= $buscaE ?>">
-                            
-
-                            <button
-                                class="btn btn-success px-4"
-                                type="submit">
-                                <i class="fa-solid fa-magnifying-glass me-0"></i>
-                                
-                            </button>
-
-                        </div>
-
-                    </form>
+                    <button
+                        class="btn btn-success px-4"
+                        type="submit">
+                        <i class="fa-solid fa-magnifying-glass me-0"></i>
+                    </button>
                 </div>
+            </form>
+        </div>
 
-                    <!-- Categoria -->
-                    <div class="col-lg-3">
-                        <label class="form-label fw-semibold">
-                            Categoria
-                        </label>
+        <div class="col-lg-3">
+            <label class="form-label fw-semibold">
+                Categoria
+            </label>
 
-                        <select class="form-select select-verde">
-                            <option selected>Todas</option>
-                            <option>Tela</option>
-                            <option>Bateria</option>
-                            <option>Botões</option>
-                        </select>
-                    </div>
+            <select class="form-select select-verde">
+                <option selected>Todas</option>
+                <option>Tela</option>
+                <option>Bateria</option>
+                <option>Botões</option>
+            </select>
+        </div>
 
-                    <!-- Status -->
-                    <div class="col-lg-3">
-                        <label class="form-label fw-semibold">
-                            Status
-                        </label>
+        <div class="col-lg-3">
+            <label class="form-label fw-semibold">
+                Status
+            </label>
 
-                        <select class="form-select select-verde">
-                            <option selected>Todos</option>
-                            <option>Em estoque</option>
-                            <option>Estoque baixo</option>
-                            <option>Esgotado</option>
-                        </select>
-                    </div>
+            <select class="form-select select-verde">
+                <option selected>Todos</option>
+                <option>Em estoque</option>
+                <option>Estoque baixo</option>
+                <option>Esgotado</option>
+            </select>
+        </div>
 
-                    <!-- Botões -->
-                <div class="col-lg-auto d-flex align-items-end">
+        <div class="col-lg-3 d-flex align-items-end">
+            <div class="d-flex gap-2 w-100">
+                <button
+                    type="button"
+                    class="btn btn-outline-success btn-filtrar flex-grow-1"
+                    title="Limpar">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
 
-                    <div class="col-lg-3"">
-
-                        <button
-                            class="btn btn-outline-success btn-filtro"
-                            title="Limpar">
-
-                            <i class="fa-solid fa-rotate-left"></i>
-
-                        </button>
-
-                        <button
-                            class="btn btn-success btn-filtrar">
-
-                            <i class="fa-solid fa-filter"></i>
-
-                            Filtrar
-
-                        </button>
-
-                    </div>
-
-                    </div>
-
-                </div>
-
+                <button
+                    type="submit"
+                    class="btn btn-success btn-filtrar flex-grow-1">
+                    <i class="fa-solid fa-filter"></i>
+                    Filtrar
+                </button>
             </div>
+        </div>
+
+        </div>
 
             <div class="table-responsive">
 

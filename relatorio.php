@@ -252,103 +252,127 @@
 
 
 <div class="row g-4 mb-4">
-    <div class="card border-0 shadow-sm" style="width: 66%;">
+    
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm">
 
-        <div class="card-header bg-white p-4 d-flex justify-content-between align-items-center">
-            <h6 class="mb-0">
-                Relatórios Recentes
-            </h6>
-            
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="selectAll">
-                <label class="form-check-label" for="selectAll">
-                    Selecionar todos
-                </label>
+            <div class="card-header bg-white p-4 d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-bold">
+                    Relatórios Recentes
+                </h6>
+                
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="selectAll">
+                    <label class="form-check-label" for="selectAll">
+                        Selecionar todos
+                    </label>
+                </div>
             </div>
-        </div>
 
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-sm table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th></th>
-                            <th>ID</th>
-                            <th>Relatório</th>
-                            <th>Tipo</th>
-                            <th>Data</th>
-                            <th>Responsável</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php echo listaRelatorio(); ?>
-                    </tbody>
-                </table>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th></th>
+                                <th>ID</th>
+                                <th>Relatório</th>
+                                <th>Tipo</th>
+                                <th>Data</th>
+                                <th>Responsável</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php echo listaRelatorio(); ?>
+                        </tbody>
+
+                        <tbody>
+                            <?php 
+                                // Passa o filtro ativo para a função
+                                echo listaRelatorio($filtro_ativo); 
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 
     <div class="col-lg-4">
-    <div class="card border-0 shadow-sm h-100">
-        <div class="card-body">
-            
-            <h5 class="fw-bold mb-3 text-secondary" style="font-size: 1.1rem;">
-                Exportações Rápidas
-            </h5>
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                
+                <h5 class="fw-bold mb-3 text-secondary" style="font-size: 1.1rem;">
+                    Exportações Rápidas
+                </h5>
 
-            <div class="card border-light shadow-sm mb-3">
-                <div class="card-body d-flex align-items-center gap-3 py-2 px-3">
-                    <button type="submit" class="btn btn-outline-danger d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
-                        <i class="fa-solid fa-file-pdf me-2"></i> PDF
-                    </button>
-                    <span class="text-secondary" style="font-size: 0.9rem;">Exportar relatório em PDF</span>
+                <div class="card border-light shadow-sm mb-2">
+                    <div class="card-body exportacao-card py-2 px-3">
+                        <a href="php/exportarPdf.php" target="_blank" class="btn btn-outline-danger d-flex align-items-center justify-content-center fw-bold export-btn" style="height: 38px; text-decoration: none;">
+                            <i class="fa-solid fa-file-pdf me-2"></i> PDF
+                        </a>
+                        <span class="text-secondary" style="font-size: 0.85rem;">Exportar em PDF</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="card border-light shadow-sm mb-3">
-                <div class="card-body d-flex align-items-center gap-3 py-2 px-3">
-                    <button type="submit" class="btn btn-outline-success d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
-                        <i class="fa-solid fa-file-excel me-2"></i> Excel
-                    </button>
-                    <span class="text-secondary" style="font-size: 0.9rem;">Exportar relatório em Excel</span>
+                <div class="card border-light shadow-sm mb-2">
+                    <div class="card-body exportacao-card py-2 px-3">
+                        <button type="submit" class="btn btn-outline-success d-flex align-items-center justify-content-center fw-bold export-btn" style="height: 38px;">
+                            <i class="fa-solid fa-file-excel me-2"></i> Excel
+                        </button>
+                        <span class="text-secondary" style="font-size: 0.85rem;">Exportar em Excel</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="card border-light shadow-sm mb-4">
-                <div class="card-body d-flex align-items-center gap-3 py-2 px-3">
-                    <button type="submit" class="btn btn-outline-primary d-flex align-items-center justify-content-center fw-bold" style="width: 85px; height: 38px;">
-                        <i class="fa-solid fa-file-csv me-2"></i> CSV
-                    </button>
-                    <span class="text-secondary" style="font-size: 0.9rem;">Exportar relatório em CSV</span>
+                <div class="card border-light shadow-sm mb-4">
+                    <div class="card-body exportacao-card py-2 px-3">
+                        <button type="submit" class="btn btn-outline-primary d-flex align-items-center justify-content-center fw-bold export-btn" style="height: 38px;">
+                            <i class="fa-solid fa-file-csv me-2"></i> CSV
+                        </button>
+                        <span class="text-secondary" style="font-size: 0.85rem;">Exportar em CSV</span>
+                    </div>
                 </div>
-            </div>
 
-            <h5 class="fw-bold mb-3 text-secondary" style="font-size: 1.1rem;">
-                Filtros Rápidos
-            </h5>
-            
-            <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-outline-secondary btn-sm bg-white text-dark border-light shadow-sm px-3 py-2">
-                    Hoje
-                </button>
-                <button class="btn btn-outline-secondary btn-sm bg-white text-dark border-light shadow-sm px-3 py-2">
-                    Últimos 7 dias
-                </button>
-                <button class="btn btn-success btn-sm border-0 px-3 py-2 fw-semibold" style="background-color: #e2f6e9; color: #157347;">
-                    Este mês
-                </button>
-                <button class="btn btn-outline-secondary btn-sm bg-white text-dark border-light shadow-sm px-3 py-2">
-                    Último mês
-                </button>
-            </div>
+                <h5 class="fw-bold mb-2 text-secondary" style="font-size: 1.1rem;">
+                    Período do Relatório
+                </h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <?php 
+                    // Identifica qual filtro está ativo na URL (se não houver nenhum, o padrão será 'este_mes')
+                    $filtro_ativo = isset($_GET['periodo']) ? $_GET['periodo'] : 'este_mes'; 
+                    ?>
 
+                    <a href="?periodo=hoje" 
+                    class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == 'hoje' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
+                    style="<?= $filtro_ativo == 'hoje' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
+                        Hoje
+                    </a>
+
+                    <a href="?periodo=7_dias" 
+                    class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == '7_dias' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
+                    style="<?= $filtro_ativo == '7_dias' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
+                        Últimos 7 dias
+                    </a>
+
+                    <a href="?periodo=este_mes" 
+                    class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == 'este_mes' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
+                    style="<?= $filtro_ativo == 'este_mes' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
+                        Este mês
+                    </a>
+
+                    <a href="?periodo=ultimo_mes" 
+                    class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == 'ultimo_mes' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
+                    style="<?= $filtro_ativo == 'ultimo_mes' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
+                        Último mês
+                    </a>
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
     
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -562,6 +586,33 @@ new Chart(document.getElementById('graficoTipo'), {
         }
     }
 });
+
+// Aguarda o carregamento do DOM
+document.addEventListener('DOMContentLoaded', function () {
+    const selectAllCheckbox = document.getElementById('selectAll');
+    
+    // Seleciona todos os checkboxes que têm a classe 'checkbox-relatorio'
+    const reportCheckboxes = document.querySelectorAll('.checkbox-relatorio');
+
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function () {
+            // Define o estado de todos os checkboxes individuais igual ao do "Selecionar todos"
+            reportCheckboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        });
+
+        // Opcional: Se o usuário desmarcar um item manualmente, desmarca o "Selecionar todos"
+        reportCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const allChecked = Array.from(reportCheckboxes).every(cb => cb.checked);
+                selectAllCheckbox.checked = allChecked;
+            });
+        });
+    }
+});
+
+
 
 </script>
 

@@ -16,7 +16,7 @@ import os
 import webbrowser
 
 class TesteAutomatizadoEstoque:
-    def __init__(self, url_base="http://localhost/cellmaster/estoque.php"):
+    def __init__(self, url_base="http://localhost:8080/cellmaster/estoque.php"):
         self.url_base = url_base
         self.diretorio_teste = "TesteCadastroEstoque"
         
@@ -225,7 +225,7 @@ if __name__ == "__main__":
     try:
         qtd = int(input("Quantas peças você deseja cadastrar hoje? "))
         if qtd > 0:
-            URL_LOCAL = "http://localhost/cellmaster/estoque.php"
+            URL_LOCAL = "http://localhost:8080/cellmaster/estoque.php"
             teste = TesteAutomatizadoEstoque(url_base=URL_LOCAL)
             teste.executar_teste_completo(qtd)
         else:

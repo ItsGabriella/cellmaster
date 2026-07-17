@@ -1,19 +1,48 @@
 <?php
 
-function listaRelatorio(){
+// Modifique a função em funcaoRelatorio.php para aceitar o parâmetro $periodo:
+    function listaRelatorio($periodo = 'este_mes'){
 
+        $funcionarios = ListarFuncionarios();
+    
+        include("conexaoBD.php");
+        
+        // 1. Criar a regra de filtragem de data para o SQL
+        $where_date = "";
+    
+        switch ($periodo) {
+            case 'hoje':
+                // Filtra registros que foram gerados apenas na data atual
+                $where_date = "WHERE DATE(data) = CURRENT_DATE()";
+                break;
+    
+            case '7_dias':
+                // Filtra registros dos últimos 7 dias (incluindo hoje)
+                $where_date = "WHERE data >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)";
+                break;
+    
+            case 'ultimo_mes':
+                // Filtra registros do mês passado inteiro
+                $where_date = "WHERE MONTH(data) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) 
+                               AND YEAR(data) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
+                break;
+    
+            case 'este_mes':
+            default:
+                // Filtra registros do mês corrente (padrão)
+                $where_date = "WHERE MONTH(data) = MONTH(CURRENT_DATE()) 
+                               AND YEAR(data) = YEAR(CURRENT_DATE())";
+                break;
+        }
+    
+        // 2. Aplicar a condição construída na sua Query SQL original
+        $sql = "SELECT * FROM relatorio " . $where_date . " ORDER BY data DESC;";
+                
+        $result = mysqli_query($conn, $sql);
+        mysqli_close($conn);
+    
+        $lista = '';
 
-    $funcionarios = ListarFuncionarios();
-
-    include("conexaoBD.php");
-    $sql = "SELECT * FROM relatorio;";
-            
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
-
-    $lista = '';
-
-    //Validar se tem retorno do BD
     if (mysqli_num_rows($result) > 0) {        
         
         foreach ($result as $coluna) {
@@ -24,10 +53,10 @@ function listaRelatorio(){
             '<tr>
                 <td>
                     <input type="checkbox" 
-                    class="form-check-input"
-                    name="relatorios[]"
+                    class="form-check-input checkbox-relatorio"  name="relatorios[]"
                     value="'.$coluna["idrelatorio"].'">
                 </td>
+
                 <td>'.$coluna["idrelatorio"].'</td>
                 <td>'.$coluna["nome_relatorio"].'</td>
                 <td>'.$coluna["tipo"].'</td>
@@ -47,6 +76,12 @@ function listaRelatorio(){
                     data-bs-toggle="modal"
                     data-bs-target="#modalExcluirRelatorio'.$coluna["idrelatorio"].'">
                     <i class="fa-solid fa-trash"></i>
+                    </button>
+
+                    <button class="btn btn-primary btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalVisualizarRelatorio'.$coluna["idrelatorio"].'">
+                    <i class="fa-solid fa-eye"></i>
                     </button>
                 </td>
             </tr>
@@ -234,7 +269,101 @@ function listaRelatorio(){
 
                     </div>
                 </div>
-            </div>';
+            </div>
+
+
+
+            <div class="modal fade" id="modalVisualizarRelatorio'.$coluna["idrelatorio"].'" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+
+                    <div class="modal-header bg-success text-white">
+
+                        <h5 class="modal-title">
+                            <i class="fa-solid fa-box-archive me-2"></i>
+                            Visualizar Relatório
+                        </h5>
+
+                        <button type="button"
+                                class="btn-close btn-close-white"
+                                data-bs-dismiss="modal">
+                        </button>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                            <div class="row g-3">
+
+                                <!-- Nome -->
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">
+                                        Relatório
+                                    </label>
+
+                                    <input type="text"
+                                        class="form-control"
+                                        id="iRelatorio" name="nRelatorio"
+                                        value="'.$coluna["nome_relatorio"].'" readonly>
+                                        
+                                </div>
+
+
+                                <div class="col-md-5">
+                                    <label class="form-label fw-semibold">
+                                        Tipo
+                                    </label>
+
+                                    <input type="text"
+                                        class="form-control"
+                                        id="iTipo" name="nTipo"
+                                        value="'.$coluna["tipo"].'" readonly>
+                                        
+                                </div>
+
+                                <!-- Quantidade -->
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">
+                                        Data
+                                    </label>
+
+                                    <input type="date"
+                                        class="form-control"
+                                        id="iData" name="nData"
+                                        value="'.$coluna["data"].'" readonly>
+                                        
+                                </div>
+
+                                
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Responsável</label>
+
+                                    <input type="text"
+                                        class="form-control"
+                                        id="iResponsavel" name="nResponsavel"
+                                        value="'.$coluna["responsavel"].'" readonly>
+                                </div>
+
+                                <!-- Valor -->
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">
+                                    Status
+                                </label>
+
+                                    <input type="text"
+                                        class="form-control"
+                                        id="iStatus" name="nStatus"
+                                        value="'.$coluna["status"].'" readonly>
+                            </div>
+
+                            </div>
+
+                    
+                    </div>
+
+                </div>
+            </div>
+        </div>';
             
                       
         }    
@@ -465,6 +594,8 @@ function graficoRelatoriosTipo(){
         "quantidades" => $quantidades
     ];
 }
+
+
 
 
 
