@@ -261,14 +261,6 @@ function proxIdServico(){
 }
 
 
-// function funcaoStatusServico($status){
-//     if ($status == "a" or $status == "A"){
-//         $status = 'ativo';
-//     }else{
-//         $status = 'inativo';
-//     }
-//     return $status;
-// }
 
 function TotalServicos()
 {

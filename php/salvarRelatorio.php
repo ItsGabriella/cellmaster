@@ -1,58 +1,64 @@
 <?php
 
-
-
-    $relatorio = $_POST["nRelatorio"];
-    $tipo = $_POST["nTipo"];
-    $data  = $_POST["nData"];
+    $relatorio   = $_POST["nRelatorio"];
+    $tipo        = $_POST["nTipo"];
+    $data        = $_POST["nData"];        // Data de Geração/Criação
+    $data_inicio = $_POST["nDataInicio"] ; // Período De
+    $data_fim    = $_POST["nDataFim"] ;    // Período Até
     $responsavel = $_POST["nResponsavel"];
-    $status = $_POST["nStatus"];
-    $funcao   = $_GET["funcao"];
-    $idRelatorio   = $_GET["codigo"];
-    
+    $status      = $_POST["nStatus"];
+    $funcao      = $_GET["funcao"];
+    $idRelatorio = $_GET["codigo"];
 
     include("conexaoBD.php");
 
-    //Validar se é Inclusão ou Alteração
+    // Inclusão (Novo Relatório)
     if($funcao == "I"){
 
         include('funcaoRelatorio.php');
 
-        //Busca o próximo ID na tabela
         $idRelatorio = proxIdRelatorio();
         $exportado = "N";
 
-        //INSERT
-        $sql = "INSERT INTO relatorio (idrelatorio, nome_relatorio, tipo, data, responsavel, exportado, status) "
-                ." VALUES (
-                ".$idRelatorio.",
-                '".$relatorio."',
-                '".$tipo."',
-                '".$data."',
-                '".$responsavel."',
-                '".$exportado."',
-                '".$status."');";
+        $sql = "INSERT INTO relatorio (idrelatorio, nome_relatorio, tipo, geracao_data, data_inicio, data_fim, responsavel, exportado, status) 
+                        VALUES (
+                            $idRelatorio,
+                            '$relatorio',
+                            '$tipo',
+                            $geracao_data,
+                            $data_inicio,
+                            $data_fim,
+                            '$responsavel',
+                            '$exportado',
+                            '$status'
+                        );";
 
+    // Alteração / Atualização
     }elseif($funcao == "U"){
-        //UPDATE
-        $sql = "UPDATE relatorio "
-                    ." SET nome_relatorio = '".$relatorio."', "
-                    ." tipo = '".$tipo."', "
-                    ." data = '".$data."', "
-                    ." responsavel = '".$responsavel."', "
-                    ." status = '".$status."'"
 
-                ." WHERE idrelatorio = ".$idRelatorio.";";
+        $updateData = ($data !== "NULL") ? "geracao_data = $data," : "";
 
+        $sql = "UPDATE relatorio SET 
+                    nome_relatorio = '$relatorio',
+                    tipo = '$tipo',
+                    $updateData
+                    data_inicio = $data_inicio,
+                    data_fim = $data_fim,
+                    responsavel = '$responsavel',
+                    status = '$status',
+                    data_alteracao = NOW()
+                WHERE idrelatorio = $idRelatorio;";
+
+    // Exclusão
     }elseif($funcao == "D"){
-        //DELETE
-        $sql = "DELETE FROM relatorio "
-                ." WHERE idrelatorio = ".$idRelatorio.";";
+
+        $sql = "DELETE FROM relatorio WHERE idrelatorio = ".$idRelatorio.";";
+
     }
 
-    $result = mysqli_query($conn,$sql);
+    mysqli_query($conn, $sql);
     mysqli_close($conn);
 
-    header("location: ../relatorio.php");
-
+    header("Location: ../relatorio.php");
+    exit;
 ?>
