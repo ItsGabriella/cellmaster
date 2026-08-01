@@ -24,7 +24,9 @@
     <title>Relatório</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
     <link rel="stylesheet" href="css/style.css">
     
 </head>
@@ -471,28 +473,23 @@
                             </select>
                         </div>
 
+
+
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Status</label>
-                            <select id="iStatus" name="nStatus" class="form-select">
-                                <option>Pendente</option>
-                                <option>Em andamento</option>
-                                <option>Concluído</option>
-                                <option>Enviado</option>
-                                <option>Arquivado</option>
-                                <option>Cancelado</option>
-                            </select>
+                            <input type="text"  id="iStatus" name="nStatus" class="form-control" value="Pendente" readonly>
                         </div>
 
                     </div>
-            </div>
+                </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">
-                    <i class="fa-solid fa-floppy-disk me-2"></i>
-                    Salvar Relatório
-                </button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>
+                        Salvar Relatório
+                    </button>
+                </div>
 
             </form>
 

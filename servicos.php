@@ -3,13 +3,8 @@
     include("php/funcoes.php");
 
 
-
-    $buscaS = "";
-
-    if(isset($_GET["nBuscaServico"]))
-    {
-        $buscaS = $_GET["nBuscaServico"];
-    }
+    $buscaS = isset($_GET["nBuscaServico"]) ? $_GET["nBuscaServico"] : "";
+    $statusS = isset($_GET["nStatus"]) ? $_GET["nStatus"] : "";
 
 
 
@@ -229,69 +224,51 @@
                             Buscar Serviço
                         </label>
 
-                    <form method="GET" action="servicos.php">
+                        <form method="GET" action="servicos.php">
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="nBuscaServico"
+                                    placeholder="Buscar serviço por nome..."
+                                    value="<?= htmlspecialchars($buscaS) ?>">
+                                <button class="btn btn-success" type="submit" title="Buscar por Nome">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </form>
 
-                        <div class="input-group">
+                    </div>
 
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="nBuscaServico"
-                                placeholder="Buscar serviço..."
-                                value="<?= $buscaS ?>">
 
-                            <button class="btn btn-success" type="submit">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
 
+
+                        <div class="col-lg-3">
+                            <form method="GET" action="servicos.php">
+                                <label class="form-label fw-semibold">Filtrar por Status</label>
+                                <div class="input-group">
+                                    <select class="form-select select-verde" name="nStatus">
+                                        <option value="" <?= ($statusS == '') ? 'selected' : '' ?>>Todos</option>
+                                        <option value="Ativo" <?= ($statusS == 'Ativo') ? 'selected' : '' ?>>Ativo</option>
+                                        <option value="Inativo" <?= ($statusS == 'Inativo') ? 'selected' : '' ?>>Inativo</option>
+                                    </select>
+                            </div>
                         </div>
 
-                    </form>
+                        <div class="col-lg-auto d-flex align-items-end">
+                            <div class="d-flex gap-2">
+                                <a href="servicos.php" class="btn btn-outline-success btn-filtro" title="Limpar Filtros">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </a>
 
-                    </form>
-                    </div>
-
-
-
-
-                    <div class="col-lg-3">
-                        <label class="form-label fw-semibold">
-                            Status
-                        </label>
-
-                        <select class="form-select select-verde">
-                            <option selected>Ativo</option>
-                            <option>Inativo</option>
-                        </select>
-                    </div>
-
-
-                <div class="col-lg-auto d-flex align-items-end">
-
-                    <div class="d-flex gap-2">
-
-                        <button
-                            class="btn btn-outline-success btn-filtro"
-                            title="Limpar">
-
-                            <i class="fa-solid fa-rotate-left"></i>
-
-                        </button>
-
-                        <button
-                            class="btn btn-success btn-filtrar">
-
-                            <i class="fa-solid fa-filter"></i>
-
-                            Filtrar
-
-                        </button>
+                                <button type="submit" class="btn btn-success btn-filtrar" title="Filtrar por Status">
+                                    <i class="fa-solid fa-filter me-1"></i> Filtrar
+                                </button>
+                            </div>
+                        </div>
 
                     </div>
-
-                    </div>
-
-                </div>
+                </form>
 
             </div>
 
@@ -357,7 +334,7 @@
     }
     else
     {
-        echo BuscarServico($buscaS);
+        echo BuscarServico($buscaS, $statusS);
     }
 
     ?>

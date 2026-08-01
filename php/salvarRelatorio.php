@@ -25,9 +25,9 @@
                             $idRelatorio,
                             '$relatorio',
                             '$tipo',
-                            $geracao_data,
-                            $data_inicio,
-                            $data_fim,
+                            '$data',
+                            '$data_inicio',
+                            '$data_fim',
                             '$responsavel',
                             '$exportado',
                             '$status'

@@ -290,4 +290,63 @@ function BuscarCliente($busca)
 }
 
 
+
+// 1. Função para contar o total geral de clientes
+function TotalClientes() {
+    include("conexaoBD.php");
+
+    $sql = "SELECT COUNT(*) AS total FROM cliente";
+    $result = mysqli_query($conn, $sql);
+
+    $total = 0;
+    if ($result && $linha = mysqli_fetch_assoc($result)) {
+        $total = $linha['total'];
+    }
+
+    mysqli_close($conn);
+    return $total;
+}
+
+// 2. Função para contar clientes cadastrados no mês atual
+// Nota: Requer que a tabela 'cliente' tenha uma coluna de data (ex: data_cadastro ou data_cad)
+function NovosClientesMês() {
+    include("conexaoBD.php");
+
+    // Ajuste o nome do campo 'data_cadastro' conforme o nome da coluna no seu Banco de Dados
+    $sql = "SELECT COUNT(*) AS total 
+            FROM cliente 
+            WHERE MONTH(data_cadastro) = MONTH(CURRENT_DATE()) 
+              AND YEAR(data_cadastro) = YEAR(CURRENT_DATE())";
+
+    $result = mysqli_query($conn, $sql);
+
+    $total = 0;
+    if ($result && $linha = mysqli_fetch_assoc($result)) {
+        $total = $linha['total'];
+    }
+
+    mysqli_close($conn);
+    return $total;
+}
+
+// 3. Função para contar clientes com ordens de serviço / vendas ativas/recentes
+function ClientesAtivos() {
+    include("conexaoBD.php");
+
+    // Exemplo: Conta clientes distintos que possuem ordens de serviço ou compras
+    // Ajuste o nome da tabela 'ordem_servico' ou 'vendas' e a chave 'idcliente' conforme o seu BD
+    $sql = "SELECT COUNT(DISTINCT idcliente) AS total FROM ordem_servico";
+
+    $result = mysqli_query($conn, $sql);
+
+    $total = 0;
+    if ($result && $linha = mysqli_fetch_assoc($result)) {
+        $total = $linha['total'];
+    }
+
+    mysqli_close($conn);
+    return $total;
+}
+
+
 ?>

@@ -1,21 +1,16 @@
 <?php
-    include ('php/funcoes.php');
+    // Inclua o arquivo onde está a função filtrarEstoque
+    include ('php/funcaoEstoque.php'); 
 
+    // Captura os filtros individualmente
+    $buscaE    = isset($_GET["nBuscaEstoque"]) ? trim($_GET["nBuscaEstoque"]) : "";
+    $categoria = isset($_GET["nCategoria"])    ? $_GET["nCategoria"]          : "Todas";
+    $status    = isset($_GET["nStatus"])       ? $_GET["nStatus"]             : "Todos";
 
-
-    $buscaE = "";
-
-    if(isset($_GET["nBuscaEstoque"]))
-    {
-        $buscaE = $_GET["nBuscaEstoque"];
-    }
-
-    $totalPecas = TotalPecas();
+    $totalPecas   = TotalPecas();
     $estoqueTotal = EstoqueTotal();
-    $pecasBaixas = PecasBaixas();
-    $valorTotal = ValorTotalEstoque();
-
-
+    $pecasBaixas  = PecasBaixas();
+    $valorTotal   = ValorTotalEstoque();
 ?>
 
 <!DOCTYPE html>
@@ -134,76 +129,60 @@
 
             <div class="card-header bg-white p-4">
 
-            <div class="row g-3 align-items-end">
+            <form method="GET" action="estoque.php" id="formFiltros">
+                <div class="row g-3 align-items-end">
 
-        <div class="col-lg-3">
-            <label class="form-label fw-semibold">
-                Buscar Peça
-            </label>
+                    <div class="col-lg-3">
+                        <label class="form-label fw-semibold">Buscar Peça</label>
+                        <div class="input-group shadow-sm">
+                            <input
+                                type="text"
+                                class="form-control border-success"
+                                placeholder="Buscar peça..."
+                                name="nBuscaEstoque"
+                                value="<?= htmlspecialchars($buscaE) ?>">
 
-            <form method="GET" action="estoque.php">
-                <div class="input-group shadow-sm">
-                    <input
-                        type="text"
-                        class="form-control border-success"
-                        placeholder="Buscar peça..."
-                        name="nBuscaEstoque"
-                        value="<?= $buscaE ?>">
+                            <button class="btn btn-success px-3" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
 
-                    <button
-                        class="btn btn-success px-4"
-                        type="submit">
-                        <i class="fa-solid fa-magnifying-glass me-0"></i>
-                    </button>
+                    <div class="col-lg-3">
+                        <label class="form-label fw-semibold">Categoria</label>
+                        <select name="nCategoria" class="form-select select-verde">
+                            <option value="Todas" <?= ($categoria == 'Todas') ? 'selected' : '' ?>>Todas</option>
+                            <option value="Tela" <?= ($categoria == 'Tela') ? 'selected' : '' ?>>Tela</option>
+                            <option value="Bateria" <?= ($categoria == 'Bateria') ? 'selected' : '' ?>>Bateria</option>
+                            <option value="Botões" <?= ($categoria == 'Botões') ? 'selected' : '' ?>>Botões</option>
+                            <option value="Conectores" <?= ($categoria == 'Conectores') ? 'selected' : '' ?>>Conectores</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <label class="form-label fw-semibold">Status</label>
+                        <select name="nStatus" class="form-select select-verde">
+                            <option value="Todos" <?= ($status == 'Todos') ? 'selected' : '' ?>>Todos</option>
+                            <option value="Em estoque" <?= ($status == 'Em estoque') ? 'selected' : '' ?>>Em estoque</option>
+                            <option value="Estoque baixo" <?= ($status == 'Estoque baixo') ? 'selected' : '' ?>>Estoque baixo</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-3 d-flex align-items-end">
+                        <div class="d-flex gap-2 w-100">
+                            <a href="estoque.php" class="btn btn-outline-success btn-filtrar flex-grow-1 text-center" title="Limpar">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </a>
+
+                            <button type="submit" class="btn btn-success btn-filtrar flex-grow-1">
+                                <i class="fa-solid fa-filter"></i>
+                                Filtrar
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </form>
-        </div>
-
-        <div class="col-lg-3">
-            <label class="form-label fw-semibold">
-                Categoria
-            </label>
-
-            <select class="form-select select-verde">
-                <option selected>Todas</option>
-                <option>Tela</option>
-                <option>Bateria</option>
-                <option>Botões</option>
-            </select>
-        </div>
-
-        <div class="col-lg-3">
-            <label class="form-label fw-semibold">
-                Status
-            </label>
-
-            <select class="form-select select-verde">
-                <option selected>Todos</option>
-                <option>Em estoque</option>
-                <option>Estoque baixo</option>
-                <option>Esgotado</option>
-            </select>
-        </div>
-
-        <div class="col-lg-3 d-flex align-items-end">
-            <div class="d-flex gap-2 w-100">
-                <button
-                    type="button"
-                    class="btn btn-outline-success btn-filtrar flex-grow-1"
-                    title="Limpar">
-                    <i class="fa-solid fa-rotate-left"></i>
-                </button>
-
-                <button
-                    type="submit"
-                    class="btn btn-success btn-filtrar flex-grow-1">
-                    <i class="fa-solid fa-filter"></i>
-                    Filtrar
-                </button>
-            </div>
-        </div>
-
-        </div>
 
             <div class="table-responsive">
 
@@ -234,7 +213,7 @@
         }
         else
         {
-            echo BuscarEstoque($buscaE);
+            echo filtrarEstoque($buscaE, $categoria, $status);
         }
 
         ?>

@@ -1,26 +1,27 @@
 <?php
-
 include("php/funcoes.php");
 
+$busca = "";
 
+if (isset($_GET["nBusca"])) {
+    $busca = $_GET["nBusca"];
+}
 
-    $busca = "";
-
-    if(isset($_GET["nBusca"]))
-    {
-        $busca = $_GET["nBusca"];
-    }
-
+// Adapte/Crie estas funções no seu funcoes.php se quiser valores dinâmicos
+$totalClientes  = function_exists('TotalClientes') ? TotalClientes() : 0;
+$novosClientes  = function_exists('NovosClientesMês') ? NovosClientesMês() : 0;
+$clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>clientes</title>
+    <title>Clientes</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css">
@@ -30,108 +31,97 @@ include("php/funcoes.php");
 
     <?php 
     $pagina = 'clientes';
-    include 'php/sidebar.php'; ?>
-
+    include 'php/sidebar.php'; 
+    ?>
 
     <main class="flex-grow-1 p-4 bg-light">
 
-    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 class="fw-bold mb-1">Clientes</h3>
+                        <nav style="--bs-breadcrumb-divider: '>';">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="#" class="text-success text-decoration-none">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active">Clientes</li>
+                            </ol>
+                        </nav>
+                    </div>
 
-<div class="card-body p-4">
-
-    <div class="d-flex justify-content-between align-items-center">
-
-        <div>
-            <h3 class="fw-bold mb-1">
-                Clientes
-            </h3>
-
-            <nav style="--bs-breadcrumb-divider: '>';">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="#" class="text-success text-decoration-none">
-                            Home
-                        </a>
-                    </li>
-
-                    <li class="breadcrumb-item active">
-                        Clientes
-                    </li>
-                </ol>
-            </nav>
+                    <button class="btn btn-success px-4 py-2" data-bs-toggle="modal" data-bs-target="#modalCliente">
+                        <i class="fa-solid fa-plus me-2"></i>
+                        Novo Cliente
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <button class="btn btn-success px-4 py-2"
-        data-bs-toggle="modal"
-        data-bs-target="#modalCliente">
-            <i class="fa-solid fa-plus me-2"></i>
-            Novo Cliente
-        </button>
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h6 class="text-secondary">Total de Clientes</h6>
+                        <h2 class="fw-bold"><?= $totalClientes ?></h2>
+                        <small>Clientes cadastrados</small>
+                    </div>
+                </div>
+            </div>
 
-    </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h6 class="text-secondary">Novos este Mês</h6>
+                        <h2 class="fw-bold text-success"><?= $novosClientes ?></h2>
+                        <small>Cadastros recentes</small>
+                    </div>
+                </div>
+            </div>
 
-</div>
-
-</div>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h6 class="text-secondary">Clientes Ativos</h6>
+                        <h2 class="fw-bold text-primary"><?= $clientesAtivos ?></h2>
+                        <small>Com ordens recentes</small>
+                    </div>
+                </div>
+            </div>
         </div>
-
 
         <div class="card border-0 shadow-sm">
-
             <div class="card-header bg-white p-4">
+                <form method="GET" action="clientes.php">
+                    <div class="row g-3 align-items-end">
 
-                <div class="row g-3 align-items-end">
-
-                    <div class="col-lg-4">
-                        <label class="form-label fw-semibold">
-                            Buscar Cliente
-                        </label>
-
-                    <form method="GET" action="clientes.php">
-
-                        <div class="input-group">
-
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="nBusca"
-                                placeholder="Buscar Cliente..."
-                                value="<?= $busca ?>">
-
-                            <button class="btn btn-success" type="submit">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
-
+                        <div class="col-lg-6">
+                            <label class="form-label fw-semibold">Buscar Cliente</label>
+                            <div class="input-group shadow-sm">
+                                <input type="text" class="form-control border-success" placeholder="Buscar por nome, CPF ou e-mail..." name="nBusca" value="<?= $busca ?>">
+                                <button class="btn btn-success px-4" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass me-0"></i>
+                                </button>
+                            </div>
                         </div>
 
-                    </form>
+
+                        <div class="col-lg-3 d-flex align-items-end">
+                            <div class="d-flex gap-2 w-20">
+                                <a href="clientes.php" class="btn btn-outline-success btn-filtrar flex-grow-1 text-center" title="Limpar">
+                                    <i class="fa-solid fa-rotate-left"></i>
+                                </a>
+                            </div>
+                        </div>
 
                     </div>
-
-                <div class="col-lg-auto d-flex align-items-end">
-
-                    <div class="d-flex gap-2">
-
-                        <a href="clientes.php"
-                            class="btn btn-outline-success btn-filtro"
-                            title="Limpar">
-                            <i class="fa-solid fa-rotate-left"></i>
-                        </a>
-
-                    </div>
-
-                    </div>
-
-                </div>
-
+                </form>
             </div>
 
             <div class="table-responsive">
-
                 <table class="table table-hover align-middle mb-0">
-
                     <thead class="table-light">
-
                         <tr>
                             <th>ID</th>
                             <th>Nome</th>
@@ -139,239 +129,146 @@ include("php/funcoes.php");
                             <th>CPF</th>
                             <th>Telefone</th>
                             <th>E-mail</th>
-<!-- idcliente	nome_clien	endereco_clien	cpf_clien	tel_clien	email_clien -->
+                            <th>Ações</th>
                         </tr>
-
                     </thead>
+                    <tbody>
+                        <?php
+                        if ($busca == "") {
+                            echo listaCliente();
+                        } else {
+                            echo BuscarCliente($busca);
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
 
-            <div class="card-footer bg-white">
-
+            <div class="card-footer bg-white py-3">
                 <nav>
-
                     <ul class="pagination justify-content-end mb-0">
-
-                        <li class="page-item">
+                        <li class="page-item disabled">
                             <a class="page-link" href="#">Anterior</a>
                         </li>
-
                         <li class="page-item active">
                             <a class="page-link" href="#">1</a>
                         </li>
-
                         <li class="page-item">
                             <a class="page-link" href="#">2</a>
                         </li>
-
                         <li class="page-item">
                             <a class="page-link" href="#">Próximo</a>
                         </li>
-
                     </ul>
-
                 </nav>
-
             </div>
 
         </div>
 
     </main>
 
+    <div class="modal fade" id="modalCliente" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="fa-solid fa-user-plus me-2"></i>
+                        Novo Cliente
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form method="POST" action="php/salvarCliente.php?funcao=I" enctype="multipart/form-data">
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Nome do Cliente</label>
+                                <input type="text" class="form-control nome" id="iCliente" name="nCliente" placeholder="Digite o nome do cliente" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Endereço</label>
+                                <input type="text" class="form-control" id="iEndereco" name="nEndereco" placeholder="Endereço" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">CPF</label>
+                                <input type="text" class="form-control cpf" name="nCPF" placeholder="000.000.000-00" maxlength="14" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Telefone</label>
+                                <input type="text" class="form-control telefone" name="nTelefone" placeholder="(99) 99999-9999" maxlength="15" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">E-mail</label>
+                                <input type="email" class="form-control" id="imail" name="nmail" placeholder="Digite o e-mail" required>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer mt-4 px-0 pb-0">
+                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa-solid fa-floppy-disk me-2"></i>
+                                Salvar Cliente
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
     </div>
-    
-    <?php
-
-    if($busca == "")
-    {
-        echo listaCliente();
-    }
-    else
-    {
-        echo BuscarCliente($busca);
-    }
-
-    ?>
-
-    <!-- Telinha q aparece na frente -->
-<div class="modal fade" id="modalCliente" tabindex="-1">
-
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-
-        <div class="modal-content border-0 shadow-lg">
-
-            <div class="modal-header bg-success text-white">
-
-                <h5 class="modal-title">
-                    <i class="fa-solid fa-box-archive me-2"></i> 
-                    Novo Cliente   <!-- Nome em cima-->
-                </h5>
-
-                <button type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal">
-                </button>
-
-            </div>
-
-        <div class="modal-body">
-
-    <form method="POST"
-          action="php/salvarCliente.php?funcao=I"
-          enctype="multipart/form-data">
-
-        <div class="row g-3">
-<!-- idcliente	nome_clien	endereco_clien	cpf_clien	tel_clien	email_clien -->
-            <!-- Nome -->
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">
-                    Nome do Cliente
-                </label>
-
-                <input type="text"
-                       class="form-control nome"
-                       id="iCliente"
-                       name="nCliente"
-                       placeholder="Digite o nome do cliente"
-                       required>
-            </div>
-
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">
-                    Endereço
-                </label>
-
-                <input type="text"
-                       class="form-control"
-                       id="iEndereco"
-                       name="nEndereco"
-                       placeholder="Endereço"
-                       required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">
-                    CPF
-                </label>
-
-                <input type="text"
-                class="form-control cpf"
-                name="nCPF"
-                placeholder="000.000.000-00"
-                maxlength="14"
-                required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">
-                    Telefone
-                </label>
-
-                <input type="text"
-                class="form-control telefone"
-                name="nTelefone"
-                placeholder="(99) 99999-9999"
-                maxlength="15"
-                required>
-            </div>
-            <div class="col-md-6">
-                <label class="form-label fw-semibold">
-                    E-mail
-                </label>
-
-                <input type="email"
-                       class="form-control"
-                       id="imail"
-                       name="nmail"
-                       placeholder="Digite o e-mail"
-                       required>
-            </div>
-
-        </div>
-
-        <div class="modal-footer mt-4">
-
-            <button type="button"
-                    class="btn btn-outline-danger"
-                    data-bs-dismiss="modal">
-                Cancelar
-            </button>
-
-            <button type="submit"
-                    class="btn btn-success">
-                <i class="fa-solid fa-floppy-disk me-2"></i>
-                Salvar Cliente
-            </button>
-
-        </div>
-
-    </form>
-
-</div>
-
-</div>
-
-</div>
-</div>
-</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/home.js"></script>
-    
 
     <script>
         // Máscara CPF
         const cpfs = document.querySelectorAll(".cpf");
-        cpfs.forEach(function(input){
-            input.addEventListener("input", function(){
+        cpfs.forEach(function(input) {
+            input.addEventListener("input", function() {
                 let valor = this.value.replace(/\D/g, "");
-                valor = valor.substring(0,11);
+                valor = valor.substring(0, 11);
                 valor = valor.replace(/^(\d{3})(\d)/, "$1.$2");
                 valor = valor.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
                 valor = valor.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
                 this.value = valor;
             });
         });
-    document.addEventListener("DOMContentLoaded", function () {
 
-    const telefones = document.querySelectorAll(".telefone");
+        // Máscara Telefone e Restrição de Nome
+        document.addEventListener("DOMContentLoaded", function() {
+            const telefones = document.querySelectorAll(".telefone");
+            telefones.forEach(function(input) {
+                input.addEventListener("input", function() {
+                    let valor = this.value.replace(/\D/g, "");
+                    valor = valor.substring(0, 11);
 
-    telefones.forEach(function(input){
+                    if (valor.length > 10) {
+                        valor = valor.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+                    } else {
+                        valor = valor.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
+                    }
+                    this.value = valor;
+                });
+            });
 
-        input.addEventListener("input", function(){
-
-            let valor = this.value.replace(/\D/g, "");
-
-            valor = valor.substring(0,11);
-
-            if(valor.length > 10){
-
-                valor = valor.replace(
-                    /^(\d{2})(\d{5})(\d{4})$/,
-                    "($1) $2-$3"
-                );
-
-            }else{
-
-                valor = valor.replace(
-                    /^(\d{2})(\d{4})(\d{0,4})$/,
-                    "($1) $2-$3"
-                );
-
-            }
-
-            this.value = valor;
-
+            const nomes = document.querySelectorAll(".nome");
+            nomes.forEach(function(input) {
+                input.addEventListener("input", function() {
+                    this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
+                });
+            });
         });
-
-    });
-    const nomes = document.querySelectorAll(".nome");
-    nomes.forEach(function(input){
-        input.addEventListener("input", function(){
-            this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
-        });
-
-});
-
-});
-</script>
-
+    </script>
 
 </body>
+
 </html>

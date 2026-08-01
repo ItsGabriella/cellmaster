@@ -187,9 +187,12 @@ function listaRelatorio($periodo = 'todos'){
             <div class="modal fade" id="modalExcluirRelatorio'.$coluna["idrelatorio"].'" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
+
                         <div class="modal-body text-center p-4">
+
                             <div class="mb-3">
-                                <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width:80px;height:80px;">
+                                <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
+                                    style="width:80px;height:80px;">
                                     <i class="bi bi-trash text-danger fs-1"></i>
                                 </div>
                             </div>

@@ -118,7 +118,7 @@ $htmlHeader = '
                 <td>#' . $rel["idrelatorio"] . '</td>
                 <td>' . htmlspecialchars($rel["nome_relatorio"]) . '</td>
                 <td>' . htmlspecialchars($rel["tipo"]) . '</td>
-                <td>' . date("d/m/Y", strtotime($rel["data"])) . '</td>
+                <td>' . date("d/m/Y", strtotime($rel["geracao_data"])) . '</td>
                 <td>' . htmlspecialchars($rel["responsavel"]) . '</td>
                 <td>' . htmlspecialchars($rel["status"]) . '</td>
             </tr>';
@@ -314,8 +314,8 @@ switch ($tipoRelatorio) {
                 $htmlBody .= '<tr>
                     <td>' . $f["idfuncionario"] . '</td>
                     <td>' . htmlspecialchars($f["nome_func"]) . '</td>
-                    <td>' . htmlspecialchars($f["cargo"] ?? 'Geral') . '</td>
-                    <td>' . htmlspecialchars($f["telefone"] ?? '-') . '</td>
+                    <td>' . htmlspecialchars($f["cargo"] ?? 'Gerente') . '</td>
+                    <td>' . htmlspecialchars($f["tel_func"]) . '</td>
                 </tr>';
             }
         } else {

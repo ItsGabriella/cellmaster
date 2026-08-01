@@ -317,50 +317,58 @@ function ValorMedioServico()
     return $dados["media"] ?? 0;
 }
 
-function BuscarServico($buscaS)
+function BuscarServico($buscaS = "", $statusS = "")
 {
     include("conexaoBD.php");
 
     $buscaS = mysqli_real_escape_string($conn, $buscaS);
+    $statusS = mysqli_real_escape_string($conn, $statusS);
 
-    $sql = "SELECT *
-            FROM servico
-            WHERE nome_servico LIKE '%$buscaS%'
-            ORDER BY nome_servico";
+    // Consulta base
+    $sql = "SELECT * FROM servico WHERE 1=1";
+
+    // Se o usuário pesquisou por NOME
+    if (!empty($buscaS)) {
+        $sql .= " AND nome_servico LIKE '%$buscaS%'";
+    }
+
+    // Se o usuário pesquisou por STATUS
+    if (!empty($statusS)) {
+        $sql .= " AND status = '$statusS'";
+    }
+
+    $sql .= " ORDER BY idservico DESC";
 
     $result = mysqli_query($conn, $sql);
-
     $lista = "";
 
-    if(mysqli_num_rows($result) > 0)
-    {
-        foreach($result as $coluna)
-        {
+    if ($result && mysqli_num_rows($result) > 0) {
+        foreach ($result as $coluna) {
             $lista .= '
             <tr>
-                <td>'.$coluna["idservico"].'</td>
-                <td>'.$coluna["nome_servico"].'</td>
-                <td>'.$coluna["descricao_servico"].'</td>
-                <td>R$ '.number_format($coluna["valor"],2,",",".").'</td>
-                <td>'.$coluna["tempo"].'</td>
-                <td>'.$coluna["status"].'</td>
+                <td>' . $coluna["idservico"] . '</td>
+                <td>' . $coluna["nome_servico"] . '</td>
+                <td>' . $coluna["descricao_servico"] . '</td>
+                <td>R$ ' . number_format($coluna["valor"], 2, ",", ".") . '</td>
+                <td>' . $coluna["tempo"] . '</td>
+                <td>' . $coluna["status"] . '</td>
                 <td>
-                    <button class="btn btn-success btn-sm">
+                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditarServico' . $coluna["idservico"] . '">
                         <i class="fa-solid fa-pen"></i>
                     </button>
-
-                    <button class="btn btn-danger btn-sm">
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluirServico' . $coluna["idservico"] . '">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
             </tr>';
         }
+    } else {
+        $lista = '<tr><td colspan="7" class="text-center text-muted p-4">Nenhum serviço encontrado.</td></tr>';
     }
 
     mysqli_close($conn);
 
     return $lista;
 }
-
 
 ?>

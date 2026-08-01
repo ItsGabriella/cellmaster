@@ -482,6 +482,136 @@ function BuscarEstoque($buscaE)
     return $lista;
 }
 
+function filtrarEstoque($busca = "", $categoria = "Todas", $status = "Todos") {
+    include("conexaoBD.php");
+
+    // Começa com uma Query genérica
+    $sql = "SELECT * FROM peca WHERE 1=1";
+
+    // 1. Se digitou algo na busca, adiciona à SQL
+    if (!empty($busca)) {
+        $buscaEscaped = mysqli_real_escape_string($conn, $busca);
+        $sql .= " AND nome_peca LIKE '%$buscaEscaped%'";
+    }
+
+    // 2. Se selecionou uma Categoria específica, adiciona à SQL
+    if ($categoria !== "Todas" && !empty($categoria)) {
+        $categoriaEscaped = mysqli_real_escape_string($conn, $categoria);
+        $sql .= " AND categoria = '$categoriaEscaped'";
+    }
+
+    // 3. Se selecionou um Status específico, adiciona à SQL
+    if ($status === "Em estoque") {
+        $sql .= " AND qtdade_peca > estoque_min";
+    } elseif ($status === "Estoque baixo") {
+        $sql .= " AND qtdade_peca <= estoque_min";
+    }
+
+    $sql .= " ORDER BY idpeca DESC";
+
+    $result = mysqli_query($conn, $sql);
+    $lista = "";
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        foreach ($result as $coluna) {
+
+            $lista .= '
+            <tr>
+                <td>'.$coluna["idpeca"].'</td>
+                <td>'.$coluna["nome_peca"].'</td>
+                <td>'.$coluna["categoria"].'</td>
+                <td>'.$coluna["qtdade_peca"].'</td>
+                <td>'.$coluna["estoque_min"].'</td>
+                <td>R$ '.number_format($coluna["valor_unit"], 2, ',', '.').'</td>
+                <td>'.funcaoStatus($coluna["qtdade_peca"], $coluna["estoque_min"]).'</td>
+                <td>
+                    <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar'.$coluna["idpeca"].'">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluir'.$coluna["idpeca"].'">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+
+            <div class="modal fade" id="modalExcluir'.$coluna["idpeca"].'" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow">
+                        <div class="modal-body text-center p-4">
+                            <div class="mb-3">
+                                <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width:80px;height:80px;">
+                                    <i class="bi bi-trash text-danger fs-1"></i>
+                                </div>
+                            </div>
+                            <h3 class="fw-bold">Excluir Produto</h3>
+                            <form method="POST" action="php/salvarEstoque.php?funcao=D&codigo='.$coluna["idpeca"].'">
+                                <p class="text-secondary">Tem certeza que deseja excluir o produto <strong class="text-danger">'.$coluna["nome_peca"].'</strong>?</p>
+                                <p class="text-muted">Esta ação não poderá ser desfeita.</p>
+                                <div class="d-flex gap-2 justify-content-center mt-4">
+                                    <button type="button" class="btn btn-outline-success px-4" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-danger px-4">Excluir</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalEditar'.$coluna["idpeca"].'" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content border-0 shadow">
+                        <div class="modal-header border-0">
+                            <h4 class="modal-title fw-bold text-success"><i class="fa-solid fa-pen me-2"></i>Editar Produto</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="php/salvarEstoque.php?funcao=U&codigo='.$coluna["idpeca"].'">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">Nome do Produto</label>
+                                        <input type="text" class="form-control" name="nPeca" value="'.$coluna["nome_peca"].'">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold">Categoria</label>
+                                        <select name="nCategoria" class="form-select">
+                                            <option '.($coluna["categoria"] == "Tela" ? "selected" : "").'>Tela</option>
+                                            <option '.($coluna["categoria"] == "Bateria" ? "selected" : "").'>Bateria</option>
+                                            <option '.($coluna["categoria"] == "Botões" ? "selected" : "").'>Botões</option>
+                                            <option '.($coluna["categoria"] == "Conectores" ? "selected" : "").'>Conectores</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Quantidade</label>
+                                        <input type="number" class="form-control" name="nQuantidade" value="'.$coluna["qtdade_peca"].'">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Estoque Mínimo</label>
+                                        <input type="number" class="form-control" name="nEstoqueMin" value="'.$coluna["estoque_min"].'">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Valor Unitário</label>
+                                        <input type="number" step="0.01" class="form-control" name="nValor" value="'.$coluna["valor_unit"].'">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end gap-2 mt-4">
+                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk me-2"></i>Salvar Alterações</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+        }
+    } else {
+        $lista = '<tr><td colspan="8" class="text-center text-muted py-4">Nenhuma peça encontrada com os filtros selecionados.</td></tr>';
+    }
+
+    mysqli_close($conn);
+    return $lista;
+}
+
 
 
 ?>
