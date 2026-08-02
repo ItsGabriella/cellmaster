@@ -1,6 +1,9 @@
 <?php
-session_start(); // <-- Sempre na primeira linha do arquivo
-include("php/funcoes.php");
+    session_start(); // Mantido no topo
+    include("php/funcoes.php");
+
+    // Recupera o nome do usuário para registro de logs
+    $usuarioLogado = $_SESSION['usuario_nome'] ?? 'Atendente';
 
     // Captura os filtros individualmente
     $buscaE    = isset($_GET["nBuscaEstoque"]) ? trim($_GET["nBuscaEstoque"]) : "";

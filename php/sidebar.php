@@ -6,7 +6,7 @@
             <div class="bg-success p-2 rounded-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
                 <i class="fa-solid fa-mobile-screen-button fs-4"></i>
             </div>
-            <h4 class="fw-bold mb-0 item-description">Assistência</h4>
+            <h4 class="fw-bold mb-0 item-description">CELLMASTER</h4>
         </div>
 
         <ul class="nav flex-column gap-2">

@@ -1,6 +1,10 @@
 <?php 
+    session_start();
 
-    include('funcaoEstoque.php');
+    include('funcoes.php');
+    include("conexaoBD.php");
+
+    $usuarioLogado = $_SESSION['usuario_nome'] ?? $_SESSION['nome'] ?? 'Atendente';
 
 
     $peca = $_POST["nPeca"];
@@ -10,9 +14,12 @@
     $estoqueMin = $_POST["nEstoqueMin"];
     $funcao   = $_GET["funcao"];
     $idPeca   = $_GET["codigo"];
+
+    $sql = "";
+    $mensagemNotificacao = "";
+    $tipoNotificacao = "info";
     
 
-    include("conexaoBD.php");
 
     //Validar se é Inclusão ou Alteração
     if($funcao == "I"){
@@ -30,6 +37,9 @@
                 ".$valorPeca.",
                 ".$estoqueMin.");";
 
+        $mensagemNotificacao = "Cadastrou a peça: " . $peca;
+        $tipoNotificacao = "sucesso";
+
     }elseif($funcao == "U"){
         //UPDATE
         $sql = "UPDATE peca "
@@ -39,17 +49,32 @@
                     ." valor_unit = ".$valorPeca.", "
                     ." estoque_min = ".$estoqueMin
 
-                ." WHERE idpeca = ".$idPeca.";";
+                    ." WHERE idpeca = ".$idPeca.";";
+                $mensagemNotificacao = "Alterou a peça: " . $peca . " (ID #" . $idPeca . ")";
+                $tipoNotificacao = "alerta";
 
     }elseif($funcao == "D"){
         //DELETE
         $sql = "DELETE FROM peca "
                 ." WHERE idpeca = ".$idPeca.";";
+                $mensagemNotificacao = "Excluiu a peça ID #" . $idPeca;
+                $tipoNotificacao = "perigo";
     }
 
-    $result = mysqli_query($conn,$sql);
-    mysqli_close($conn);
+    if (!empty($sql)) {
+            $result = mysqli_query($conn, $sql);
 
-    header("location: ../estoque.php");
+            // Se a query deu certo, registra a notificação
+            if ($result && !empty($mensagemNotificacao)) {
+                // Chama a função passando a conexão, a mensagem, o usuário e o tipo
+                registrarNotificacao($conn, $mensagemNotificacao, $usuarioLogado, $tipoNotificacao);
+            }
+        }
+
+        mysqli_close($conn);
+
+        // Redireciona de volta para a tela de estoque
+        header("location: ../estoque.php");
+        exit();
 
 ?>
