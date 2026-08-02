@@ -482,29 +482,28 @@ function BuscarEstoque($buscaE)
     return $lista;
 }
 
-function filtrarEstoque($busca = "", $categoria = "Todas", $status = "Todos") {
+function filtrarEstoque($buscaE = "", $categoria = "Todas", $status = "Todos") {
     include("conexaoBD.php");
 
-    // Começa com uma Query genérica
-    $sql = "SELECT * FROM peca WHERE 1=1";
+    $sql = "SELECT * FROM peca";
 
     // 1. Se digitou algo na busca, adiciona à SQL
-    if (!empty($busca)) {
-        $buscaEscaped = mysqli_real_escape_string($conn, $busca);
-        $sql .= " AND nome_peca LIKE '%$buscaEscaped%'";
+    if (!empty($buscaE)) {
+        $buscaEscaped = mysqli_real_escape_string($conn, $buscaE);
+        $sql .= " WHERE nome_peca LIKE '%$buscaEscaped%'";
     }
 
     // 2. Se selecionou uma Categoria específica, adiciona à SQL
     if ($categoria !== "Todas" && !empty($categoria)) {
         $categoriaEscaped = mysqli_real_escape_string($conn, $categoria);
-        $sql .= " AND categoria = '$categoriaEscaped'";
+        $sql .= " WHERE categoria = '$categoriaEscaped'";
     }
 
     // 3. Se selecionou um Status específico, adiciona à SQL
     if ($status === "Em estoque") {
-        $sql .= " AND qtdade_peca > estoque_min";
+        $sql .= " WHERE qtdade_peca > estoque_min";
     } elseif ($status === "Estoque baixo") {
-        $sql .= " AND qtdade_peca <= estoque_min";
+        $sql .= " WHERE qtdade_peca <= estoque_min";
     }
 
     $sql .= " ORDER BY idpeca DESC";

@@ -1,4 +1,5 @@
 <?php
+session_start(); // <-- Sempre na primeira linha do arquivo
 include("php/funcoes.php");
 
 $busca = "";
@@ -36,28 +37,23 @@ $clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
 
     <main class="flex-grow-1 p-4 bg-light">
 
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
-            <div class="card-body p-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h3 class="fw-bold mb-1">Clientes</h3>
-                        <nav style="--bs-breadcrumb-divider: '>';">
-                            <ol class="breadcrumb mb-0">
-                                <li class="breadcrumb-item">
-                                    <a href="#" class="text-success text-decoration-none">Home</a>
-                                </li>
-                                <li class="breadcrumb-item active">Clientes</li>
-                            </ol>
-                        </nav>
-                    </div>
+        <?php 
+        // Configura as informações desta página
+        $tituloPagina = "Clientes";
+        $breadcrumb   = "Clientes";
 
-                    <button class="btn btn-success px-4 py-2" data-bs-toggle="modal" data-bs-target="#modalCliente">
-                        <i class="fa-solid fa-plus me-2"></i>
-                        Novo Cliente
-                    </button>
-                </div>
-            </div>
-        </div>
+        // Inclui o arquivo de cabeçalho
+        include 'php/header.php'; 
+    ?>
+
+    <div class="d-flex justify-content-end mb-4">
+        <button class="btn btn-success px-4 py-2 rounded-3 shadow-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#modalCliente">
+            <i class="fa-solid fa-plus me-2"></i>
+            Novo Cliente
+        </button>
+    </div>
 
         <div class="row g-4 mb-4">
             <div class="col-md-4">
@@ -143,6 +139,8 @@ $clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
                     </tbody>
                 </table>
             </div>
+
+
 
             <div class="card-footer bg-white py-3">
                 <nav>

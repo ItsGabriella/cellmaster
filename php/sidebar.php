@@ -2,17 +2,11 @@
 
     <div class="p-3">
 
-        <div class="d-flex align-items-center gap-2 mb-4">
-            <img src="img/perfil.png" id="user_avatar" alt="Avatar">
-
-            <div class="user_infos">
-                <span class="item-description d-block">
-                    Fulano de tal
-                </span>
-                <span class="item-description d-block text-secondary">
-                    Gerente
-                </span>
+        <div class="logo d-flex align-items-center gap-2 mb-4 text-white">
+            <div class="bg-success p-2 rounded-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                <i class="fa-solid fa-mobile-screen-button fs-4"></i>
             </div>
+            <h4 class="fw-bold mb-0 item-description">Assistência</h4>
         </div>
 
         <ul class="nav flex-column gap-2">
@@ -73,6 +67,13 @@
                 </a>
             </li>
 
+            <li class="nav-item side-item <?= ($pagina == 'configuracoes') ? 'active' : '' ?>">
+                <a href="configuracoes.php" class="nav-link text-white">
+                    <i class="fa-solid fa-gear"></i>
+                    <span class="item-description ms-2">Configurações</span>
+                </a>
+            </li>
+
         </ul>
 
         <button id="open_btn">
@@ -82,7 +83,7 @@
     </div>
 
     <div class="border-top p-3">
-        <button id="logout_btn" class="w-100" onclick="window.location.href='index.php';">
+        <button id="logout_btn" class="w-100" onclick="window.location.href='php/logout.php';">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
 
             <span class="item-description">

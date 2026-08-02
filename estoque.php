@@ -1,6 +1,6 @@
 <?php
-    // Inclua o arquivo onde está a função filtrarEstoque
-    include ('php/funcaoEstoque.php'); 
+session_start(); // <-- Sempre na primeira linha do arquivo
+include("php/funcoes.php");
 
     // Captura os filtros individualmente
     $buscaE    = isset($_GET["nBuscaEstoque"]) ? trim($_GET["nBuscaEstoque"]) : "";
@@ -34,49 +34,29 @@
 
     <?php 
         $pagina = 'estoque';
-        include 'php/sidebar.php'; ?>
+        include ('php/sidebar.php');?>
 
         <!-- Conteúdo -->
     <main class="flex-grow-1 p-4 bg-light">
 
-        <div class="card border-0 shadow-sm rounded-4 mb-4">
+    <?php 
+        // Configura as informações desta página
+        $tituloPagina = "Estoque";
+        $breadcrumb   = "Estoque";
 
-            <div class="card-body p-4">
+        // Inclui o arquivo de cabeçalho
+        include 'php/header.php'; 
+    ?>
 
-                <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-end mb-4">
+        <button class="btn btn-success px-4 py-2 rounded-3 shadow-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#modalProduto">
+            <i class="fa-solid fa-plus me-2"></i>
+            Nova Peça
+        </button>
+    </div>
 
-                    <div>
-                        <h3 class="fw-bold mb-1">
-                            Estoque
-                        </h3>
-
-                        <nav style="--bs-breadcrumb-divider: '>';">
-                            <ol class="breadcrumb mb-0">
-                                <li class="breadcrumb-item">
-                                    <a href="#" class="text-success text-decoration-none">
-                                        Home
-                                    </a>
-                                </li>
-
-                                <li class="breadcrumb-item active">
-                                    Estoque
-                                </li>
-                            </ol>
-                        </nav>
-                    </div>
-
-                    <button class="btn btn-success px-4 py-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modalProduto">
-                        <i class="fa-solid fa-plus me-2"></i>
-                        Nova Peça
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
         <!-- Cards -->
         <div class="row g-4 mb-4">
 
@@ -204,19 +184,39 @@
                     </thead>
 
                     <tbody>
+                        <?php
+                        if ($buscaE == "") {
+                            echo listaProduto();
+                        } else {
+                            echo BuscarEstoque($buscaE);
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
 
-    <?php
+            <div class="card-footer bg-white py-3">
+                <nav>
+                    <ul class="pagination justify-content-end mb-0">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Anterior</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Próximo</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
 
-        if($buscaE == "")
-        {
-            echo listaProduto();
-        }
-        else
-        {
-            echo filtrarEstoque($buscaE, $categoria, $status);
-        }
+        </div>
 
-        ?>
+    </main>
         
 <!-- Modal Novo Produto -->
 <div class="modal fade" id="modalProduto" tabindex="-1">

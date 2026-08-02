@@ -1,7 +1,9 @@
-<?php 
-
-    include("php/funcaoRelatorio.php");
+<?php
+session_start(); // <-- Sempre na primeira linha do arquivo
+include("php/funcoes.php");
     $filtro_ativo = isset($_GET['periodo']) ? $_GET['periodo'] : 'todos';
+    $busca        = isset($_GET['busca']) ? $_GET['busca'] : '';
+
     $funcionarios = ListarFuncionarios();
     $graficoMes = graficoRelatoriosMes();
     $graficoTipo = graficoRelatoriosTipo();
@@ -11,8 +13,6 @@
     $relatoriosMes   = RelatoriosMes();
     $pendentes       = RelatoriosPendentes();
     $exportados      = RelatoriosExportados();
-
-
 
 ?>
 
@@ -40,44 +40,22 @@
 
     <main class="flex-grow-1 p-4 bg-light">
 
-    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <?php 
+        // Configura as informações desta página
+        $tituloPagina = "Relatorio";
+        $breadcrumb   = "Relatorio";
 
-    <div class="card-body p-4">
+        // Inclui o arquivo de cabeçalho
+        include 'php/header.php'; 
+    ?>
 
-    <div class="d-flex justify-content-between align-items-center">
-
-        <div>
-            <h3 class="fw-bold mb-1">
-                Relatório
-            </h3>
-
-            <nav style="--bs-breadcrumb-divider: '>';">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="#" class="text-success text-decoration-none">
-                            Home
-                        </a>
-                    </li>
-
-                    <li class="breadcrumb-item active">
-                        Relatório
-                    </li>
-                </ol>
-            </nav>
-        </div>
-
-        <button class="btn btn-success px-4 py-2"
-        data-bs-toggle="modal"
-        data-bs-target="#modalRelatorio">
+    <div class="d-flex justify-content-end mb-4">
+        <button class="btn btn-success px-4 py-2 rounded-3 shadow-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#modalRelatorio">
             <i class="fa-solid fa-plus me-2"></i>
-            Novo Relatório
+            Novo relatório
         </button>
-
-
-    </div>
-
-    </div>
-
     </div>
 
     <div class="row g-4 mb-4">
@@ -114,7 +92,6 @@
             </div>
         </div>
 
-        <!-- Serviços Ativos -->
         <div class="col-md-3">
             <div class="card dashboard-card shadow-sm">
 
@@ -147,7 +124,6 @@
             </div>
         </div>
 
-        <!-- Serviços Inativos -->
         <div class="col-md-3">
             <div class="card dashboard-card shadow-sm">
 
@@ -180,7 +156,6 @@
             </div>
         </div>
 
-        <!-- Valor Médio -->
         <div class="col-md-3">
             <div class="card dashboard-card shadow-sm">
 
@@ -218,10 +193,6 @@
 
         <div class="row g-4 mb-4">
 
-    <!-- Gráfico de Barras -->
-
-
-    <!-- Gráfico de Barras -->
     <div class="col-lg-6">
         <div class="card border-0 shadow-sm rounded-4 h-60">
             <div class="card-body">
@@ -238,7 +209,6 @@
         </div>
     </div>
 
-    <!-- Gráfico Donut -->
     <div class="col-lg-6">
         <div class="card border-0 shadow-sm rounded-4 h-60">
             <div class="card-body">
@@ -267,16 +237,37 @@
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm">
 
-                <div class="card-header bg-white p-4 d-flex justify-content-between align-items-center">
+                <div class="card-header bg-white p-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
                     <h6 class="mb-0 fw-bold">
                         Relatórios Recentes
                     </h6>
-                    
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="selectAll">
-                        <label class="form-check-label" for="selectAll">
-                            Selecionar todos
-                        </label>
+
+                    <div class="d-flex align-items-center gap-3 ms-auto">
+                        <form method="GET" action="" class="d-flex align-items-center">
+                            <input type="hidden" name="periodo" value="<?= htmlspecialchars($filtro_ativo) ?>">
+                            <div class="input-group input-group-sm">
+                                <input type="text" 
+                                       name="busca" 
+                                       class="form-control" 
+                                       placeholder="Buscar relatório..." 
+                                       value="<?= htmlspecialchars($busca) ?>">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                                <?php if (!empty($busca)): ?>
+                                    <a href="?periodo=<?= urlencode($filtro_ativo) ?>" class="btn btn-outline-danger" title="Limpar busca">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </form>
+
+                        <div class="form-check text-nowrap">
+                            <input class="form-check-input" type="checkbox" id="selectAll">
+                            <label class="form-check-label" for="selectAll">
+                                Selecionar todos
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -298,8 +289,8 @@
 
                             <tbody>
                                 <?php 
-                                    // Passa o filtro ativo para a função
-                                    echo listaRelatorio($filtro_ativo); 
+                                    // Passa o filtro ativo e a busca para a função
+                                    echo listaRelatorio($filtro_ativo, $busca); 
                                 ?>
                             </tbody>
 
@@ -360,31 +351,31 @@
                     </h5>
                     <div class="d-flex flex-wrap gap-2">
 
-                        <a href="?periodo=hoje" 
+                        <a href="?periodo=hoje<?= !empty($busca) ? '&busca='.urlencode($busca) : '' ?>" 
                         class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == 'hoje' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
                         style="<?= $filtro_ativo == 'hoje' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
                             Hoje
                         </a>
 
-                        <a href="?periodo=7_dias" 
+                        <a href="?periodo=7_dias<?= !empty($busca) ? '&busca='.urlencode($busca) : '' ?>" 
                         class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == '7_dias' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
                         style="<?= $filtro_ativo == '7_dias' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
                             Últimos 7 dias
                         </a>
 
-                        <a href="?periodo=este_mes" 
+                        <a href="?periodo=este_mes<?= !empty($busca) ? '&busca='.urlencode($busca) : '' ?>" 
                         class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == 'este_mes' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
                         style="<?= $filtro_ativo == 'este_mes' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
                             Este mês
                         </a>
 
-                        <a href="?periodo=ultimo_mes" 
+                        <a href="?periodo=ultimo_mes<?= !empty($busca) ? '&busca='.urlencode($busca) : '' ?>" 
                         class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == 'ultimo_mes' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
                         style="<?= $filtro_ativo == 'ultimo_mes' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
                             Último mês
                         </a>
 
-                        <a href="?periodo=todos" 
+                        <a href="?periodo=todos<?= !empty($busca) ? '&busca='.urlencode($busca) : '' ?>" 
                         class="btn btn-sm px-3 py-2 fw-semibold <?= $filtro_ativo == 'todos' ? 'btn-success border-0' : 'btn-outline-secondary bg-white text-dark border-light shadow-sm' ?>"
                         style="<?= $filtro_ativo == 'todos' ? 'background-color: #e2f6e9; color: #157347;' : '' ?>">
                             Todos
@@ -589,8 +580,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
-
 
 </script>
 

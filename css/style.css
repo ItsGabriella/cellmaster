@@ -311,3 +311,22 @@ main{
     justify-content: center;
     gap: 8px;
 }
+
+/* Botão do Sino de Notificação estilo Pílula/Verde Claro */
+.btn-bell {
+    width: 42px;
+    height: 42px;
+    background-color: #e8f5e9; /* Verde bem claro suave */
+    border: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-bell:hover {
+    background-color: #c8e6c9;
+}
+
+/* Ajuste na imagem de perfil */
+.object-fit-cover {
+    object-fit: cover;
+}
+
