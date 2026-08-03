@@ -6,6 +6,8 @@ if(isset($_COOKIE["lembrar_email"])){
     $email = $_COOKIE["lembrar_email"];
 }
 
+
+
 ?>
 
 <!DOCTYPE html>

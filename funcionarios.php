@@ -40,12 +40,23 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
             include 'php/header.php'; 
         ?>
 
+        <?php if (isset($_SESSION['mensagem_erro'])): ?>
+            <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <?= $_SESSION['mensagem_erro']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php unset($_SESSION['mensagem_erro']); ?>
+        <?php endif; ?>
+
         <div class="d-flex justify-content-end mb-4">
             <button class="btn btn-success px-4 py-2 rounded-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalFuncionario">
                 <i class="fa-solid fa-user-plus me-2"></i>
                 Novo Funcionário
             </button>
         </div>
+
+        
 
         <div class="row g-4 mb-4">
             <div class="col-md-4">
@@ -145,9 +156,18 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
             <div class="card-footer bg-white py-3">
                 <nav>
                     <ul class="pagination justify-content-end mb-0">
-                        <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">Anterior</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Próximo</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

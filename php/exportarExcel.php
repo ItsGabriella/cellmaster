@@ -4,7 +4,7 @@
 include("conexaoBD.php");
 
 // 1. Receber os IDs selecionados do formulário
-$relatorios_post = $_POST['relatorios'] ?? $_POST['relatorios[]'] ?? [];
+$relatorios_post = $_POST['relatorios'] ?? $_POST['relatorios[]'] ?? $_POST['ids'] ?? [];
 
 if (empty($relatorios_post)) {
     echo "<script>

@@ -60,30 +60,22 @@ function listaFuncionario(){
             <div class="modal fade" id="modalExcluir'.$coluna["idfuncionario"].'" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
+
                         <div class="modal-body text-center p-4">
+
                             <div class="mb-3">
                                 <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
                                     style="width:80px;height:80px;">
                                     <i class="bi bi-trash text-danger fs-1"></i>
                                 </div>
                             </div>
-
-                            <h3 class="fw-bold">Excluir Funcionário</h3>
-
-                            <form method="POST" action="php/salvarFuncionario.php?funcao=D&IDFunc='.$coluna["idfuncionario"].'">
-                                <p class="text-secondary mb-1">
-                                    Tem certeza que deseja excluir o funcionário
-                                    <strong class="text-danger">'.$coluna["nome_func"].'</strong>?
-                                </p>
-                                <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
-
+                            <h3 class="fw-bold">Excluir Relatório</h3>
+                            <form method="POST" action="php/salvarFuncionario.php?funcao=D&codigo='.$coluna["idfuncionario"].'" enctype="multipart/form-data">
+                                <p class="text-secondary">Tem certeza que deseja excluir o relatório <strong style="color: red;">'.$coluna["nome_func"].'</strong>?</p>
+                                <p class="text-muted">Esta ação não poderá ser desfeita.</p>
                                 <div class="d-flex gap-2 justify-content-center mt-4">
-                                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
-                                        Cancelar
-                                    </button>
-                                    <button type="submit" class="btn btn-danger px-4">
-                                        Excluir
-                                    </button>
+                                    <button type="button" class="btn btn-outline-success px-4" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-danger px-4">Excluir</button>
                                 </div>
                             </form>
                         </div>
@@ -228,12 +220,21 @@ function filtrarFuncionarios($busca, $cargo) {
             <div class="modal fade" id="modalExcluir'.$coluna["idfuncionario"].'" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content border-0 shadow">
+
                         <div class="modal-body text-center p-4">
-                            <h3 class="fw-bold">Excluir Funcionário</h3>
-                            <form method="POST" action="php/salvarFuncionario.php?funcao=D&IDFunc='.$coluna["idfuncionario"].'">
-                                <p class="text-secondary">Tem certeza que deseja excluir <strong>'.$coluna["nome_func"].'</strong>?</p>
+
+                            <div class="mb-3">
+                                <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center"
+                                    style="width:80px;height:80px;">
+                                    <i class="bi bi-trash text-danger fs-1"></i>
+                                </div>
+                            </div>
+                            <h3 class="fw-bold">Excluir Relatório</h3>
+                            <form method="POST" action="php/salvarFuncionario.php?funcao=D&codigo='.$coluna["idfuncionario"].'" enctype="multipart/form-data">
+                                <p class="text-secondary">Tem certeza que deseja excluir o relatório <strong style="color: red;">'.$coluna["nome_func"].'</strong>?</p>
+                                <p class="text-muted">Esta ação não poderá ser desfeita.</p>
                                 <div class="d-flex gap-2 justify-content-center mt-4">
-                                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-outline-success px-4" data-bs-dismiss="modal">Cancelar</button>
                                     <button type="submit" class="btn btn-danger px-4">Excluir</button>
                                 </div>
                             </form>

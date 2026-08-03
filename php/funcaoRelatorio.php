@@ -149,40 +149,40 @@ function listaRelatorio($periodo = 'todos'){
                     break;
             }
 
-            $lista .= 
-            '<tr>
-                <td>
-                    <input type="checkbox" 
-                    class="form-check-input checkbox-relatorio" name="relatorios[]"
-                    value="'.$coluna["idrelatorio"].'">
-                </td>
+            $lista .= '
+                <tr>
+                    <td>
+                        <input class="form-check-input checkbox-relatorio" 
+                        type="checkbox" 
+                        name="ids[]" 
+                        value="'.$coluna["idrelatorio"].'">
+                    </td>
+                    <td>#'.$coluna["idrelatorio"].'</td>
+                    <td>'.htmlspecialchars($coluna["nome_relatorio"]).'</td>
+                    <td>'.$coluna["tipo"].'</td>
+                    <td>'.(!empty($coluna["geracao_data"]) ? date('d/m/Y', strtotime($coluna["geracao_data"])) : 'N/A').'</td>
+                    <td>'.$coluna["status"].'</td>
 
-                <td>'.$coluna["idrelatorio"].'</td>
-                <td>'.$coluna["nome_relatorio"].'</td>
-                <td>'.$coluna["tipo"].'</td>
-                <td>'.(!empty($coluna["geracao_data"]) ? date('d/m/Y', strtotime($coluna["geracao_data"])) : 'N/A').'</td>
-                <td>'.$coluna["status"].'</td>
+                    <td>
+                        <button type="button" class="btn btn-success btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalEditarRelatorio'.$coluna["idrelatorio"].'">
+                        <i class="fa-solid fa-pen"></i>
+                        </button>
 
-                <td>
-                    <button type="button" class="btn btn-success btn-sm"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalEditarRelatorio'.$coluna["idrelatorio"].'">
-                    <i class="fa-solid fa-pen"></i>
-                    </button>
+                        <button type="button" class="btn btn-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalExcluirRelatorio'.$coluna["idrelatorio"].'">
+                        <i class="fa-solid fa-trash"></i>
+                        </button>
 
-                    <button type="button" class="btn btn-danger btn-sm"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalExcluirRelatorio'.$coluna["idrelatorio"].'">
-                    <i class="fa-solid fa-trash"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-primary btn-sm"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalVisualizarRelatorio'.$coluna["idrelatorio"].'">
-                    <i class="fa-solid fa-eye"></i>
-                    </button>
-                </td>
-            </tr>
+                        <button type="button" class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalVisualizarRelatorio'.$coluna["idrelatorio"].'">
+                        <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
 
             <div class="modal fade" id="modalExcluirRelatorio'.$coluna["idrelatorio"].'" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">

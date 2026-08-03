@@ -1,3 +1,46 @@
+<?php
+// Obtém o cargo do usuário logado da sessão (aceita ID numérico 1, 2, 3, 4 ou nome do cargo/tipo)
+$cargoUsuario = $_SESSION['cargos_idcargos'] ?? $_SESSION['usuario_cargo'] ?? $_SESSION['cargo_id'] ?? $_SESSION['cargo'] ?? $_SESSION['tipo_usuario'] ?? 1;
+
+// Define as páginas que CADA CARGO PODE CLICAR
+// 1 = Gerente, 2 = Técnico, 3 = Atendente, 4 = Cliente
+if ($cargoUsuario == 1 || strtolower($cargoUsuario) === 'gerente') {
+    // Gerente clica em tudo
+    $menusPermitidos = ['dashboard', 'funcionarios', 'clientes', 'orcamento', 'os', 'estoque', 'servicos', 'relatorio', 'configuracoes'];
+} elseif ($cargoUsuario == 2 || strtolower($cargoUsuario) === 'técnico' || strtolower($cargoUsuario) === 'tecnico') {
+    // Técnico clica apenas em Dashboard, OS, Estoque, Serviços e Configurações
+    $menusPermitidos = ['dashboard', 'os', 'estoque', 'servicos', 'configuracoes'];
+} elseif ($cargoUsuario == 3 || strtolower($cargoUsuario) === 'atendente') {
+    // Atendente clica em Dashboard, Clientes, Orçamento, OS, Estoque, Serviços e Configurações
+    $menusPermitidos = ['dashboard', 'clientes', 'orcamento', 'os', 'estoque', 'servicos', 'configuracoes'];
+} elseif ($cargoUsuario == 4 || strtolower($cargoUsuario) === 'cliente') {
+    // Cliente clica apenas no Dashboard e Configurações
+    $menusPermitidos = ['dashboard', 'configuracoes'];
+} else {
+    // Padrão de segurança para clientes ou perfis não reconhecidos
+    $menusPermitidos = ['dashboard', 'configuracoes'];
+}
+
+// Função auxiliar para renderizar cada item do menu
+function renderMenuItem($chaveMenu, $paginaAtual, $link, $iconeClass, $titulo, $menusPermitidos) {
+    $podeAcessar = in_array($chaveMenu, $menusPermitidos);
+    $activeClass = ($paginaAtual == $chaveMenu) ? 'active' : '';
+    
+    // Se não puder acessar, adiciona estilo visual de desabilitado e bloqueia clique
+    $disabledClass = !$podeAcessar ? 'opacity-50 pe-none' : '';
+    $href = $podeAcessar ? $link : '#';
+    $titleAttr = !$podeAcessar ? 'title="Acesso não permitido para o seu perfil"' : '';
+
+    echo '
+    <li class="nav-item side-item ' . $activeClass . ' ' . $disabledClass . '" ' . $titleAttr . '>
+        <a href="' . $href . '" class="nav-link text-white ' . (!$podeAcessar ? 'disabled' : '') . '" ' . (!$podeAcessar ? 'tabindex="-1" aria-disabled="true"' : '') . '>
+            <i class="' . $iconeClass . '"></i>
+            <span class="item-description ms-2">' . $titulo . '</span>
+        </a>
+    </li>';
+}
+?>
+
 <nav id="sidebar" class="d-flex flex-column justify-content-between">
 
     <div class="p-3">
@@ -10,70 +53,17 @@
         </div>
 
         <ul class="nav flex-column gap-2">
-
-            <li class="nav-item side-item <?= ($pagina == 'dashboard') ? 'active' : '' ?>">
-                <a href="dashboard.php" class="nav-link text-white">
-                    <i class="fa-solid fa-chart-line"></i>
-                    <span class="item-description ms-2">Dashboard</span>
-                </a>
-            </li>
-
-            <li class="nav-item side-item <?= ($pagina == 'funcionarios') ? 'active' : '' ?>">
-                <a href="funcionarios.php" class="nav-link text-white">
-                    <i class="fa-solid fa-clipboard-user"></i>
-                    <span class="item-description ms-2">Funcionários</span>
-                </a>
-            </li>
-
-            <li class="nav-item side-item <?= ($pagina == 'clientes') ? 'active' : '' ?>">
-                <a href="clientes.php" class="nav-link text-white">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="item-description ms-2">Clientes</span>
-                </a>
-            </li>
-
-            <li class="nav-item side-item <?= ($pagina == 'estoque') ? 'active' : '' ?>">
-                <a href="estoque.php" class="nav-link text-white">
-                    <i class="fa-solid fa-box-archive"></i>
-                    <span class="item-description ms-2">Estoque</span>
-                </a>
-            </li>
-
-            <li class="nav-item side-item <?= ($pagina == 'servicos') ? 'active' : '' ?>">
-                <a href="servicos.php" class="nav-link text-white">
-                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                    <span class="item-description ms-2">Serviços</span>
-                </a>
-            </li>
-
-            <li class="nav-item side-item <?= ($pagina == 'orcamentos') ? 'active' : '' ?>">
-                <a href="orcamentos.php" class="nav-link text-white">
-                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                    <span class="item-description ms-2">Orçamento</span>
-                </a>
-            </li>
-
-            <li class="nav-item side-item <?= ($pagina == 'os') ? 'active' : '' ?>">
-                <a href="ordem_servico.php" class="nav-link text-white">
-                    <i class="fa-solid fa-file-contract"></i>
-                    <span class="item-description ms-2">Ordem de Serviço</span>
-                </a>
-            </li>
-
-            <li class="nav-item side-item <?= ($pagina == 'relatorio') ? 'active' : '' ?>">
-                <a href="relatorio.php" class="nav-link text-white">
-                    <i class="fa-solid fa-file"></i>
-                    <span class="item-description ms-2">Relatório</span>
-                </a>
-            </li>
-
-            <li class="nav-item side-item <?= ($pagina == 'configuracoes') ? 'active' : '' ?>">
-                <a href="configuracoes.php" class="nav-link text-white">
-                    <i class="fa-solid fa-gear"></i>
-                    <span class="item-description ms-2">Configurações</span>
-                </a>
-            </li>
-
+            <?php 
+                renderMenuItem('dashboard', $pagina, 'dashboard.php', 'fa-solid fa-chart-line', 'Dashboard', $menusPermitidos);
+                renderMenuItem('funcionarios', $pagina, 'funcionarios.php', 'fa-solid fa-clipboard-user', 'Funcionários', $menusPermitidos);
+                renderMenuItem('clientes', $pagina, 'clientes.php', 'fa-solid fa-users', 'Clientes', $menusPermitidos);
+                renderMenuItem('orcamento', $pagina, 'orcamento.php', 'fa-solid fa-calculator', 'Orçamento', $menusPermitidos);
+                renderMenuItem('os', $pagina, 'ordens_servico.php', 'fa-solid fa-file-contract', 'Ordem de Serviço', $menusPermitidos);
+                renderMenuItem('estoque', $pagina, 'estoque.php', 'fa-solid fa-boxes-stacked', 'Estoque', $menusPermitidos);
+                renderMenuItem('servicos', $pagina, 'servicos.php', 'fa-solid fa-wrench', 'Serviços', $menusPermitidos);
+                renderMenuItem('relatorio', $pagina, 'relatorio.php', 'fa-solid fa-file', 'Relatório', $menusPermitidos);
+                renderMenuItem('configuracoes', $pagina, 'configuracoes.php', 'fa-solid fa-gear', 'Configurações', $menusPermitidos);
+            ?>
         </ul>
 
         <button id="open_btn">
@@ -84,11 +74,8 @@
 
     <div class="border-top p-3">
         <button id="logout_btn" class="w-100" onclick="window.location.href='php/logout.php';">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-
-            <span class="item-description">
-                Logout
-            </span>
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="item-description ms-2">Sair</span>
         </button>
     </div>
 

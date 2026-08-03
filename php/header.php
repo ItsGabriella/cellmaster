@@ -95,14 +95,28 @@
                     height="42"
                     onerror="this.onerror=null; this.src='img/user.png';">
                 
-                <div class="d-flex flex-column justify-content-center lh-1">
-                    <span class="fw-bold text-dark fs-6 mb-1">
-                        <?= htmlspecialchars($_SESSION['nome'] ?? 'Utilizador'); ?>
-                    </span>
-                    <span class="text-secondary small fw-normal">
-                        <?= htmlspecialchars($_SESSION['cargo'] ?? 'Atendente'); ?>
-                    </span>
-                </div>
+<?php
+    // Identifica o cargo correto salvo na sessão
+    $cargoExibicao = $_SESSION['tipo_usuario'] ?? $_SESSION['cargo'] ?? '';
+
+    // Caso a sessão tenha apenas o número ID do cargo (1=Gerente, 2=Técnico, 3=Atendente)
+    if (empty($cargoExibicao) || is_numeric($cargoExibicao)) {
+        $idCargoNum = $_SESSION['cargos_idcargos'] ?? $_SESSION['usuario_cargo'] ?? 0;
+        if ($idCargoNum == 1) $cargoExibicao = 'Gerente';
+        elseif ($idCargoNum == 2) $cargoExibicao = 'Técnico';
+        elseif ($idCargoNum == 3) $cargoExibicao = 'Atendente';
+        else $cargoExibicao = 'Cliente';
+    }
+?>
+
+<div class="d-flex flex-column justify-content-center lh-1">
+    <span class="fw-bold text-dark fs-6 mb-1">
+        <?= htmlspecialchars($_SESSION['nome_func'] ?? $_SESSION['usuario_nome'] ?? $_SESSION['nome'] ?? 'Utilizador'); ?>
+    </span>
+    <span class="text-secondary small fw-normal">
+        <?= htmlspecialchars($cargoExibicao); ?>
+    </span>
+</div>
             </div>
 
         </div>

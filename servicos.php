@@ -31,6 +31,15 @@ $valorMedio = ValorMedioServico();
     $pagina = 'servicos';
     include 'php/sidebar.php'; ?>
 
+    <?php if (isset($_SESSION['mensagem_erro'])): ?>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            <?= $_SESSION['mensagem_erro']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <?php unset($_SESSION['mensagem_erro']); ?>
+    <?php endif; ?>
+
 
     <main class="flex-grow-1 p-4 bg-light">
 

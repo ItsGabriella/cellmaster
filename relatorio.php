@@ -148,7 +148,7 @@ include("php/funcoes.php");
             </div>
         </div>
 
-        <form method="POST">
+        <form method="POST" id="formExportar">
             <div class="row g-4 mb-4">
                 
                 <div class="col-lg-8">
@@ -220,9 +220,9 @@ include("php/funcoes.php");
 
                             <div class="card border-light shadow-sm mb-2">
                                 <div class="card-body exportacao-card py-2 px-3">
-                                    <button type="submit" 
-                                            formaction="php/exportarPdf.php" 
-                                            formtarget="_blank" 
+                                    <button 
+                                            type="submit"
+                                            onclick="exportarPdfsSeparados()" 
                                             class="btn btn-outline-danger d-flex align-items-center justify-content-center fw-bold export-btn w-100" 
                                             style="height: 38px;">
                                         <i class="fa-solid fa-file-pdf me-2"></i> PDF
@@ -234,7 +234,7 @@ include("php/funcoes.php");
                             <div class="card border-light shadow-sm mb-2">
                                 <div class="card-body exportacao-card py-2 px-3">
                                     <button type="submit" 
-                                            formaction="php/exportarExcel.php" 
+                                            onclick="exportarSeparados('php/exportarExcel.php')"
                                             class="btn btn-outline-success d-flex align-items-center justify-content-center fw-bold export-btn w-100" 
                                             style="height: 38px;">
                                         <i class="fa-solid fa-file-excel me-2"></i> Excel
@@ -246,7 +246,7 @@ include("php/funcoes.php");
                             <div class="card border-light shadow-sm mb-4">
                                 <div class="card-body exportacao-card py-2 px-3">
                                     <button type="submit" 
-                                            formaction="php/exportarCsv.php" 
+                                            onclick="exportarSeparados('php/exportarCsv.php')"
                                             class="btn btn-outline-primary d-flex align-items-center justify-content-center fw-bold export-btn w-100" 
                                             style="height: 38px;">
                                         <i class="fa-solid fa-file-csv me-2"></i> CSV
@@ -431,24 +431,58 @@ include("php/funcoes.php");
 
     // Script Selecionar Todos
     document.addEventListener('DOMContentLoaded', function () {
-        const selectAllCheckbox = document.getElementById('selectAll');
-        const reportCheckboxes = document.querySelectorAll('.checkbox-relatorio');
+    const selectAllCheckbox = document.getElementById('selectAll');
+    const reportCheckboxes = document.querySelectorAll('.checkbox-relatorio');
 
-        if (selectAllCheckbox) {
-            selectAllCheckbox.addEventListener('change', function () {
-                reportCheckboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function () {
             reportCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    const allChecked = Array.from(reportCheckboxes).every(cb => cb.checked);
-                    selectAllCheckbox.checked = allChecked;
-                });
+                checkbox.checked = selectAllCheckbox.checked;
             });
-        }
+        });
+
+        reportCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const allChecked = Array.from(reportCheckboxes).every(cb => cb.checked);
+                selectAllCheckbox.checked = allChecked;
+            });
+        });
+    }
+});
+
+function exportarSeparados(urlDestino) {
+    // Busca todas as checkboxes marcadas na tabela
+    const marcados = document.querySelectorAll('.checkbox-relatorio:checked');
+
+    if (marcados.length === 0) {
+        alert('Por favor, selecione pelo menos um relatório para exportar.');
+        return;
+    }
+
+    // Para cada item selecionado, cria e envia um formulário separado
+    marcados.forEach(checkbox => {
+        const idRelatorio = checkbox.value;
+
+        // Cria o formulário temporário em memória
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = urlDestino;
+        form.target = '_blank'; // Abre em nova aba / dispara o download individual
+
+        // Cria o campo com o ID do relatório
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'relatorios[]';
+        input.value = idRelatorio;
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+
+        // Submete o formulário e depois o remove do DOM
+        form.submit();
+        document.body.removeChild(form);
     });
+}
     </script>
 </body>
 </html>

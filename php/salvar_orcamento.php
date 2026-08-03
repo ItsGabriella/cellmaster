@@ -1,5 +1,5 @@
 <?php
-include("conexao.php");
+include("conexaoBD.php");
 
 $cliente_idcliente = $_POST['cliente_idcliente'] ?? null;
 $funcionario_idfuncionario = $_POST['funcionario_idfuncionario'] ?? null;
@@ -9,13 +9,13 @@ $marca = $_POST['marca'] ?? '';
 $modelo = $_POST['modelo'] ?? '';
 $imei = $_POST['imei'] ?? '';
 $status = $_POST['status'] ?? 'Aguardando';
-$valor_total = $_POST['valor_total'] ?? 0;
-$data_dia = $_POST['data_dia'] ?? null;
+$valor_total = (float)($_POST['valor_total'] ?? 0);
+$data_dia = $_POST['data_dia'] ?? date('Y-m-d');
 
 $aprovado = null;
-if ($status == "Aprovado") {
+if (strtolower($status) == "aprovado") {
     $aprovado = "Sim";
-} elseif ($status == "Reprovado") {
+} elseif (strtolower($status) == "reprovado") {
     $aprovado = "Nao";
 }
 
@@ -24,23 +24,28 @@ $sql = "INSERT INTO orcamento
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param(
-    "iissssisdss",
-    $cliente_idcliente,
-    $funcionario_idfuncionario,
-    $defeito,
-    $observacoes,
-    $marca,
-    $modelo,
-    $imei,
-    $aprovado,
-    $valor_total,
-    $data_dia,
-    $status
-);
+if ($stmt) {
+    $stmt->bind_param(
+        "iissssisdss",
+        $cliente_idcliente,
+        $funcionario_idfuncionario,
+        $defeito,
+        $observacoes,
+        $marca,
+        $modelo,
+        $imei,
+        $aprovado,
+        $valor_total,
+        $data_dia,
+        $status
+    );
 
-if ($stmt->execute()) {
-    header("Location: orcamentos.php?sucesso=1");
+    if ($stmt->execute()) {
+        header("Location: orcamentos.php?sucesso=1");
+    } else {
+        header("Location: orcamentos.php?erro=1");
+    }
+    $stmt->close();
 } else {
     header("Location: orcamentos.php?erro=1");
 }
