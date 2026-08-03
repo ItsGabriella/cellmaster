@@ -24,9 +24,12 @@ function listaFuncionario(){
 
     $lista = '';
 
-    if (mysqli_num_rows($result) > 0) {        
+    if ($result && mysqli_num_rows($result) > 0) {        
         foreach ($result as $coluna) {
             $cargoNome = getNomeCargo($coluna["cargos_idcargos"]);
+
+            // Converte o valor de data_cadastro para o formato dd/mm/AAAA
+            $dataCadastro = !empty($coluna["data_cadastro"]) ? date("d/m/Y", strtotime($coluna["data_cadastro"])) : "-";
 
             $lista .= 
             '<tr>
@@ -35,6 +38,7 @@ function listaFuncionario(){
                 <td><span class="badge bg-secondary">'.$cargoNome.'</span></td>
                 <td>'.$coluna["tel_func"].'</td>
                 <td>'.$coluna["email_func"].'</td>
+                <td>'.$dataCadastro.'</td>
 
                 <td>
                     <button class="btn btn-success btn-sm me-1"
@@ -108,7 +112,7 @@ function listaFuncionario(){
 
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold">Cargo</label>
-                                        <select class="form-select cargo" name="ncargo" required>
+                                        <select class="form-select cargo" name="nCargo" required>
                                             <option value="1" '.($coluna["cargos_idcargos"] == 1 ? 'selected' : '').'>1 - Gerente</option>
                                             <option value="2" '.($coluna["cargos_idcargos"] == 2 ? 'selected' : '').'>2 - Técnico</option>
                                             <option value="3" '.($coluna["cargos_idcargos"] == 3 ? 'selected' : '').'>3 - Atendente</option>
@@ -141,6 +145,8 @@ function listaFuncionario(){
                 </div>
             </div>';
         }    
+    } else {
+        $lista = '<tr><td colspan="7" class="text-center text-muted py-4">Nenhum funcionário encontrado.</td></tr>';
     }
     
     return $lista;
@@ -166,32 +172,40 @@ function proxIdFuncionario(){
 }
 
 // Função de Busca com Modais incluídos
-function BuscarFuncionario($busca) {
+function filtrarFuncionarios($busca, $cargo) {
     include("conexaoBD.php");
 
-    $buscaLimpa = strtolower(trim($busca));
-    $cargo = $buscaLimpa;
+    $sql = "SELECT * FROM funcionario";
+    $condicoes = array();
 
-    if ($buscaLimpa == "gerente") {
-        $cargo = 1;
-    } elseif ($buscaLimpa == "técnico" || $buscaLimpa == "tecnico") {
-        $cargo = 2;
-    } elseif ($buscaLimpa == "atendente") {
-        $cargo = 3;
+    // 1. Filtro de Texto (Nome ou E-mail)
+    if (!empty($busca)) {
+        $buscaEscaped = mysqli_real_escape_string($conn, $busca);
+        $condicoes[] = "(nome_func LIKE '%$buscaEscaped%' OR email_func LIKE '%$buscaEscaped%')";
     }
 
-    $sql = "SELECT * FROM funcionario
-            WHERE nome_func LIKE '%$buscaLimpa%'
-            OR email_func LIKE '%$buscaLimpa%'
-            OR cargos_idcargos LIKE '%$cargo%'
-            ORDER BY nome_func";
+    // 2. Filtro por Cargo
+    if ($cargo !== "Todos" && !empty($cargo)) {
+        $cargoEscaped = mysqli_real_escape_string($conn, $cargo);
+        $condicoes[] = "cargos_idcargos = '$cargoEscaped'";
+    }
+
+    // Aplica as cláusulas WHERE
+    if (count($condicoes) > 0) {
+        $sql .= " WHERE " . implode(" AND ", $condicoes);
+    }
+
+    $sql .= " ORDER BY idfuncionario DESC";
 
     $result = mysqli_query($conn, $sql);
     $lista = "";
 
-    if (mysqli_num_rows($result) > 0) {
+    if ($result && mysqli_num_rows($result) > 0) {
         foreach ($result as $coluna) {
             $cargoNome = getNomeCargo($coluna["cargos_idcargos"]);
+            
+            // Converte o valor de data_cadastro para o formato dd/mm/AAAA
+            $dataCadastro = !empty($coluna["data_cadastro"]) ? date("d/m/Y", strtotime($coluna["data_cadastro"])) : "-";
 
             $lista .= '
             <tr>
@@ -200,18 +214,12 @@ function BuscarFuncionario($busca) {
                 <td><span class="badge bg-secondary">'.$cargoNome.'</span></td>
                 <td>'.$coluna["tel_func"].'</td>
                 <td>'.$coluna["email_func"].'</td>
+                <td>'.$dataCadastro.'</td>
                 <td>
-                    <button class="btn btn-success btn-sm me-1"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalEditar'.$coluna["idfuncionario"].'"
-                            title="Editar">
+                    <button class="btn btn-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#modalEditar'.$coluna["idfuncionario"].'" title="Editar">
                         <i class="fa-solid fa-pen"></i>
                     </button>
-
-                    <button class="btn btn-danger btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalExcluir'.$coluna["idfuncionario"].'"
-                            title="Excluir">
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluir'.$coluna["idfuncionario"].'" title="Excluir">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </td>
@@ -233,24 +241,24 @@ function BuscarFuncionario($busca) {
                     </div>
                 </div>
             </div>
-            
+
             <div class="modal fade" id="modalEditar'.$coluna["idfuncionario"].'" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content border-0 shadow-lg">
                         <div class="modal-header bg-success text-white">
-                            <h5 class="modal-title">Editar Funcionário</h5>
+                            <h5 class="modal-title"><i class="fa-solid fa-user-pen me-2"></i>Editar Funcionário</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
                             <form method="POST" action="php/salvarFuncionario.php?funcao=U&IDFunc='.$coluna["idfuncionario"].'">
                                 <div class="row g-3">
                                     <div class="col-md-6">
-                                        <label class="form-label fw-semibold">Nome</label>
+                                        <label class="form-label fw-semibold">Nome do Funcionário</label>
                                         <input type="text" class="form-control nome" name="nFuncionario" value="'.$coluna["nome_func"].'" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold">Cargo</label>
-                                        <select class="form-select cargo" name="ncargo" required>
+                                        <select class="form-select cargo" name="nCargo" required>
                                             <option value="1" '.($coluna["cargos_idcargos"] == 1 ? 'selected' : '').'>1 - Gerente</option>
                                             <option value="2" '.($coluna["cargos_idcargos"] == 2 ? 'selected' : '').'>2 - Técnico</option>
                                             <option value="3" '.($coluna["cargos_idcargos"] == 3 ? 'selected' : '').'>3 - Atendente</option>
@@ -267,7 +275,7 @@ function BuscarFuncionario($busca) {
                                 </div>
                                 <div class="modal-footer mt-4 px-0 pb-0">
                                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-success">Salvar Alterações</button>
+                                    <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk me-2"></i>Salvar Alterações</button>
                                 </div>
                             </form>
                         </div>
@@ -276,7 +284,7 @@ function BuscarFuncionario($busca) {
             </div>';
         }
     } else {
-        $lista = '<tr><td colspan="6" class="text-center text-muted py-4">Nenhum funcionário encontrado.</td></tr>';
+        $lista = '<tr><td colspan="7" class="text-center text-muted py-4">Nenhum funcionário encontrado.</td></tr>';
     }
 
     mysqli_close($conn);

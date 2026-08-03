@@ -227,7 +227,7 @@ function funcaoStatus($qtd,$qtdmin){
     if ($qtd > $qtdmin){
         $status = '<span class="badge text-bg-success">Em estoque</span>';
     }else{
-        $status = '<span class="badge text-bg-danger">Baixo Estoque</span>';
+        $status = '<span class="badge text-bg-danger">Baixo estoque</span>';
     }
     return $status;
 }
@@ -486,24 +486,30 @@ function filtrarEstoque($buscaE = "", $categoria = "Todas", $status = "Todos") {
     include("conexaoBD.php");
 
     $sql = "SELECT * FROM peca";
+    $condicoes = array();
 
-    // 1. Se digitou algo na busca, adiciona à SQL
+    // 1. Filtro por Busca do Nome/Texto
     if (!empty($buscaE)) {
         $buscaEscaped = mysqli_real_escape_string($conn, $buscaE);
-        $sql .= " WHERE nome_peca LIKE '%$buscaEscaped%'";
+        $condicoes[] = "nome_peca LIKE '%$buscaEscaped%'";
     }
 
-    // 2. Se selecionou uma Categoria específica, adiciona à SQL
+    // 2. Filtro por Categoria
     if ($categoria !== "Todas" && !empty($categoria)) {
         $categoriaEscaped = mysqli_real_escape_string($conn, $categoria);
-        $sql .= " WHERE categoria = '$categoriaEscaped'";
+        $condicoes[] = "categoria = '$categoriaEscaped'";
     }
 
-    // 3. Se selecionou um Status específico, adiciona à SQL
+    // 3. Filtro por Status (Aceitando tanto 'Estoque baixo' quanto 'Baixo estoque')
     if ($status === "Em estoque") {
-        $sql .= " WHERE qtdade_peca > estoque_min";
-    } elseif ($status === "Estoque baixo") {
-        $sql .= " WHERE qtdade_peca <= estoque_min";
+        $condicoes[] = "qtdade_peca > estoque_min";
+    } elseif ($status === "Estoque baixo" || $status === "Baixo estoque") {
+        $condicoes[] = "qtdade_peca <= estoque_min";
+    }
+
+    // Se houver qualquer filtro preenchido, concatena no SQL usando AND
+    if (count($condicoes) > 0) {
+        $sql .= " WHERE " . implode(" AND ", $condicoes);
     }
 
     $sql .= " ORDER BY idpeca DESC";
@@ -513,7 +519,6 @@ function filtrarEstoque($buscaE = "", $categoria = "Todas", $status = "Todos") {
 
     if ($result && mysqli_num_rows($result) > 0) {
         foreach ($result as $coluna) {
-
             $lista .= '
             <tr>
                 <td>'.$coluna["idpeca"].'</td>
@@ -611,6 +616,28 @@ function filtrarEstoque($buscaE = "", $categoria = "Todas", $status = "Todos") {
     return $lista;
 }
 
+
+// Função para carregar as categorias cadastradas no Banco de Dados
+function buscarCategoriasOptions($categoriaSelecionada = "Todas") {
+    include("conexaoBD.php");
+
+    // Busca todas as categorias únicas cadastradas no banco
+    $sql = "SELECT DISTINCT categoria FROM peca WHERE categoria IS NOT NULL AND categoria != '' ORDER BY categoria ASC";
+    $result = mysqli_query($conn, $sql);
+
+    $options = '';
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($linha = mysqli_fetch_assoc($result)) {
+            $cat = $linha['categoria'];
+            $selected = ($cat === $categoriaSelecionada) ? 'selected' : '';
+            $options .= '<option value="' . htmlspecialchars($cat) . '" ' . $selected . '>' . htmlspecialchars($cat) . '</option>';
+        }
+    }
+
+    mysqli_close($conn);
+    return $options;
+}
 
 
 ?>

@@ -1,18 +1,15 @@
 <?php
-session_start(); // <-- Sempre na primeira linha do arquivo
-include("php/funcoes.php");
+session_start();
+include("php/funcoes.php"); // Ou funcaoFuncionario.php
 
-$busca = "";
+$busca = isset($_GET["nBusca"]) ? trim($_GET["nBusca"]) : "";
+$cargo = isset($_GET["nCargo"]) ? $_GET["nCargo"] : "Todos";
 
-if (isset($_GET["nBusca"])) {
-    $busca = $_GET["nBusca"];
-}
-
-// Adapte/Crie estas funções no seu funcoes.php se desejar valores dinâmicos
 $totalFuncionarios = function_exists('TotalFuncionarios') ? TotalFuncionarios() : 0;
 $tecnicos          = function_exists('TotalTecnicos') ? TotalTecnicos() : 0;
 $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -31,29 +28,24 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
 <body class="bg-custom">
 
     <?php 
-    $pagina = 'funcionarios';
-    include 'php/sidebar.php'; 
+        $pagina = 'funcionarios';
+        include ('php/sidebar.php');
     ?>
 
     <main class="flex-grow-1 p-4 bg-light">
 
         <?php 
-        // Configura as informações desta página
-        $tituloPagina = "Funcionarios";
-        $breadcrumb   = "Funcionarios";
+            $tituloPagina = "Funcionários";
+            $breadcrumb = "Funcionários";
+            include 'php/header.php'; 
+        ?>
 
-        // Inclui o arquivo de cabeçalho
-        include 'php/header.php'; 
-    ?>
-
-    <div class="d-flex justify-content-end mb-4">
-        <button class="btn btn-success px-4 py-2 rounded-3 shadow-sm"
-            data-bs-toggle="modal"
-            data-bs-target="#modalCliente">
-            <i class="fa-solid fa-plus me-2"></i>
-            Novo Funcionários
-        </button>
-    </div>
+        <div class="d-flex justify-content-end mb-4">
+            <button class="btn btn-success px-4 py-2 rounded-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalFuncionario">
+                <i class="fa-solid fa-user-plus me-2"></i>
+                Novo Funcionário
+            </button>
+        </div>
 
         <div class="row g-4 mb-4">
             <div class="col-md-4">
@@ -61,7 +53,7 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
                     <div class="card-body">
                         <h6 class="text-secondary">Total de Funcionários</h6>
                         <h2 class="fw-bold"><?= $totalFuncionarios ?></h2>
-                        <small>Equipe cadastrada</small>
+                        <small>Ativos na empresa</small>
                     </div>
                 </div>
             </div>
@@ -71,7 +63,7 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
                     <div class="card-body">
                         <h6 class="text-secondary">Técnicos</h6>
                         <h2 class="fw-bold text-success"><?= $tecnicos ?></h2>
-                        <small>Equipe técnica</small>
+                        <small>Manutenção</small>
                     </div>
                 </div>
             </div>
@@ -79,9 +71,9 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
             <div class="col-md-4">
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <h6 class="text-secondary">Atendentes / Outros</h6>
+                        <h6 class="text-secondary">Atendentes</h6>
                         <h2 class="fw-bold text-primary"><?= $atendentes ?></h2>
-                        <small>Atendimento e gestão</small>
+                        <small>Recepção</small>
                     </div>
                 </div>
             </div>
@@ -95,7 +87,7 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
                         <div class="col-lg-6">
                             <label class="form-label fw-semibold">Buscar Funcionário</label>
                             <div class="input-group shadow-sm">
-                                <input type="text" class="form-control border-success" placeholder="Buscar por nome, cargo ou e-mail..." name="nBusca" value="<?= $busca ?>">
+                                <input type="text" class="form-control border-success" placeholder="Buscar por nome ou e-mail..." name="nBusca" value="<?= htmlspecialchars($busca) ?>">
                                 <button class="btn btn-success px-4" type="submit">
                                     <i class="fa-solid fa-magnifying-glass me-0"></i>
                                 </button>
@@ -104,11 +96,11 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
 
                         <div class="col-lg-3">
                             <label class="form-label fw-semibold">Cargo</label>
-                            <select class="form-select select-verde">
-                                <option selected>Todos</option>
-                                <option>Gerente</option>
-                                <option>Técnico</option>
-                                <option>Atendente</option>
+                            <select name="nCargo" class="form-select select-verde">
+                                <option value="Todos" <?= ($cargo == 'Todos') ? 'selected' : '' ?>>Todos</option>
+                                <option value="1" <?= ($cargo == '1') ? 'selected' : '' ?>>Gerente</option>
+                                <option value="2" <?= ($cargo == '2') ? 'selected' : '' ?>>Técnico</option>
+                                <option value="3" <?= ($cargo == '3') ? 'selected' : '' ?>>Atendente</option>
                             </select>
                         </div>
 
@@ -117,6 +109,7 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
                                 <a href="funcionarios.php" class="btn btn-outline-success btn-filtrar flex-grow-1 text-center" title="Limpar">
                                     <i class="fa-solid fa-rotate-left"></i>
                                 </a>
+
                                 <button type="submit" class="btn btn-success btn-filtrar flex-grow-1">
                                     <i class="fa-solid fa-filter"></i>
                                     Filtrar
@@ -137,16 +130,13 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
                             <th>Cargo</th>
                             <th>Telefone</th>
                             <th>E-mail</th>
+                            <th>Data de Cadastro</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        if ($busca == "") {
-                            echo listaFuncionario();
-                        } else {
-                            echo BuscarFuncionario($busca);
-                        }
+                            echo filtrarFuncionarios($busca, $cargo);
                         ?>
                     </tbody>
                 </table>
@@ -155,24 +145,13 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
             <div class="card-footer bg-white py-3">
                 <nav>
                     <ul class="pagination justify-content-end mb-0">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#">Anterior</a>
-                        </li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Próximo</a>
-                        </li>
+                        <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
                     </ul>
                 </nav>
             </div>
-
         </div>
-
     </main>
 
     <div class="modal fade" id="modalFuncionario" tabindex="-1">
@@ -181,39 +160,49 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
 
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title">
-                        <i class="fa-solid fa-user-gear me-2"></i>
+                        <i class="fa-solid fa-user-plus me-2"></i>
                         Novo Funcionário
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
-                    <form method="POST" action="php/salvarFuncionario.php?funcao=I" enctype="multipart/form-data">
+                    <form method="POST" action="php/salvarFuncionario.php?funcao=I">
 
                         <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Nome do Funcionário</label>
-                                <input type="text" class="form-control nome" id="iFuncionario" name="nFuncionario" placeholder="Digite o nome do funcionário" required>
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold">ID</label>
+                                <input type="text" class="form-control" placeholder="0001" readonly>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
+                                <label class="form-label fw-semibold">Nome Completo</label>
+                                <input type="text" id="iFuncionario" name="nFuncionario" class="form-control nome" placeholder="Digite o nome" required>
+                            </div>
+
+                            <div class="col-md-4">
                                 <label class="form-label fw-semibold">Cargo</label>
-                                <select class="form-select cargo" id="icargo" name="ncargo" required>
-                                    <option value="">Selecione...</option>
+                                <select id="iCargo" name="nCargo" class="form-select" required>
                                     <option value="1">1 - Gerente</option>
                                     <option value="2">2 - Técnico</option>
                                     <option value="3">3 - Atendente</option>
                                 </select>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label fw-semibold">Telefone</label>
-                                <input type="text" class="form-control telefone" name="nTelefone" placeholder="(99) 99999-9999" maxlength="15" required>
+                                <input type="text" id="iTelefone" name="nTelefone" class="form-control telefone" placeholder="(00) 00000-0000" maxlength="15" required>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label fw-semibold">E-mail</label>
-                                <input type="email" class="form-control" id="imail" name="nmail" placeholder="Digite o e-mail" required>
+                                <input type="email" id="iEmail" name="nmail" class="form-control" placeholder="email@exemplo.com" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Senha Padrão</label>
+                                <input type="password" id="iSenha" name="nSenha" class="form-control" value="Cellmaster123" required>
+                                <small class="text-muted">Senha temporária sugerida</small>
                             </div>
                         </div>
 
@@ -264,7 +253,5 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
             });
         });
     </script>
-
 </body>
-
 </html>

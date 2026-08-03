@@ -1,56 +1,40 @@
 <?php
 
-function listaRelatorio($periodo = 'todos', $busca = ''){
-
-    include("conexaoBD.php");
+function listaRelatorio($periodo = 'todos'){
 
     $funcionarios = ListarFuncionarios();
+
+    include("conexaoBD.php");
     
-    // 1. Sanitizar a busca para evitar SQL Injection
-    $buscaSanitizada = mysqli_real_escape_string($conn, trim($busca));
+    // 1. Criar a regra de filtragem de data para o SQL
+    $where_date = "";
 
-    // 2. Criar as regras de filtragem (Data e Busca por Nome)
-    $condicoes = [];
-
-    // Filtro por termo de busca
-    if (!empty($buscaSanitizada)) {
-        $condicoes[] = "nome_relatorio LIKE '%$buscaSanitizada%'";
-    }
-
-    // Filtro por Período
     switch ($periodo) {
         case 'hoje':
-            $condicoes[] = "DATE(geracao_data) = CURRENT_DATE()";
+            $where_date = "WHERE DATE(geracao_data) = CURRENT_DATE()";
             break;
 
         case '7_dias':
-            $condicoes[] = "geracao_data >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)";
+            $where_date = "WHERE geracao_data >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY)";
             break;
 
         case 'ultimo_mes':
-            $condicoes[] = "MONTH(geracao_data) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) 
-                            AND YEAR(geracao_data) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
+            $where_date = "WHERE MONTH(geracao_data) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) 
+                           AND YEAR(geracao_data) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
             break;
 
         case 'este_mes':
-            $condicoes[] = "MONTH(geracao_data) = MONTH(CURRENT_DATE()) 
-                            AND YEAR(geracao_data) = YEAR(CURRENT_DATE())";
+            $where_date = "WHERE MONTH(geracao_data) = MONTH(CURRENT_DATE()) 
+                           AND YEAR(geracao_data) = YEAR(CURRENT_DATE())";
             break;
 
         case 'todos':
         default:
-            // Não adiciona filtro de data
+            $where_date = "";
             break;
     }
 
-    // Monta a cláusula WHERE dinamicamente se houver condições
-    $where_sql = "";
-    if (count($condicoes) > 0) {
-        $where_sql = " WHERE " . implode(" AND ", $condicoes);
-    }
-
-    // Consulta SQL com filtros aplicados
-    $sql = "SELECT * FROM relatorio " . $where_sql . " ORDER BY idrelatorio ASC;";
+    $sql = "SELECT * FROM relatorio " . $where_date . " ORDER BY idrelatorio ASC;";
             
     $result = mysqli_query($conn, $sql);
     mysqli_close($conn);
@@ -356,8 +340,6 @@ function listaRelatorio($periodo = 'todos', $busca = ''){
                 </div>
             </div>';
         }    
-    } else {
-        $lista = '<tr><td colspan="7" class="text-center py-4 text-muted">Nenhum relatório encontrado.</td></tr>';
     }
     
     return $lista;

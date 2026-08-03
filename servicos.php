@@ -2,18 +2,15 @@
 session_start(); // <-- Sempre na primeira linha do arquivo
 include("php/funcoes.php");
 
+$buscaS = isset($_GET["nBuscaServico"]) ? $_GET["nBuscaServico"] : "";
+$statusS = isset($_GET["nStatus"]) ? $_GET["nStatus"] : "";
 
-    $buscaS = isset($_GET["nBuscaServico"]) ? $_GET["nBuscaServico"] : "";
-    $statusS = isset($_GET["nStatus"]) ? $_GET["nStatus"] : "";
-
-
-
-    $totalServicos = TotalServicos();
-    $servicosAtivos = ServicosAtivos();
-    $servicosInativos = ServicosInativos();
-    $valorMedio = ValorMedioServico();
-
+$totalServicos = TotalServicos();
+$servicosAtivos = ServicosAtivos();
+$servicosInativos = ServicosInativos();
+$valorMedio = ValorMedioServico();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -271,11 +268,7 @@ include("php/funcoes.php");
 
                     <tbody>
                         <?php
-                        if ($buscaS == "") {
-                            echo listaServico();
-                        } else {
-                            echo BuscarServico($buscaS);
-                        }
+                        echo BuscarServico($buscaS, $statusS);
                         ?>
                     </tbody>
                 </table>

@@ -253,6 +253,7 @@ function BuscarCliente($busca)
         FROM cliente
         WHERE nome_clien LIKE '%$busca%'
            OR cpf_clien LIKE '%$busca%'
+           OR email_clien LIKE '%$busca%'
         ORDER BY nome_clien";
 
     $result = mysqli_query($conn, $sql);

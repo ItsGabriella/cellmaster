@@ -330,3 +330,12 @@ main{
     object-fit: cover;
 }
 
+.list-group-item.active {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+}
+
+.form-check-input:checked {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+}

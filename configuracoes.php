@@ -9,13 +9,38 @@ $pagina = 'configuracoes';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Cor de fundo e borda do item ativo na lista */
+        .list-group-item.active {
+            background-color: #198754 !important; /* Verde padrão Bootstrap */
+            border-color: #198754 !important;
+        }
+
+        /* Cor do interruptor (Switch) quando ativado */
+        .form-check-input:checked {
+            background-color: #198754 !important;
+            border-color: #198754 !important;
+        }
+
+        /* Foco (contorno) verde para os campos e botões */
+        .form-check-input:focus,
+        .list-group-item-action:focus {
+            box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25) !important;
+        }
+    </style>
 </head>
 <body class="bg-custom">
 
 <div class="d-flex">
-    <?php include 'php/sidebar.php'; ?>
+
+    <?php 
+    $pagina = 'configuracoes';
+    include ('php/sidebar.php'); ?>
 
     <main class="flex-grow-1 p-4 bg-light">
         <?php
