@@ -1,14 +1,12 @@
 <?php
-$host = "127.0.0.1";
-$usuario = "root";
-$senha = "";
-$banco = "os_cellmaster";
+$host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "os_cellmaster";
 
-$conn = new mysqli($host, $usuario, $senha, $banco);
+$conn = new mysqli($host, $user, $pass, $dbname);
 
 if ($conn->connect_error) {
-    die("Erro na conexao: " . $conn->connect_error);
+    die("Falha na conexão: " . $conn->connect_error);
 }
-
-$conn->set_charset("utf8mb4");
 ?>
