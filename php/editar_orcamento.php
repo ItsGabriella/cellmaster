@@ -4,7 +4,7 @@ include("conexaoBD.php");
 $idorcamento = (int)($_GET['id'] ?? 0);
 
 if ($idorcamento <= 0) {
-    header("Location: orcamentos.php?erro=1");
+    header("Location: ../orcamento.php?erro=1");
     exit;
 }
 
@@ -15,7 +15,7 @@ $stmt->execute();
 $orcamento = $stmt->get_result()->fetch_assoc();
 
 if (!$orcamento) {
-    header("Location: orcamentos.php?erro=1");
+    header("Location: ../orcamento.php?erro=1");
     exit;
 }
 
@@ -71,9 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($stmtUpdate->execute()) {
-        header("Location: orcamentos.php?sucesso=1");
+        header("Location: ../orcamento.php?sucesso=1");
     } else {
-        header("Location: orcamentos.php?erro=1");
+        header("Location: ../orcamento.php?erro=1");
     }
     exit;
 }
@@ -172,7 +172,7 @@ $funcionarios = $conn->query("SELECT idfuncionario, nome_func FROM funcionario O
                 </div>
 
                 <div class="col-12 d-flex justify-content-end gap-2 mt-4">
-                    <a href="orcamentos.php" class="btn btn-outline-secondary">Cancelar</a>
+                    <a href="../orcamento.php" class="btn btn-outline-secondary">Cancelar</a>
                     <button type="submit" class="btn btn-warning"><i class="fa-solid fa-floppy-disk me-1"></i> Atualizar Orçamento</button>
                 </div>
             </div>

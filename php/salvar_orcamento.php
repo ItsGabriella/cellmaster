@@ -41,13 +41,13 @@ if ($stmt) {
     );
 
     if ($stmt->execute()) {
-        header("Location: orcamento.php?sucesso=1");
+        header("Location: ../orcamento.php?sucesso=1");
     } else {
-        header("Location: orcamento.php?erro=1");
+        header("Location: ../orcamento.php?erro=1");
     }
     $stmt->close();
 } else {
-    header("Location: orcamento.php?erro=1");
+    header("Location: ../orcamento.php?erro=1");
 }
 exit;
 ?>
