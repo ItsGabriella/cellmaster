@@ -165,64 +165,56 @@ $clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
 
     </main>
 
-    <div class="modal fade" id="modalCliente" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title">
-                        <i class="fa-solid fa-user-plus me-2"></i>
-                        Novo Cliente
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+    <div class="modal fade" id="modalCliente" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title"><i class="fa-solid fa-user-plus me-2"></i>Novo Cliente</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="php/salvarCliente.php?funcao=I" method="POST">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Nome Completo</label>
+                    <input type="text" class="form-control" name="nCliente" required>
                 </div>
-
-                <div class="modal-body">
-                    <form method="POST" action="php/salvarCliente.php?funcao=I" enctype="multipart/form-data">
-
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Nome do Cliente</label>
-                                <input type="text" class="form-control nome" id="iCliente" name="nCliente" placeholder="Digite o nome do cliente" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Endereço</label>
-                                <input type="text" class="form-control" id="iEndereco" name="nEndereco" placeholder="Endereço" required>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="form-label fw-semibold">CPF</label>
-                                <input type="text" class="form-control cpf" name="nCPF" placeholder="000.000.000-00" maxlength="14" required>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="form-label fw-semibold">Telefone</label>
-                                <input type="text" class="form-control telefone" name="nTelefone" placeholder="(99) 99999-9999" maxlength="15" required>
-                            </div>
-
-                            <div class="col-md-4">
-                                <label class="form-label fw-semibold">E-mail</label>
-                                <input type="email" class="form-control" id="imail" name="nmail" placeholder="Digite o e-mail" required>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer mt-4 px-0 pb-0">
-                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa-solid fa-floppy-disk me-2"></i>
-                                Salvar Cliente
-                            </button>
-                        </div>
-
-                    </form>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">E-mail</label>
+                    <input type="email" class="form-control" name="nmail" placeholder="email@exemplo.com" required>
                 </div>
+            </div>
 
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">CPF</label>
+                    <input type="text" class="form-control cpf" name="nCPF" placeholder="000.000.000-00" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Telefone</label>
+                    <input type="text" class="form-control telefone" name="nTelefone" placeholder="(00) 00000-0000" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Endereço</label>
+                    <input type="text" class="form-control" name="nEndereco" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Senha de Acesso</label>
+                    <input type="password" class="form-control" name="nSenha" placeholder="Digite a senha inicial" required>
+                </div>
             </div>
         </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success">Cadastrar Cliente</button>
+        </div>
+      </form>
     </div>
+  </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/home.js"></script>

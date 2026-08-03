@@ -103,33 +103,24 @@ function BuscarServico($buscaS = "", $statusS = "") {
                 </td>
             </tr>
 
-            <div class="modal fade" id="modalExcluirServico' . $coluna["idservico"] . '" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content border-0 shadow">
-                        <div class="modal-body text-center p-4">
-                            <div class="mb-3">
-                                <div class="bg-danger bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center" style="width:80px;height:80px;">
-                                    <i class="fa-solid fa-trash text-danger fs-1"></i>
-                                </div>
-                            </div>
-
-                            <h3 class="fw-bold">Excluir Serviço</h3>
-
-                            <form method="POST" action="php/salvarServico.php?funcao=D&codigo=' . $coluna["idservico"] . '">
-                                <p class="text-secondary mb-1">
-                                    Tem certeza que deseja excluir o serviço 
-                                    <strong class="text-danger">' . htmlspecialchars($coluna["nome_servico"]) . '</strong>?
-                                </p>
-                                <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
-
-                                <div class="d-flex gap-2 justify-content-center mt-4">
-                                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-danger px-4">Excluir</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            <div class="modal fade" id="modalExcluirServico'.$coluna["idservico"].'" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                  <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold"><i class="fa-solid fa-triangle-exclamation me-2"></i>Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                  </div>
+                  <div class="modal-body text-center py-4">
+                    <i class="fa-solid fa-trash text-danger fa-3x mb-3"></i>
+                    <p class="fs-5 fw-semibold mb-1">Tem certeza que deseja excluir?</p>
+                    <p class="text-muted small mb-0">Você está prestes a remover o serviço <strong>'.htmlspecialchars($coluna["nome_servico"]).'</strong>. Esta ação não poderá ser desfeita.</p>
+                  </div>
+                  <div class="modal-footer bg-light border-0 justify-content-center">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="php/salvarServico.php?codigo='.$coluna["idservico"].'&funcao=D" class="btn btn-danger px-4 fw-semibold">Sim, Excluir</a>
+                  </div>
                 </div>
+              </div>
             </div>
             
             <div class="modal fade" id="modalEditarServico' . $coluna["idservico"] . '" tabindex="-1">

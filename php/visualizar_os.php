@@ -198,7 +198,7 @@ $codigoOS = "OS-" . str_pad($os['idos'], 4, "0", STR_PAD_LEFT);
                 <a href="gerar_pdf.php?id=<?= $os['idos']; ?>" target="_blank" class="btn btn-red px-3 py-2 rounded-3">
                     <i class="fa-solid fa-file-pdf me-1"></i> Gerar PDF
                 </a>
-                <a href="../orcamento.php" class="btn btn-light border px-3 py-2 rounded-3 text-secondary fw-semibold">
+                <a href="../ordens_servico.php" class="btn btn-light border px-3 py-2 rounded-3 text-secondary fw-semibold">
                     <i class="fa-solid fa-arrow-left me-1"></i> Voltar
                 </a>
             </div>

@@ -1,6 +1,6 @@
 <?php
 include("conexaoBD.php");
-
+include ('php/funcoes.php');
 // Consultas do Administrador / Gerente
 $totalFaturamento = $conn->query("SELECT SUM(valor_final) as total FROM ordem_servico WHERE status_os IN ('Concluído', 'Entregue')")->fetch_assoc()['total'] ?? 0.00;
 $totalOS = $conn->query("SELECT COUNT(*) as total FROM ordem_servico")->fetch_assoc()['total'] ?? 0;

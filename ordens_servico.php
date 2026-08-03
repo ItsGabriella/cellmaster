@@ -229,7 +229,7 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
-                                            <a href="visualizar_os.php?id=<?= $os['idos']; ?>"
+                                            <a href="php/visualizar_os.php?id=<?= $os['idos']; ?>"
                                                class="btn btn-outline-primary btn-sm rounded-2"
                                                title="Ver/Imprimir OS">
                                                 <i class="fa-solid fa-eye"></i>
@@ -289,7 +289,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form id="formEditarOS" method="POST" action="salvar_edicao_os.php">
+                <form id="formEditarOS" method="POST" action="php/salvar_edicao_os.php">
                     <div class="modal-body p-4">
                         <input type="hidden" name="idos" id="edit_idos">
 
