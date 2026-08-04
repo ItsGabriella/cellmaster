@@ -35,7 +35,16 @@ $clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
     include 'php/sidebar.php'; 
     ?>
 
-    <main class="flex-grow-1 p-4 bg-light">
+<main class="flex-grow-1 p-4 bg-light">
+
+        <?php if (isset($_SESSION['mensagem_erro'])): ?>
+            <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <?= $_SESSION['mensagem_erro']; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <?php unset($_SESSION['mensagem_erro']); ?>
+        <?php endif; ?>
 
         <?php 
         // Configura as informações desta página
@@ -44,7 +53,7 @@ $clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
 
         // Inclui o arquivo de cabeçalho
         include 'php/header.php'; 
-    ?>
+        ?>
 
     <div class="d-flex justify-content-end mb-4">
         <button class="btn btn-success px-4 py-2 rounded-3 shadow-sm"
@@ -125,6 +134,7 @@ $clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
                             <th>CPF</th>
                             <th>Telefone</th>
                             <th>E-mail</th>
+                            <th>Data Cadastro</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -177,7 +187,7 @@ $clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-semibold">Nome Completo</label>
-                    <input type="text" class="form-control" name="nCliente" required>
+                    <input type="text" class="form-control" name="nCliente" placeholder="Digite o nome do cliente" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-semibold">E-mail</label>
@@ -199,11 +209,12 @@ $clientesAtivos = function_exists('ClientesAtivos') ? ClientesAtivos() : 0;
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-semibold">Endereço</label>
-                    <input type="text" class="form-control" name="nEndereco" required>
+                    <input type="text" class="form-control" name="nEndereco" placeholder="Ex: Rua xxxxx, n°000 - Bairro" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-semibold">Senha de Acesso</label>
-                    <input type="password" class="form-control" name="nSenha" placeholder="Digite a senha inicial" required>
+                    <input type="text" class="form-control" name="nSenha" value="Cellmaster123" required>
+                    <small class="text-muted">Senha temporária sugerida</small>
                 </div>
             </div>
         </div>

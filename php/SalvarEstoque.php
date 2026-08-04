@@ -52,7 +52,7 @@
 
         // NOTA: Ajuste o nome da tabela e coluna conforme a estrutura do seu banco de dados.
         // Exemplo: 'ordemservico_has_peca', 'itens_os', 'orcamento_peca' etc.
-        $queryVerificaOS = "SELECT COUNT(*) AS total FROM ordemservico_has_peca WHERE peca_idpeca = {$idPeca}";
+        $queryVerificaOS = "SELECT COUNT(*) AS total FROM peca_orcamento WHERE peca_idpeca = {$idPeca}";
         $resVerifica = mysqli_query($conn, $queryVerificaOS);
 
         if ($resVerifica) {

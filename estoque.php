@@ -43,6 +43,14 @@
         $breadcrumb   = "Estoque";
         include 'php/header.php'; 
     ?>
+    <?php if (isset($_SESSION['mensagem_erro'])): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            <?= htmlspecialchars($_SESSION['mensagem_erro']); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <?php unset($_SESSION['mensagem_erro']); // Limpa a mensagem após exibir ?>
+    <?php endif; ?>
 
     <div class="d-flex justify-content-end mb-4">
         <button class="btn btn-success px-4 py-2 rounded-3 shadow-sm"

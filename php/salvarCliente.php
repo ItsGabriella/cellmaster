@@ -22,6 +22,10 @@ $senha     = $_POST["nSenha"] ?? '';
 $idCliente = isset($_GET["IDClien"]) ? intval($_GET["IDClien"]) : 0;
 $funcao    = isset($_GET["funcao"]) ? $_GET["funcao"] : "";
 
+$sql = "";
+$mensagemNotificacao = "";
+$tipoNotificacao = "";
+
 if ($funcao == "I") {
     $idCliente = proxIdCliente();
     
@@ -71,11 +75,30 @@ if ($funcao == "I") {
     $tipoNotificacao = "alerta";
 
 } elseif ($funcao == "D") {
-    $sql = "DELETE FROM cliente WHERE idcliente = {$idCliente}";
-    $mensagemNotificacao = "Excluiu o cliente ID #" . $idCliente;
-    $tipoNotificacao = "perigo";
+    // 1. Verifica se existem ordens de serviço vinculadas
+    $sqlVerificaOS = "SELECT COUNT(*) AS total FROM ordem_servico WHERE idcliente = {$idCliente}";
+    $resOS = mysqli_query($conn, $sqlVerificaOS);
+    $totOS = ($resOS) ? mysqli_fetch_assoc($resOS)['total'] : 0;
+
+    // 2. Verifica se existem orçamentos vinculados
+    $sqlVerificaOrcamento = "SELECT COUNT(*) AS total FROM orcamento WHERE idcliente = {$idCliente}";
+    $resOrc = mysqli_query($conn, $sqlVerificaOrcamento);
+    $totOrc = ($resOrc) ? mysqli_fetch_assoc($resOrc)['total'] : 0;
+
+    if ($totOS > 0 || $totOrc > 0) {
+        $_SESSION['mensagem_erro'] = "Atenção: Não é permitido excluir este cliente pois ele possui ordens de serviço ou orçamentos vinculados!";
+        
+        // Redireciona e encerra imediatamente se houver bloqueio
+        header("Location: ../clientes.php");
+        exit;
+    } else {
+        $sql = "DELETE FROM cliente WHERE idcliente = {$idCliente}";
+        $mensagemNotificacao = "Excluiu o cliente ID #" . $idCliente;
+        $tipoNotificacao = "perigo";
+    }
 }
 
+// Executa a query se ela foi definida (para Insert, Update ou Delete sem bloqueio)
 if (!empty($sql)) {
     $result = mysqli_query($conn, $sql);
 
@@ -84,6 +107,7 @@ if (!empty($sql)) {
     }
 }
 
+// Redirecionamento geral de volta para a tela de clientes
 header("Location: ../clientes.php");
 exit;
 ?>

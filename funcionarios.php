@@ -220,7 +220,7 @@ $atendentes        = function_exists('TotalAtendentes') ? TotalAtendentes() : 0;
                             </div>
 
                             <div class="col-md-4">
-                                <label class="form-label fw-semibold">Senha Padrão</label>
+                                <label class="form-label fw-semibold">Senha de Acesso</label>
                                 <input type="text" id="iSenha" name="nSenha" class="form-control" value="Cellmaster123" required>
                                 <small class="text-muted">Senha temporária sugerida</small>
                             </div>

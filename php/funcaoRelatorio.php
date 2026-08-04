@@ -230,8 +230,16 @@ function listaRelatorio($periodo = 'todos'){
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label fw-bold text-secondary">Data</label>
+                                        <label class="form-label fw-bold text-secondary">Data de Geração</label>
                                         <input type="date" class="form-control" name="nData" value="'.$coluna["geracao_data"].'">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-secondary">Período Início (De)</label>
+                                        <input type="date" class="form-control" name="nDataInicio" value="'.$coluna["data_inicio"].'">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label fw-bold text-secondary">Período Fim (Até)</label>
+                                        <input type="date" class="form-control" name="nDataFim" value="'.$coluna["data_fim"].'">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label fw-bold text-secondary">Responsável</label>
@@ -246,7 +254,7 @@ function listaRelatorio($periodo = 'todos'){
                                         $lista .= '</select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label fw-bold text-secondary">Status</label>
+                                        <label class="form-label fw-bold text-secondary">Status Atual</label>
                                         <select name="nStatus" class="form-select">
                                             <option '.($coluna["status"]=='Pendente'?'selected':'').'>Pendente</option>
                                             <option '.($coluna["status"]=='Em andamento'?'selected':'').'>Em andamento</option>

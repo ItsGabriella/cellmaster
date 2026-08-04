@@ -21,6 +21,7 @@ function listaCliente(){
                 <td>'.htmlspecialchars($coluna["cpf_clien"]).'</td>
                 <td>'.htmlspecialchars($coluna["tel_clien"]).'</td>
                 <td>'.htmlspecialchars($coluna["email_clien"]).'</td>
+                <td>'.date("d/m/Y", strtotime($coluna["data_cadastro"])).'</td>
 
                 <td>
                     <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditar'.$coluna["idcliente"].'">

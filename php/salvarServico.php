@@ -21,7 +21,7 @@
     // --- FUNÇÃO AUXILIAR PARA CHECAR SE O SERVIÇO ESTÁ EM USO EM OS OU ORÇAMENTO ---
     function servicoEmUso($conn, $idServico) {
         // Ajuste o nome da tabela/coluna relacional conforme a estrutura do seu banco
-        $sqlCheck = "SELECT COUNT(*) AS total FROM ordemservico_has_servico WHERE servico_idservico = {$idServico}";
+        $sqlCheck = "SELECT COUNT(*) AS total FROM peca_orcamento WHERE servico_idservico = {$idServico}";
         $res = mysqli_query($conn, $sqlCheck);
         if ($res) {
             $row = mysqli_fetch_assoc($res);
