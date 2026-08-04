@@ -38,8 +38,8 @@ include("php/funcoes.php");
     <main class="flex-grow-1 p-4 bg-light">
 
         <?php 
-            $tituloPagina = "Relatorio";
-            $breadcrumb   = "Relatorio";
+            $tituloPagina = "Relatório";
+            $breadcrumb   = "Relatório";
             include 'php/header.php'; 
         ?>
 
@@ -222,7 +222,7 @@ include("php/funcoes.php");
                                 <div class="card-body exportacao-card py-2 px-3">
                                     <button 
                                             type="submit"
-                                            onclick="exportarPdfsSeparados()" 
+                                            onclick="exportarSeparados('php/exportarPdf.php')" 
                                             class="btn btn-outline-danger d-flex align-items-center justify-content-center fw-bold export-btn w-100" 
                                             style="height: 38px;">
                                         <i class="fa-solid fa-file-pdf me-2"></i> PDF

@@ -84,7 +84,31 @@ $isCliente = ($idCargo == 4 || $tipoUsuario === 'cliente');
                         <div class="tab-pane fade show active" id="list-perfil" role="tabpanel">
                             <div class="card bg-white shadow-sm border p-4 rounded-3">
                                 <h5 class="fw-bold mb-3 text-dark">Informações do Perfil</h5>
-                                <form action="php/salvarConta.php" method="POST">
+                                 <form method="POST" action="php/salvarConta.php" enctype="multipart/form-data" onsubmit="return validarSenhas()">
+
+                                    <input type="hidden" name="nIdFuncionario" value="<?= $_SESSION['id'] ?? '' ?>">
+
+
+
+                                    <div class="text-center mb-4">
+
+                                        <img src="img/perfil/<?= $_SESSION['foto'] ?? '../user.png' ?>"
+
+                                             class="rounded-circle border border-3 border-success"
+
+                                             width="130" height="130" style="object-fit:cover;"
+
+                                             onerror="this.src='img/user.png'">
+
+                                        <div class="mt-3 col-md-6 mx-auto">
+
+                                            <label class="form-label fw-semibold">Foto de Perfil</label>
+
+                                            <input type="file" class="form-control" name="fotoPerfil" accept="image/*">
+
+                                        </div>
+
+                                    </div>
                                     <div class="row g-3 mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label fw-semibold">Nome Completo</label>
