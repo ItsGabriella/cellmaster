@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($origem === 'visualizar') {
                     header("Location: visualizar_os.php?id={$idos}&sucesso=1");
                 } else {
-                    header("Location: ordens_servico.php?sucesso=1");
+                    header("Location: ../ordens_servico.php?sucesso=1");
                 }
                 exit();
             }

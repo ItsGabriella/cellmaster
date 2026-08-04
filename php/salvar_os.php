@@ -1,5 +1,5 @@
 <?php
-include("conexao.php");
+include("conexaoBD.php");
 
 $orcamento_id = (int) ($_POST['orcamento_idorcamento'] ?? 0);
 $cliente_id = (int) ($_POST['cliente_idcliente'] ?? 0);
@@ -17,8 +17,9 @@ $desconto = (float) ($_POST['desconto'] ?? 0);
 $valor_final = ($valor_pecas + $valor_mao_obra) - $desconto;
 if ($valor_final < 0) { $valor_final = 0; }
 
+// Validação se o ID do orçamento chegou zerado ou inválido
 if ($orcamento_id <= 0 || $cliente_id <= 0 || $funcionario_id <= 0 || $laudo_tecnico === '') {
-    header("Location: ordens_servico.php?erro=1");
+    header("Location: ../orcamento.php?erro=1");
     exit;
 }
 
@@ -38,6 +39,7 @@ $check->close();
 // Número sequencial amigável da OS
 $numero_os = 'OS-' . date('Ymd') . '-' . str_pad($orcamento_id, 4, '0', STR_PAD_LEFT);
 
+// ATENÇÃO: A coluna 'idos' foi retirada do INSERT para o banco gerar o ID automaticamente (Auto Increment)
 $sql = "INSERT INTO ordem_servico (
     numero_os,
     orcamento_idorcamento,
@@ -74,13 +76,15 @@ if ($stmt) {
     );
 
     if ($stmt->execute()) {
-        header("Location: visualizar_os.php?id=" . $stmt->insert_id . "&sucesso=1");
+        // Pega o ID gerado automaticamente pelo banco para redirecionar corretamente
+        $novo_id = $stmt->insert_id;
+        header("Location: visualizar_os.php?id=" . $novo_id . "&sucesso=1");
     } else {
-        header("Location: ordens_servico.php?erro=1");
+        header("Location: ../orcamento.php?erro=2");
     }
     $stmt->close();
 } else {
-    header("Location: ordens_servico.php?erro=1");
+    header("Location: ../orcamento.php?erro=3");
 }
 exit;
 ?>

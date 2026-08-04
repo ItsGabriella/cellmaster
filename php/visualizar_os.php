@@ -8,7 +8,7 @@ include("conexaoBD.php");
 $idos = (int)($_GET['id'] ?? 0);
 
 if ($idos <= 0) {
-    header("Location: ordens_servico.php");
+    header("Location: ../ordens_servico.php");
     exit();
 }
 
@@ -164,7 +164,7 @@ $codigoOS = "OS-" . str_pad($os['idos'], 4, "0", STR_PAD_LEFT);
                 <nav style="--bs-breadcrumb-divider: '›';" class="small">
                     <ol class="breadcrumb mb-0 text-muted">
                         <li class="breadcrumb-item"><a href="home.php" class="text-success text-decoration-none">Home</a></li>
-                        <li class="breadcrumb-item"><a href="ordens_servico.php" class="text-success text-decoration-none">Ordem de Serviço</a></li>
+                        <li class="breadcrumb-item"><a href="../ordens_servico.php" class="text-success text-decoration-none">Ordem de Serviço</a></li>
                         <li class="breadcrumb-item active"><?= $codigoOS; ?></li>
                     </ol>
                 </nav>

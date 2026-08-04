@@ -358,7 +358,7 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'excluir_os.php?id=' + idos;
+                window.location.href = 'php/excluir_os.php?id=' + idos;
             }
         });
     }

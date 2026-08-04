@@ -89,7 +89,8 @@ $funcionarios = $conn->query("SELECT idfuncionario, nome_func FROM funcionario O
                            placeholder="DD/MM/AAAA" 
                            maxlength="10" 
                            value="<?php echo date('d/m/Y'); ?>" 
-                           onkeyup="mascaraData(this)" 
+                           onkeyup="mascaraData(this)"
+                           readonly 
                            required>
                 </div>
 
