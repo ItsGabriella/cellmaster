@@ -333,12 +333,12 @@ switch ($tipoRelatorio) {
     $totalServico = mysqli_fetch_assoc($resCount)['total'] ?? 0;
 
     // Contagem de ativos
-    $sqlCountAtivos = "SELECT COUNT(*) as total FROM servico WHERE status = 'a'";
+    $sqlCountAtivos = "SELECT COUNT(*) as total FROM servico WHERE status = 'Ativo'";
     $resCountAtivos = mysqli_query($conn, $sqlCountAtivos);
     $totalAtivos = mysqli_fetch_assoc($resCountAtivos)['total'] ?? 0;
 
     // Contagem de inativos
-    $sqlCountInativos = "SELECT COUNT(*) as total FROM servico WHERE status != 'a'";
+    $sqlCountInativos = "SELECT COUNT(*) as total FROM servico WHERE status != 'Inativo'";
     $resCountInativos = mysqli_query($conn, $sqlCountInativos);
     $totalInativos = mysqli_fetch_assoc($resCountInativos)['total'] ?? 0;
 
